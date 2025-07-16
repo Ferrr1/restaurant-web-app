@@ -1,0 +1,68 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+@import "tailwindcss";
+@plugin 'tailwind-scrollbar' {
+  nocompatible: true;
+  preferredstrategy: "pseudoelements";
+}
+@theme {
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-text: var(--text);
+  --color-text-accent: var(--text-accent);
+  --color-card: var(--card);
+  --font-roboto: "Roboto", sans-serif;
+}
+
+@layer base {
+  :root {
+    --background: #fff;
+    --foreground: #f1f0f4;
+    --text: #000;
+    --card: #ffffff;
+  }
+
+  .dark {
+    --background: #111518;
+    --foreground: #283239;
+    --text: #fff;
+    --card: #242426;
+  }
+
+  .accent-forest {
+    --primary: #39e079;
+    --secondary: #264532;
+    --text-accent: #c1ffd3;
+  }
+
+  .accent-ocean {
+    --primary: #0c92f2;
+    --secondary: #00406d;
+    --text-accent: #c1eaff;
+  }
+
+  .accent-purple {
+    --primary: #731fc7;
+    --secondary: #362645;
+    --text-accent: #fca1ff;
+  }
+
+  /* .dark.accent-forest {
+    --primary: #34c759;
+    --secondary: #1e3527;
+    --text-accent: #8bc34a;
+  }
+
+  .dark.accent-ocean {
+    --primary: #0097a7;
+    --secondary: #1a2d38;
+    --text-accent: #64d8cb;
+  }
+
+  .dark.accent-purple {
+    --primary: #7a00e6;
+    --secondary: #2b2033;
+    --text-accent: #b300ff;
+  } */
+}
