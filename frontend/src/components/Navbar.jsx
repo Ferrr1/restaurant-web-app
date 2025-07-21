@@ -1,13 +1,9 @@
-import {
-  MdLogout,
-  MdOutlinePeopleAlt,
-  MdOutlineSettings,
-} from "react-icons/md";
+import { MdLogout, MdOutlineSettings } from "react-icons/md";
 import Notification from "./Notification";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import AvatarSkeleton from "./skeleton/AvatarSkeleton";
 import Avatar from "./ui/Avatar";
+import { LogoutButton } from "./ui/LogoutButton";
 
 const Navbar = ({ head, summary }) => {
   const [activeDropdown, setActiveDropdown] = useState(null);
@@ -32,48 +28,30 @@ const Navbar = ({ head, summary }) => {
               className={({ isActive }) =>
                 `${
                   isActive && "bg-secondary text-white"
-                } relative hover:bg-primary cursor-pointer p-2 rounded-md group transition-colors duration-200 ease-in-out`
+                } relative cursor-pointer rounded-full p-2 border-2 border-foreground hover:border-primary group transition-colors duration-200 ease-in-out`
               }
             >
               <MdOutlineSettings
                 size={20}
-                className="group-hover:text-text-accent"
+                className="group-hover:text-primary"
               />
             </NavLink>
+            <LogoutButton />
           </div>
           <div className="relative">
-            <button
-              onClick={() => toggleDropdown("profile")}
-              className={`flex items-center gap-4 ${
-                activeDropdown === "profile" ? "bg-secondary text-white" : ""
-              } hover:bg-primary cursor-pointer p-2 rounded-md transition-colors duration-200 ease-in-out group`}
+            <div
+              className={`flex items-center gap-4 p-2 rounded-md transition-colors duration-200 ease-in-out group`}
             >
               <Avatar
                 src={
                   "https://images.unsplash.com/photo-1499714608240-22fc6ad53fb2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                 }
               />
-              <span
-                className={`flex flex-col text-left ${
-                  activeDropdown === "profile"
-                    ? "text-white"
-                    : "text-text group-hover:text-text-accent"
-                }`}
-              >
-                <h6 className="capitalize">john doe</h6>
-                <p
-                  className={`text-sm lowercase ${
-                    activeDropdown === "profile"
-                      ? "text-white/70"
-                      : "text-text/50 group-hover:text-text-accent/50"
-                  }`}
-                >
-                  johndoe@example
-                </p>
+              <span className={`flex flex-col text-left `}>
+                <h6 className="capitalize">maulana feri </h6>
+                <p className={`text-sm lowercase text-text/50`}>Admin</p>
               </span>
-            </button>
-
-            {activeDropdown === "profile" && <MenuProfile />}
+            </div>
           </div>
         </div>
       </div>
@@ -83,34 +61,34 @@ const Navbar = ({ head, summary }) => {
 
 export default Navbar;
 
-const MenuProfile = () => {
-  const MenuData = [
-    {
-      icon: <MdOutlinePeopleAlt size={16} />,
-      title: "View Profile",
-    },
-    {
-      icon: <MdLogout size={16} />,
-      title: "Logout",
-    },
-  ];
-  return (
-    <div className="absolute rounded-md z-10 overflow-y-auto flex flex-col top-18 left-0 w-52 max-h-72 bg-card shadow-sm text-text scrollbar-w-1 scrollbar scrollbar-thumb-primary scrollbar-track-slate-300 transition-all duration-300 ease-in-out">
-      <div className="flex flex-col items-start">
-        {MenuData.map((item, index) => (
-          <div
-            key={index}
-            className="group flex w-full items-center gap-2 px-4 py-2 border-b-2 border-foreground cursor-pointer hover:bg-primary transition-colors duration-200 last:border-b-0"
-          >
-            <span className="text-text group-hover:text-text-accent">
-              {item.icon}
-            </span>
-            <p className="text-sm text-text group-hover:text-text-accent">
-              {item.title}
-            </p>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
+// const MenuProfile = () => {
+//   const MenuData = [
+//     {
+//       icon: <MdOutlinePeopleAlt size={16} />,
+//       title: "View Profile",
+//     },
+//     {
+//       icon: <MdLogout size={16} />,
+//       title: "Logout",
+//     },
+//   ];
+//   return (
+//     <div className="absolute rounded-md z-10 overflow-y-auto flex flex-col top-18 left-0 w-52 max-h-72 bg-card shadow-sm text-text scrollbar-w-1 scrollbar scrollbar-thumb-primary scrollbar-track-slate-300 transition-all duration-300 ease-in-out">
+//       <div className="flex flex-col items-start">
+//         {MenuData.map((item, index) => (
+//           <div
+//             key={index}
+//             className="group flex w-full items-center gap-2 px-4 py-2 border-b-2 border-foreground cursor-pointer hover:bg-primary transition-colors duration-200 last:border-b-0"
+//           >
+//             <span className="text-text group-hover:text-text-accent">
+//               {item.icon}
+//             </span>
+//             <p className="text-sm text-text group-hover:text-text-accent">
+//               {item.title}
+//             </p>
+//           </div>
+//         ))}
+//       </div>
+//     </div>
+//   );
+// };

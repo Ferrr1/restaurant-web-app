@@ -1,41 +1,12 @@
 import { Link, NavLink } from "react-router-dom";
-import {
-  MdArrowBack,
-  MdArrowForward,
-  MdAttachMoney,
-  MdFastfood,
-  MdProductionQuantityLimits,
-  MdShoppingCart,
-  MdSpaceDashboard,
-} from "react-icons/md";
+import { MdArrowBack, MdArrowForward, MdFastfood } from "react-icons/md";
 import { useContext } from "react";
 import { SidebarContext } from "../context/SidebarContext";
-import { FaBox } from "react-icons/fa";
+import { BottomNavItems } from "../data/constants";
 
 const Sidebar = () => {
   const { isCollapsed, toggleSidebar } = useContext(SidebarContext);
-  const sidebarItems = [
-    {
-      name: "Dashboard",
-      link: "/",
-      icon: <MdSpaceDashboard />,
-    },
-    {
-      name: "Orders",
-      link: "/orders",
-      icon: <MdShoppingCart />,
-    },
-    {
-      name: "Products",
-      link: "/products",
-      icon: <FaBox />,
-    },
-    {
-      name: "Transactions",
-      link: "/transactions",
-      icon: <MdAttachMoney />,
-    },
-  ];
+
   return (
     <div
       className={`${
@@ -58,7 +29,7 @@ const Sidebar = () => {
           isCollapsed && "mt-18"
         } mt-8`}
       >
-        {sidebarItems.map((item, index) => (
+        {BottomNavItems.map((item, index) => (
           <NavLink
             key={index}
             to={item.link}
@@ -69,7 +40,7 @@ const Sidebar = () => {
             }
           >
             <div className="flex gap-4 justify-center items-center">
-              <span className="text-xl">{item.icon}</span>
+              <span className="text-xl">{item.icon && <item.icon />}</span>
               {!isCollapsed && <span>{item.name}</span>}
             </div>
           </NavLink>

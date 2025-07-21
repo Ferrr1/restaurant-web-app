@@ -7,12 +7,9 @@ const Notification = ({ isOpen, onToggle, notifCount = 0 }) => {
         onClick={onToggle}
         className={`${
           isOpen && "bg-secondary text-white"
-        } relative hover:bg-primary cursor-pointer p-2 rounded-md group transition-colors duration-200 ease-in-out`}
+        } relative cursor-pointer p-2 border-2 border-foreground hover:border-primary rounded-full group transition-colors duration-200 ease-in-out`}
       >
-        <MdNotificationsActive
-          size={20}
-          className="group-hover:text-text-accent"
-        />
+        <MdNotificationsActive size={20} className="group-hover:text-primary" />
         {notifCount > 0 && (
           <span className="absolute -top-1 -right-1 w-4 h-4 flex justify-center items-center bg-red-600 rounded-full">
             <p className="text-xs text-white">
