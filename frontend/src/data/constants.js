@@ -30,7 +30,7 @@ const DataOrder = [
     id: "#ODR001",
     table: "01",
     itemCount: 2,
-    status: "All",
+    status: "Served",
     time: "2 Mins ago",
   },
   {
@@ -98,85 +98,79 @@ const DataOrder = [
   },
 ];
 
-const FilterFood = [
-  {
-    type: "All",
-    image: MiePangsit,
-    items: 4,
-  },
-  {
-    type: "Special",
-    image: MiePangsit,
-    items: 3,
-  },
-  {
-    type: "Soups",
-    image: MiePangsit,
-    items: 2,
-  },
-  {
-    type: "Desserts",
-    image: MiePangsit,
-    items: 2,
-  },
-  {
-    type: "Chickens",
-    image: MiePangsit,
-    items: 3,
-  },
-  {
-    type: "Desserts",
-    image: MiePangsit,
-    items: 2,
-  },
-  {
-    type: "Chickens",
-    image: MiePangsit,
-    items: 3,
-  },
-  {
-    type: "Desserts",
-    image: MiePangsit,
-    items: 2,
-  },
-  {
-    type: "Chickens",
-    image: MieGoreng,
-    items: 3,
-  },
-];
-
 const FoodData = [
   {
-    type: "Appetizer",
-    name: "Bruschetta",
-    image: MieGoreng,
+    type: "Beef",
+    name: "Wagyu Beef Steak",
+    image: MiePangsit,
+    price: 129900,
+  },
+  {
+    type: "Beef",
+    name: "Beef Satay",
+    image: MiePangsit,
     price: 89900,
   },
   {
-    type: "Main Course",
-    name: "Grilled Salmon",
-    image: MieGoreng,
-    price: 159900,
+    type: "Beef",
+    name: "Beef Fajitas",
+    image: MiePangsit,
+    price: 109900,
   },
   {
-    type: "Main Course",
-    name: "Ribeye Steak",
-    image: MieGoreng,
-    price: 229900,
+    type: "Beef",
+    name: "Beef Rendang",
+    image: MiePangsit,
+    price: 89900,
   },
   {
-    type: "Dessert",
-    name: "Cheesecake",
-    image: MieGoreng,
+    type: "Soups",
+    name: "Creamy Mushroom Soup",
+    image: MiePangsit,
     price: 69900,
   },
   {
-    type: "Beverage",
-    name: "Lemonade",
+    type: "Soups",
+    name: "Tom Yum Soup",
     image: MiePangsit,
-    price: 39900,
+    price: 89900,
+  },
+  {
+    type: "Desserts",
+    name: "Cheesecake",
+    image: MiePangsit,
+    price: 69900,
+  },
+  {
+    type: "Desserts",
+    name: "Chocolate Lava Cake",
+    image: MiePangsit,
+    price: 79900,
+  },
+  {
+    type: "Chickens",
+    name: "Grilled Chicken",
+    image: MiePangsit,
+    price: 119900,
+  },
+  {
+    type: "Chickens",
+    name: "Crispy Fried Chicken",
+    image: MiePangsit,
+    price: 99900,
+  },
+  {
+    type: "Chickens",
+    name: "Chicken Cordon Bleu",
+    image: MiePangsit,
+    price: 149900,
+  },
+  {
+    type: "Chickens",
+    name: "Chicken Fajitas",
+    image: MiePangsit,
+    price: 109900,
   },
 ];
 
-export { BottomNavItems, DataOrder, FilterFood, FoodData };
+export { BottomNavItems, DataOrder, FoodData };

@@ -8,7 +8,7 @@ const Layout = () => {
   return (
     <>
       <div className={`transition-all duration-300 ease-in-out`}>
-        <main className="font-roboto w-full max-h-screen h-full bg-background">
+        <main className="font-roboto pb-24 w-full min-h-screen bg-background">
           <Outlet />
         </main>
         <BottomNav />

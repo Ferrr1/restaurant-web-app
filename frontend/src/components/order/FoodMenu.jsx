@@ -1,13 +1,16 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import Heading from "../ui/Heading";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { FaMinus, FaPlus } from "react-icons/fa6";
-import { FilterFood, FoodData } from "../../data/constants";
+import { FoodData } from "../../data/constants";
 import ImageSkeleton from "../skeleton/ImageSkeleton";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { useScrollNavigator } from "../../hooks/useScrollNavigator";
+import MiePangsit from "../../assets/images/food/filter/soups.jpg";
+import { getFilterCountsByKey } from "../../utils/FilterCounts";
 
 const FoodMenu = () => {
-  const scrollRef = useRef(null);
+  const { scrollRef, handleScroll } = useScrollNavigator();
   const [activeFilter, setActiveFilter] = useState("All");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -21,16 +24,34 @@ const FoodMenu = () => {
       setIsLoading(false);
     }, 5000);
   };
-  const handleScroll = (direction) => {
-    if (scrollRef.current) {
-      const container = scrollRef.current;
-      const scrollAmount = container.offsetWidth * 0.5;
-      container.scrollBy({
-        left: direction === "left" ? -scrollAmount : scrollAmount,
-        behavior: "smooth",
-      });
-    }
-  };
+  const typeCounts = getFilterCountsByKey(FoodData, "type");
+  const FilterFood = [
+    {
+      type: "All",
+      image: MiePangsit,
+      items: typeCounts["All"] || 0,
+    },
+    {
+      type: "Beef",
+      image: MiePangsit,
+      items: typeCounts["Beef"] || 0,
+    },
+    {
+      type: "Soups",
+      image: MiePangsit,
+      items: typeCounts["Soups"] || 0,
+    },
+    {
+      type: "Desserts",
+      image: MiePangsit,
+      items: typeCounts["Desserts"] || 0,
+    },
+    {
+      type: "Chickens",
+      image: MiePangsit,
+      items: typeCounts["Chickens"] || 0,
+    },
+  ];
   return (
     <div>
       <Heading
@@ -84,14 +105,14 @@ const FoodMenu = () => {
           </div>
         ))}
       </div>
-      <FoodList />
+      <FoodList activeFilter={activeFilter} />
     </div>
   );
 };
 
 export default FoodMenu;
 
-const FoodList = () => {
+const FoodList = ({ activeFilter }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleTestLoading = () => {
@@ -100,9 +121,14 @@ const FoodList = () => {
       setIsLoading(false);
     }, 2000);
   };
+
+  const filteredData =
+    activeFilter === "All"
+      ? FoodData
+      : FoodData.filter((item) => item.type === activeFilter);
   return (
-    <div className="flex flex-wrap gap-4 mt-4">
-      {FoodData.map((item, index) => (
+    <div className="flex justify-around flex-wrap gap-4 mt-4">
+      {filteredData.map((item, index) => (
         <div
           key={index}
           className="p-2 text-text w-[15rem] border-1 border-background/60 rounded-xl"
@@ -127,7 +153,7 @@ const FoodList = () => {
               <button className="p-2 cursor-pointer border-2 border-background/60 hover:border-primary rounded-full transition-colors duration-200 ease-in-out">
                 <FaMinus size={16} />
               </button>
-              <span>1</span>
+              <span>0</span>
               <button
                 onClick={handleTestLoading}
                 className="p-2 cursor-pointer bg-primary border-2 border-background/60 hover:bg-primary/30 hover:border-primary rounded-full transition-colors duration-200 ease-in-out"

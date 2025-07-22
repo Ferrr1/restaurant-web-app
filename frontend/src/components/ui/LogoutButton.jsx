@@ -22,15 +22,15 @@ export const LogoutButton = () => {
       >
         <div className="flex flex-col gap-4">
           <div>
-            <p className="text-sm">
+            <p className="text-sm text-text">
               When you click confirm, you will be redirected to the login page.
             </p>
           </div>
           <div className="flex justify-end gap-4">
-            <Button variant="confirm">Confirm</Button>
             <Button onClick={closeModal} variant="delete">
               Cancel
             </Button>
+            <Button variant="confirm">Confirm</Button>
           </div>
         </div>
       </Modal>

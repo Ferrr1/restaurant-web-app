@@ -5,9 +5,16 @@ import Divider from "../ui/Divider";
 import { useState } from "react";
 import { FaCashRegister, FaCreditCard, FaPrint } from "react-icons/fa6";
 import { FaMouse } from "react-icons/fa";
+import Modal from "../ui/Modal";
+import Button from "../ui/Button";
 
 const Cart = () => {
   const [payment, setPayment] = useState("Cash");
+  const [activeModal, setactiveModal] = useState(null);
+  const openModal = (type) => {
+    setactiveModal(type);
+  };
+  const closeModal = () => setactiveModal(null);
   const tooglePayment = (pay) => setPayment(pay);
   const dataStatis = [
     {
@@ -47,10 +54,16 @@ const Cart = () => {
         <div className="flex justify-between items-center mb-2">
           <h2 className="text-text text-xl">Table No #04</h2>
           <div className="flex gap-2 text-text">
-            <button className="cursor-pointer p-2 border-2 border-background/60 hover:bg-background rounded-full">
+            <button
+              onClick={() => openModal("order")}
+              className="cursor-pointer p-2 border-2 border-background/60 hover:bg-background rounded-full"
+            >
               <CiEdit size={24} />
             </button>
-            <button className="cursor-pointer p-2 border-2 border-background/60 hover:bg-background rounded-full">
+            <button
+              onClick={() => openModal("delete")}
+              className="cursor-pointer p-2 border-2 border-background/60 hover:bg-background rounded-full"
+            >
               <AiOutlineDelete size={24} className="text-red-600" />
             </button>
           </div>
@@ -144,8 +157,33 @@ const Cart = () => {
           <span>Place Order</span>
         </button>
       </div>
+      <ModalOrder isOpen={activeModal === "order"} onClose={closeModal} />
+      <ModalDelete isOpen={activeModal === "delete"} onClose={closeModal} />
     </>
   );
 };
 
 export default Cart;
+
+const ModalOrder = ({ isOpen, onClose }) => {
+  return <Modal isOpen={isOpen} onClose={onClose} title="Create Order"></Modal>;
+};
+const ModalDelete = ({ isOpen, onClose }) => {
+  return (
+    <Modal isOpen={isOpen} onClose={onClose} title="Delete Order">
+      <div className="flex flex-col gap-4">
+        <div>
+          <p className="text-sm text-text">
+            Are you sure you want to delete this order?
+          </p>
+        </div>
+        <div className="flex justify-end gap-4">
+          <Button onClick={onClose} variant="delete">
+            Cancel
+          </Button>
+          <Button variant="confirm">Confirm</Button>
+        </div>
+      </div>
+    </Modal>
+  );
+};
