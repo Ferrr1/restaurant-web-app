@@ -3,12 +3,19 @@ import { CiDesktopMouse2, CiEdit } from "react-icons/ci";
 import { IoMdPeople } from "react-icons/io";
 import Divider from "../ui/Divider";
 import { useContext, useState } from "react";
-import { FaCashRegister, FaCreditCard, FaPrint } from "react-icons/fa6";
+import {
+  FaCashRegister,
+  FaCreditCard,
+  FaMinus,
+  FaPlus,
+  FaPrint,
+} from "react-icons/fa6";
 import { FaMouse } from "react-icons/fa";
 import Modal from "../ui/Modal";
 import Button from "../ui/Button";
 import Notify from "../ui/Notify";
 import { NotifyContext } from "../../context/NotifyContext";
+import { Select, TextArea } from "../ui/Input";
 
 const Cart = () => {
   const [payment, setPayment] = useState("Cash");
@@ -168,7 +175,66 @@ const Cart = () => {
 export default Cart;
 
 const ModalOrder = ({ isOpen, onClose }) => {
-  return <Modal isOpen={isOpen} onClose={onClose} title="Create Order"></Modal>;
+  const [guestCount, setGuestCount] = useState(0);
+
+  const increment = () => {
+    if (guestCount >= 8) return;
+    setGuestCount(guestCount + 1);
+  };
+  const decrement = () => {
+    if (guestCount <= 0) return;
+    setGuestCount(guestCount - 1);
+  };
+  return (
+    <Modal isOpen={isOpen} onClose={onClose} title="Create Order">
+      <div className="flex flex-col gap-2">
+        <Select
+          label="Select Table"
+          className="w-full"
+          placeholder="Select Table"
+        >
+          <option value="1">Table 1</option>
+          <option value="2">Table 2</option>
+          <option value="3">Table 3</option>
+          <option value="4">Table 4</option>
+          <option value="5">Table 5</option>
+        </Select>
+        <div>
+          <label className="block mb-2 mt-3 text-sm font-medium text-[#ababab]">
+            Guest
+          </label>
+          <div className="flex items-center justify-between bg-primary/30 px-4 py-3 rounded-lg">
+            <button
+              onClick={decrement}
+              className="text-text cursor-pointer rounded-full p-2 border-2 border-background/60 hover:border-primary bg-primary/20 hover:bg-primary/30 transition-colors duration-200 ease-in-out"
+            >
+              <FaMinus size={16} />
+            </button>
+            <span className="text-text">{guestCount} Person</span>
+            <button
+              onClick={increment}
+              className="text-text cursor-pointer rounded-full p-2 border-2 border-background/60 hover:border-primary bg-primary/20 hover:bg-primary/30 transition-colors duration-200 ease-in-out"
+            >
+              <FaPlus size={16} />
+            </button>
+          </div>
+        </div>
+        <TextArea
+          label="Note"
+          className="w-full"
+          placeholder="e.g. Please add extra cheese, No MSG, etc."
+        />
+        <div className="flex justify-end gap-2">
+          <Button variant="delete" onClick={onClose} className="mt-2">
+            Close
+          </Button>
+          <Button variant="confirm" onClick={onClose} className="mt-2">
+            Create
+          </Button>
+        </div>
+      </div>
+    </Modal>
+  );
 };
 const ModalDelete = ({ isOpen, onClose }) => {
   const { push } = useContext(NotifyContext);

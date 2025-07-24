@@ -1,18 +1,22 @@
-const Divider = ({ type = "solid" }) => {
-  const getDividerStyle = () => {
-    switch (type) {
-      case "dashed":
-        return `border-t-2 border-dashed border-slate-400`;
-      case "dotted":
-        return `border-t-2 border-dotted border-slate-400`;
-      case "double":
-        return `border-t-2 border-double border-slate-400`;
-      default:
-        return `border-t-2 border-slate-400`;
-    }
-  };
+import { cn } from "../../utils/cn";
 
-  return <hr className={`w-full my-4 ${getDividerStyle()}`} />;
+const Divider = ({ type = "solid" }) => {
+  let className;
+  switch (type) {
+    case "dashed":
+      className = `border-t-2 border-dashed border-slate-400`;
+      break;
+    case "dotted":
+      className = `border-t-2 border-dotted border-slate-400`;
+      break;
+    case "double":
+      className = `border-t-2 border-double border-slate-400`;
+      break;
+    default:
+      className = `border-t-2 border-slate-400`;
+  }
+
+  return <hr className={cn("w-full my-4", className)} />;
 };
 
 export default Divider;
