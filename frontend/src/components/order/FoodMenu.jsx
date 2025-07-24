@@ -127,11 +127,11 @@ const FoodList = ({ activeFilter }) => {
       ? FoodData
       : FoodData.filter((item) => item.type === activeFilter);
   return (
-    <div className="flex justify-around flex-wrap gap-4 mt-4">
+    <div className="flex flex-wrap gap-4 mt-4">
       {filteredData.map((item, index) => (
         <div
           key={index}
-          className="p-2 text-text w-[15rem] border-1 border-background/60 rounded-xl"
+          className="p-2 text-text min-w-[15rem] border-1 border-background/60 rounded-xl"
         >
           {isLoading ? (
             <ImageSkeleton width="full" height="10rem" />
@@ -139,7 +139,7 @@ const FoodList = ({ activeFilter }) => {
             <img
               src={item.image}
               alt=""
-              className="w-[15rem] h-[10rem]
+              className="w-full h-[calc(10rem*1.2)]
       object-cover rounded-xl bg-center"
             />
           )}

@@ -4,12 +4,15 @@ import "./index.css";
 import App from "./App.jsx";
 import { ThemeProvider } from "./context/ThemeContext.jsx";
 import { HelmetProvider } from "react-helmet-async";
+import { NotifyProvider } from "./context/NotifyContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <HelmetProvider>
       <ThemeProvider>
-        <App />
+        <NotifyProvider>
+          <App />
+        </NotifyProvider>
       </ThemeProvider>
     </HelmetProvider>
   </StrictMode>

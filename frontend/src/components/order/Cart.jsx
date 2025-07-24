@@ -2,11 +2,13 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { CiDesktopMouse2, CiEdit } from "react-icons/ci";
 import { IoMdPeople } from "react-icons/io";
 import Divider from "../ui/Divider";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FaCashRegister, FaCreditCard, FaPrint } from "react-icons/fa6";
 import { FaMouse } from "react-icons/fa";
 import Modal from "../ui/Modal";
 import Button from "../ui/Button";
+import Notify from "../ui/Notify";
+import { NotifyContext } from "../../context/NotifyContext";
 
 const Cart = () => {
   const [payment, setPayment] = useState("Cash");
@@ -169,21 +171,30 @@ const ModalOrder = ({ isOpen, onClose }) => {
   return <Modal isOpen={isOpen} onClose={onClose} title="Create Order"></Modal>;
 };
 const ModalDelete = ({ isOpen, onClose }) => {
+  const { push } = useContext(NotifyContext);
+
+  const handleClick = () => {
+    push({ message: "Berhasil disimpan!", type: "success" });
+  };
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Delete Order">
-      <div className="flex flex-col gap-4">
-        <div>
-          <p className="text-sm text-text">
-            Are you sure you want to delete this order?
-          </p>
+    <>
+      <Modal isOpen={isOpen} onClose={onClose} title="Delete Order">
+        <div className="flex flex-col gap-4">
+          <div>
+            <p className="text-sm text-text">
+              Are you sure you want to delete this order?
+            </p>
+          </div>
+          <div className="flex justify-end gap-4">
+            <Button onClick={onClose} variant="delete">
+              Cancel
+            </Button>
+            <Button onClick={handleClick} variant="confirm">
+              Confirm
+            </Button>
+          </div>
         </div>
-        <div className="flex justify-end gap-4">
-          <Button onClick={onClose} variant="delete">
-            Cancel
-          </Button>
-          <Button variant="confirm">Confirm</Button>
-        </div>
-      </div>
-    </Modal>
+      </Modal>
+    </>
   );
 };
