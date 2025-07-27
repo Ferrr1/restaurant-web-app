@@ -22,8 +22,16 @@ import { CartContext } from "../../context/CartContext";
 import { currencyIDR } from "../../utils/currency";
 
 const Cart = () => {
-  const { cartItems, totalQuantity, totalAmount, tax, totalAfterTax } =
-    useContext(CartContext);
+  const {
+    order,
+    cartItems,
+    totalQuantity,
+    totalAmount,
+    tax,
+    totalAfterTax,
+    createOrder,
+    removeFromCart,
+  } = useContext(CartContext);
   const [payment, setPayment] = useState("Cash");
   const [activeModal, setactiveModal] = useState(null);
   const openModal = (type) => {
@@ -31,11 +39,18 @@ const Cart = () => {
   };
   const closeModal = () => setactiveModal(null);
   const tooglePayment = (pay) => setPayment(pay);
+  // customerName: "",
+  //   orderType: "",
+  //   tableNumber: 0,
+  //   guestCount: 0,
+  //   paymentType: "Cash",
   return (
     <>
       <div className="p-4 bg-foreground rounded-lg">
         <div className="flex justify-between items-center mb-2">
-          <h2 className="text-text text-xl">Table No #04</h2>
+          <h2 className="text-text text-xl">
+            {order.tableNumber ? "Table " + order.tableNumber : "Not Selected"}
+          </h2>
           <div className="flex gap-2 text-text">
             <button
               onClick={() => openModal("order")}
@@ -54,7 +69,11 @@ const Cart = () => {
         <div className="flex justify-between ">
           <h2 className="text-base text-slate-400">Order #ODR007</h2>
           <div className="flex gap-2 items-center justify-center text-text">
-            <p>3</p>
+            {order.guestCount > 0 ? (
+              <p>{order.guestCount}</p>
+            ) : (
+              <p className="text-slate-400">Not Set</p>
+            )}
             <IoMdPeople size={24} />
           </div>
         </div>
@@ -147,16 +166,25 @@ const Cart = () => {
           <span>Place Order</span>
         </button>
       </div>
-      <ModalOrder isOpen={activeModal === "order"} onClose={closeModal} />
-      <ModalDelete isOpen={activeModal === "delete"} onClose={closeModal} />
+      <ModalOrder
+        createOrder={createOrder}
+        isOpen={activeModal === "order"}
+        onClose={closeModal}
+      />
+      <ModalDelete
+        cartItems={cartItems}
+        order={order}
+        removeFromCart={removeFromCart}
+        isOpen={activeModal === "delete"}
+        onClose={closeModal}
+      />
     </>
   );
 };
 
 export default Cart;
 
-const ModalOrder = ({ isOpen, onClose }) => {
-  const { createOrder } = useContext(CartContext);
+const ModalOrder = ({ isOpen, onClose, createOrder }) => {
   const [order, setOrder] = useState({
     customerName: "",
     orderType: "",
@@ -273,12 +301,13 @@ const ModalOrder = ({ isOpen, onClose }) => {
     </Modal>
   );
 };
-const ModalDelete = ({ isOpen, onClose }) => {
+const ModalDelete = ({ isOpen, onClose, removeFromCart, cartItems, order }) => {
   const { push } = useContext(NotifyContext);
-  const { removeFromCart, cartItems } = useContext(CartContext);
 
   const handleClick = () => {
-    if (cartItems.length === 0) {
+    const isOrderEmpty = !order || Object.keys(order).length === 0;
+
+    if (cartItems.length === 0 && isOrderEmpty) {
       onClose();
       push({
         message: "Gagal menghapus order! Keranjang kosong.",
