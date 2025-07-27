@@ -5,13 +5,16 @@ import App from "./App.jsx";
 import { ThemeProvider } from "./context/ThemeContext.jsx";
 import { HelmetProvider } from "react-helmet-async";
 import { NotifyProvider } from "./context/NotifyContext.jsx";
+import { CartProvider } from "./context/CartContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <HelmetProvider>
       <ThemeProvider>
         <NotifyProvider>
-          <App />
+          <CartProvider>
+            <App />
+          </CartProvider>
         </NotifyProvider>
       </ThemeProvider>
     </HelmetProvider>

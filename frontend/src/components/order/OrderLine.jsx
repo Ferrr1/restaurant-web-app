@@ -12,7 +12,7 @@ export const OrderLine = () => {
       </div>
 
       {/* KANAN */}
-      <div className="flex-[1] min-w-0 max-w-lg">
+      <div className="flex-[1.5] min-w-0 max-w-lg">
         <div className="sticky top-4">
           <Cart />
         </div>

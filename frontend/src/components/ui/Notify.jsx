@@ -1,12 +1,17 @@
-import { AiFillCheckCircle, AiFillUpCircle } from "react-icons/ai";
 import { motion, AnimatePresence } from "framer-motion";
+import {
+  IoMdCheckmarkCircle,
+  IoMdClose,
+  IoMdInformationCircle,
+  IoMdWarning,
+} from "react-icons/io";
 
 const NotifyItem = ({ message, type = "info" }) => {
   const icons = {
-    success: <AiFillCheckCircle className="text-green-500 w-6 h-6" />,
-    error: <AiFillUpCircle className="text-red-500 w-6 h-6" />,
-    warning: <AiFillCheckCircle className="text-yellow-500 w-6 h-6" />,
-    info: <AiFillUpCircle className="text-blue-500 w-6 h-6" />,
+    success: <IoMdCheckmarkCircle className="text-green-500 w-6 h-6" />,
+    error: <IoMdClose className="text-red-500 w-6 h-6" />,
+    warning: <IoMdWarning className="text-yellow-500 w-6 h-6" />,
+    info: <IoMdInformationCircle className="text-blue-500 w-6 h-6" />,
   };
 
   const colors = {

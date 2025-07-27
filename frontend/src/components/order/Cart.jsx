@@ -1,5 +1,7 @@
 import { AiOutlineDelete } from "react-icons/ai";
 import { CiDesktopMouse2, CiEdit } from "react-icons/ci";
+import { PiPicnicTableBold } from "react-icons/pi";
+import { RiTakeawayLine } from "react-icons/ri";
 import { IoMdPeople } from "react-icons/io";
 import Divider from "../ui/Divider";
 import { useContext, useState } from "react";
@@ -15,9 +17,13 @@ import Modal from "../ui/Modal";
 import Button from "../ui/Button";
 import Notify from "../ui/Notify";
 import { NotifyContext } from "../../context/NotifyContext";
-import { Select, TextArea } from "../ui/Input";
+import { Input, Select, TextArea } from "../ui/Input";
+import { CartContext } from "../../context/CartContext";
+import { currencyIDR } from "../../utils/currency";
 
 const Cart = () => {
+  const { cartItems, totalQuantity, totalAmount, tax, totalAfterTax } =
+    useContext(CartContext);
   const [payment, setPayment] = useState("Cash");
   const [activeModal, setactiveModal] = useState(null);
   const openModal = (type) => {
@@ -25,38 +31,6 @@ const Cart = () => {
   };
   const closeModal = () => setactiveModal(null);
   const tooglePayment = (pay) => setPayment(pay);
-  const dataStatis = [
-    {
-      id: 1,
-      name: "Nasi Goreng",
-      price: 15000,
-      quantity: 2,
-    },
-    {
-      id: 2,
-      name: "Sate Ayam",
-      price: 20000,
-      quantity: 1,
-    },
-    {
-      id: 3,
-      name: "Gado-Gado",
-      price: 10000,
-      quantity: 3,
-    },
-    {
-      id: 4,
-      name: "Mie Goreng",
-      price: 12000,
-      quantity: 2,
-    },
-    {
-      id: 5,
-      name: "Bakso",
-      price: 25000,
-      quantity: 1,
-    },
-  ];
   return (
     <>
       <div className="p-4 bg-foreground rounded-lg">
@@ -88,17 +62,19 @@ const Cart = () => {
         <div className="flex justify-between">
           <h2 className="text-text text-xl">Ordered Items</h2>
           <div className="flex gap-2 text-text">
-            <span className="text-lg text-slate-400">05</span>
+            <span className="text-lg text-slate-400">{totalQuantity}</span>
           </div>
         </div>
-        {dataStatis.map((item) => (
+        {cartItems.map((item) => (
           <div key={item.id} className="flex justify-between">
             <div className="flex gap-2">
               <h2 className="text-slate-400 text-lg">{item.quantity}</h2>
               <h2 className="text-slate-400 text-lg">{item.name}</h2>
             </div>
             <div className="flex gap-2 text-text">
-              <span className="text-lg text-text">Rp. {item.price}</span>
+              <span className="text-lg text-text">
+                {currencyIDR(item.price)}
+              </span>
             </div>
           </div>
         ))}
@@ -110,15 +86,20 @@ const Cart = () => {
             <h2 className="text-slate-400 text-lg">Tax</h2>
           </div>
           <div className="flex flex-col">
-            <span className="text-lg text-text">Rp. 50000</span>
-            <span className="text-lg text-text">Rp. 50000</span>
+            <span className="text-lg text-text">
+              {currencyIDR(totalAmount)}
+            </span>
+            <span className="text-lg text-text"> {currencyIDR(tax)}</span>
           </div>
         </div>
         <Divider type="dashed" />
         <div className="flex justify-between ">
           <h2 className="text-text text-xl">Total Pay</h2>
           <div className="flex gap-2 text-text">
-            <span className="text-lg text-text">Rp. 100000</span>
+            <span className="text-lg text-text">
+              {" "}
+              {currencyIDR(totalAfterTax)}
+            </span>
           </div>
         </div>
         <Divider type="dashed" />
@@ -175,29 +156,80 @@ const Cart = () => {
 export default Cart;
 
 const ModalOrder = ({ isOpen, onClose }) => {
-  const [guestCount, setGuestCount] = useState(0);
+  const { createOrder } = useContext(CartContext);
+  const [order, setOrder] = useState({
+    customerName: "",
+    orderType: "",
+    tableNumber: 0,
+    guestCount: 0,
+    paymentType: "Cash",
+  });
 
   const increment = () => {
-    if (guestCount >= 8) return;
-    setGuestCount(guestCount + 1);
+    if (order.guestCount >= 8) return;
+    setOrder({ ...order, guestCount: order.guestCount + 1 });
   };
   const decrement = () => {
-    if (guestCount <= 0) return;
-    setGuestCount(guestCount - 1);
+    if (order.guestCount <= 0) return;
+    setOrder({ ...order, guestCount: order.guestCount - 1 });
   };
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Create Order">
       <div className="flex flex-col gap-2">
-        <Select
-          label="Select Table"
+        <Input
+          onChange={(e) => setOrder({ ...order, customerName: e.target.value })}
+          label="Customer Name"
           className="w-full"
+          placeholder="e.g. Udin"
+        />
+        <div>
+          <label className="text-sm text-text/50">Order Type</label>
+          <div className="flex gap-2">
+            <button
+              onClick={() => setOrder({ ...order, orderType: "Dine in" })}
+              className={`flex ${
+                order.orderType === "Dine in"
+                  ? "bg-lime-600/10 border-lime-600"
+                  : "border-lime-600/20"
+              } border-1 flex-1 gap-2 justify-center items-center text-sm p-4 rounded-xl cursor-pointer transition-colors duration-300 ease-in-out text-text`}
+            >
+              <PiPicnicTableBold size={20} />
+              <span>Dine in</span>
+            </button>
+            <button
+              onClick={() => setOrder({ ...order, orderType: "Take away" })}
+              className={`flex ${
+                order.orderType === "Take away"
+                  ? "bg-violet-600/10 border-violet-600"
+                  : "border-violet-600/20"
+              } border-1 flex-1 gap-2 justify-center items-center text-sm p-4 rounded-xl cursor-pointer transition-colors duration-300 ease-in-out text-text`}
+            >
+              <RiTakeawayLine size={20} />
+              <span>Take away</span>
+            </button>
+          </div>
+        </div>
+        <Select
+          onChange={(e) => setOrder({ ...order, tableNumber: e.target.value })}
+          label="Select Table"
+          className="w-full text-text "
           placeholder="Select Table"
         >
-          <option value="1">Table 1</option>
-          <option value="2">Table 2</option>
-          <option value="3">Table 3</option>
-          <option value="4">Table 4</option>
-          <option value="5">Table 5</option>
+          <option className="bg-background text-text" value="1">
+            Table 1
+          </option>
+          <option className="bg-background text-text" value="2">
+            Table 2
+          </option>
+          <option className="bg-background text-text" value="3">
+            Table 3
+          </option>
+          <option className="bg-background text-text" value="4">
+            Table 4
+          </option>
+          <option className="bg-background text-text" value="5">
+            Table 5
+          </option>
         </Select>
         <div>
           <label className="block mb-2 mt-3 text-sm font-medium text-[#ababab]">
@@ -210,7 +242,7 @@ const ModalOrder = ({ isOpen, onClose }) => {
             >
               <FaMinus size={16} />
             </button>
-            <span className="text-text">{guestCount} Person</span>
+            <span className="text-text">{order.guestCount} Person</span>
             <button
               onClick={increment}
               className="text-text cursor-pointer rounded-full p-2 border-2 border-background/60 hover:border-primary bg-primary/20 hover:bg-primary/30 transition-colors duration-200 ease-in-out"
@@ -220,6 +252,7 @@ const ModalOrder = ({ isOpen, onClose }) => {
           </div>
         </div>
         <TextArea
+          onChange={(e) => setOrder({ ...order, note: e.target.value })}
           label="Note"
           className="w-full"
           placeholder="e.g. Please add extra cheese, No MSG, etc."
@@ -228,7 +261,11 @@ const ModalOrder = ({ isOpen, onClose }) => {
           <Button variant="delete" onClick={onClose} className="mt-2">
             Close
           </Button>
-          <Button variant="confirm" onClick={onClose} className="mt-2">
+          <Button
+            variant="confirm"
+            onClick={() => createOrder(order)}
+            className="mt-2"
+          >
             Create
           </Button>
         </div>
@@ -238,9 +275,20 @@ const ModalOrder = ({ isOpen, onClose }) => {
 };
 const ModalDelete = ({ isOpen, onClose }) => {
   const { push } = useContext(NotifyContext);
+  const { removeFromCart, cartItems } = useContext(CartContext);
 
   const handleClick = () => {
-    push({ message: "Berhasil disimpan!", type: "success" });
+    if (cartItems.length === 0) {
+      onClose();
+      push({
+        message: "Gagal menghapus order! Keranjang kosong.",
+        type: "error",
+      });
+    } else {
+      onClose();
+      removeFromCart();
+      push({ message: "Berhasil menghapus order!", type: "success" });
+    }
   };
   return (
     <>

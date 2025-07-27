@@ -100,72 +100,84 @@ const DataOrder = [
 
 const FoodData = [
   {
+    id: 1,
     type: "Beef",
     name: "Wagyu Beef Steak",
     image: MiePangsit,
     price: 129900,
   },
   {
+    id: 2,
     type: "Beef",
     name: "Beef Satay",
     image: MiePangsit,
     price: 89900,
   },
   {
+    id: 3,
     type: "Beef",
     name: "Beef Fajitas",
     image: MiePangsit,
     price: 109900,
   },
   {
+    id: 4,
     type: "Beef",
     name: "Beef Rendang",
     image: MiePangsit,
     price: 89900,
   },
   {
+    id: 5,
     type: "Soups",
     name: "Creamy Mushroom Soup",
     image: MiePangsit,
     price: 69900,
   },
   {
+    id: 6,
     type: "Soups",
     name: "Tom Yum Soup",
     image: MiePangsit,
     price: 89900,
   },
   {
+    id: 7,
     type: "Desserts",
     name: "Cheesecake",
     image: MiePangsit,
     price: 69900,
   },
   {
+    id: 8,
     type: "Desserts",
     name: "Chocolate Lava Cake",
     image: MiePangsit,
     price: 79900,
   },
   {
+    id: 9,
     type: "Chickens",
     name: "Grilled Chicken",
     image: MiePangsit,
     price: 119900,
   },
   {
+    id: 10,
     type: "Chickens",
     name: "Crispy Fried Chicken",
     image: MiePangsit,
     price: 99900,
   },
   {
+    id: 11,
     type: "Chickens",
     name: "Chicken Cordon Bleu",
     image: MiePangsit,
     price: 149900,
   },
   {
+    id: 12,
     type: "Chickens",
     name: "Chicken Fajitas",
     image: MiePangsit,
@@ -173,4 +185,7 @@ const FoodData = [
   },
 ];
 
-export { BottomNavItems, DataOrder, FoodData };
+const PaymentMethods = ["Cash", "Debit"];
+const OrderTypes = ["Dine In", "Take Away"];
+
+export { BottomNavItems, DataOrder, FoodData, OrderTypes, PaymentMethods };
