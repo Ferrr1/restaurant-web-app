@@ -50,12 +50,12 @@ const Cart = () => {
           <h2 className="text-text text-xl">
             {order.tableNumber ? "Table " + order.tableNumber : "Not Selected"}
           </h2>
-          <div className="flex gap-2 text-text">
+          <div className="flex gap-2">
             <button
               onClick={() => openModal("order")}
               className="cursor-pointer p-2 border-2 border-border hover:bg-background rounded-full"
             >
-              <CiEdit size={24} />
+              <CiEdit size={24} className="text-primary" />
             </button>
             <button
               onClick={() => openModal("delete")}
