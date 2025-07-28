@@ -1,14 +1,13 @@
 import { useContext, useState } from "react";
-import Heading from "../ui/Heading";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { FaMinus, FaPlus } from "react-icons/fa6";
-import { FoodData } from "../../data/constants";
-import ImageSkeleton from "../skeleton/ImageSkeleton";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { useScrollNavigator } from "../../hooks/useScrollNavigator";
-import MiePangsit from "../../assets/images/food/filter/soups.jpg";
-import { getFilterCountsByKey } from "../../utils/FilterCounts";
-import { CartContext } from "../../context/CartContext";
+import { FoodData } from "../../../data/constants";
+import Heading from "../../../components/ui/Heading";
+import { useScrollNavigator } from "../../../hooks/useScrollNavigator";
+import MiePangsit from "../../../assets/images/food/filter/soups.jpg";
+import { getFilterCountsByKey } from "../../../utils/FilterCounts";
+import { CartContext } from "../../../context/CartContext";
+import { currencyIDR } from "../../../utils/currency";
 
 const FoodMenu = () => {
   const { scrollRef, handleScroll } = useScrollNavigator();
@@ -48,19 +47,19 @@ const FoodMenu = () => {
   return (
     <div>
       <Heading
-        text="Order Line"
+        text="Food Menu"
         className={"flex justify-between items-center mb-2"}
       >
         <div className="flex gap-2">
           <button
             onClick={() => handleScroll("left")}
-            className="text-text cursor-pointer rounded-full p-2 border-2 border-background/60 hover:border-primary bg-primary/20 hover:bg-primary/30 transition-colors duration-200 ease-in-out"
+            className="text-text cursor-pointer rounded-full p-2 border-2 border-border hover:border-primary bg-primary/20 hover:bg-primary/30 transition-colors duration-200 ease-in-out"
           >
             <IoIosArrowBack size={20} />
           </button>
           <button
             onClick={() => handleScroll("right")}
-            className="text-text cursor-pointer rounded-full p-2 border-2 border-background/60 hover:border-primary bg-primary/20 hover:bg-primary/30 transition-colors duration-200 ease-in-out"
+            className="text-text cursor-pointer rounded-full p-2 border-2 border-border hover:border-primary bg-primary/20 hover:bg-primary/30 transition-colors duration-200 ease-in-out"
           >
             <IoIosArrowForward size={20} />
           </button>
@@ -74,10 +73,8 @@ const FoodMenu = () => {
           <div
             onClick={() => toggleFilter(item.type)}
             key={index}
-            className={`min-w-[150px] border-1 text-text ${
-              activeFilter === item.type
-                ? "border-primary"
-                : "border-background/60"
+            className={`min-w-[150px] border-2 text-text ${
+              activeFilter === item.type ? "border-primary" : "border-border"
             } cursor-pointer snap-center flex-shrink-0 flex gap-2 p-2 rounded-xl`}
           >
             <img
@@ -87,7 +84,7 @@ const FoodMenu = () => {
             />
             <div className="flex flex-col gap-2 text-sm">
               <span className="flex-1 font-semibold">{item.type}</span>
-              <div className="text-xs text-gray-400">{item.items} Items</div>
+              <div className="text-xs text-text-muted">{item.items} Items</div>
             </div>
           </div>
         ))}
@@ -115,7 +112,7 @@ const FoodList = ({ activeFilter }) => {
           <div
             key={index}
             className={`p-2 text-text min-w-[15rem] border-2 ${
-              quantity > 0 ? "border-primary" : "border-background/60"
+              quantity > 0 ? "border-primary" : "border-border"
             } rounded-xl transition-colors duration-300 ease-in-out`}
           >
             <img
@@ -124,23 +121,23 @@ const FoodList = ({ activeFilter }) => {
               className="w-full h-[calc(10rem*1.2)]
       object-cover rounded-xl bg-center"
             />
-            <p className="text-sm text-gray-400 mt-2">{item.type}</p>
+            <p className="text-sm text-text-muted mt-2">{item.type}</p>
             <h5 className="font-semibold">{item.name}</h5>
             <div className="flex justify-between items-center my-2">
               <span className="text-[1rem]">
-                Rp. {item.price === 0 ? "Free" : item.price}
+                {item.price === 0 ? "Free" : currencyIDR(item.price)}
               </span>
               <div className="flex gap-2 items-center">
                 <button
                   onClick={() => decreaseQuantity(item)}
-                  className="p-2 cursor-pointer border-2 border-background/60 hover:border-primary rounded-full transition-colors duration-200 ease-in-out"
+                  className="p-2 cursor-pointer border-2 border-border hover:border-primary rounded-full transition-colors duration-200 ease-in-out"
                 >
                   <FaMinus size={16} />
                 </button>
                 <span>{quantity}</span>
                 <button
                   onClick={() => addToCart(item)}
-                  className="p-2 cursor-pointer bg-primary border-2 border-background/60 hover:bg-primary/30 hover:border-primary rounded-full transition-colors duration-200 ease-in-out"
+                  className="p-2 cursor-pointer text-text-accent bg-primary border-2 border-border hover:bg-primary/30 hover:border-primary rounded-full transition-colors duration-200 ease-in-out"
                 >
                   <FaPlus size={16} />
                 </button>

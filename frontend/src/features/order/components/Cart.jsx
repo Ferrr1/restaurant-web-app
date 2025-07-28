@@ -1,9 +1,9 @@
 import { AiOutlineDelete } from "react-icons/ai";
-import { CiDesktopMouse2, CiEdit } from "react-icons/ci";
+import { CiEdit } from "react-icons/ci";
 import { PiPicnicTableBold } from "react-icons/pi";
 import { RiTakeawayLine } from "react-icons/ri";
 import { IoMdPeople } from "react-icons/io";
-import Divider from "../ui/Divider";
+import Divider from "../../../components/ui/Divider";
 import { useContext, useState } from "react";
 import {
   FaCashRegister,
@@ -13,13 +13,12 @@ import {
   FaPrint,
 } from "react-icons/fa6";
 import { FaMouse } from "react-icons/fa";
-import Modal from "../ui/Modal";
-import Button from "../ui/Button";
-import Notify from "../ui/Notify";
-import { NotifyContext } from "../../context/NotifyContext";
-import { Input, Select, TextArea } from "../ui/Input";
-import { CartContext } from "../../context/CartContext";
-import { currencyIDR } from "../../utils/currency";
+import Modal from "../../../components/ui/Modal";
+import Button from "../../../components/ui/Button";
+import { NotifyContext } from "../../../context/NotifyContext";
+import { Input, Select, TextArea } from "../../../components/ui/Input";
+import { CartContext } from "../../../context/CartContext";
+import { currencyIDR } from "../../../utils/currency";
 
 const Cart = () => {
   const {
@@ -46,7 +45,7 @@ const Cart = () => {
   //   paymentType: "Cash",
   return (
     <>
-      <div className="p-4 bg-foreground rounded-lg">
+      <div className="p-4 bg-surface rounded-lg">
         <div className="flex justify-between items-center mb-2">
           <h2 className="text-text text-xl">
             {order.tableNumber ? "Table " + order.tableNumber : "Not Selected"}
@@ -54,25 +53,25 @@ const Cart = () => {
           <div className="flex gap-2 text-text">
             <button
               onClick={() => openModal("order")}
-              className="cursor-pointer p-2 border-2 border-background/60 hover:bg-background rounded-full"
+              className="cursor-pointer p-2 border-2 border-border hover:bg-background rounded-full"
             >
               <CiEdit size={24} />
             </button>
             <button
               onClick={() => openModal("delete")}
-              className="cursor-pointer p-2 border-2 border-background/60 hover:bg-background rounded-full"
+              className="cursor-pointer p-2 border-2 border-border hover:bg-background rounded-full"
             >
               <AiOutlineDelete size={24} className="text-red-600" />
             </button>
           </div>
         </div>
         <div className="flex justify-between ">
-          <h2 className="text-base text-slate-400">Order #ODR007</h2>
+          <h2 className="text-base text-text-muted">Order #ODR007</h2>
           <div className="flex gap-2 items-center justify-center text-text">
             {order.guestCount > 0 ? (
               <p>{order.guestCount}</p>
             ) : (
-              <p className="text-slate-400">Not Set</p>
+              <p className="text-text-muted">Not Set</p>
             )}
             <IoMdPeople size={24} />
           </div>
@@ -81,14 +80,14 @@ const Cart = () => {
         <div className="flex justify-between">
           <h2 className="text-text text-xl">Ordered Items</h2>
           <div className="flex gap-2 text-text">
-            <span className="text-lg text-slate-400">{totalQuantity}</span>
+            <span className="text-lg text-text-muted">{totalQuantity}</span>
           </div>
         </div>
         {cartItems.map((item) => (
           <div key={item.id} className="flex justify-between">
             <div className="flex gap-2">
-              <h2 className="text-slate-400 text-lg">{item.quantity}</h2>
-              <h2 className="text-slate-400 text-lg">{item.name}</h2>
+              <h2 className="text-text-muted text-lg">{item.quantity}</h2>
+              <h2 className="text-text-muted text-lg">{item.name}</h2>
             </div>
             <div className="flex gap-2 text-text">
               <span className="text-lg text-text">
@@ -101,8 +100,8 @@ const Cart = () => {
         <h2 className="text-text text-xl">Payment Summary</h2>
         <div className="flex justify-between">
           <div>
-            <h2 className="text-slate-400 text-lg">Sub Total</h2>
-            <h2 className="text-slate-400 text-lg">Tax</h2>
+            <h2 className="text-text-muted text-lg">Sub Total</h2>
+            <h2 className="text-text-muted text-lg">Tax</h2>
           </div>
           <div className="flex flex-col">
             <span className="text-lg text-text">
@@ -121,15 +120,16 @@ const Cart = () => {
             </span>
           </div>
         </div>
-        <Divider type="dashed" />
-        <h2 className="text-text text-xl mb-2">Payment Summary</h2>
+      </div>
+      <div className="p-4 bg-surface rounded-lg mt-4">
+        <h2 className="text-text text-xl mb-2">Payment Method</h2>
         <div className="flex gap-2">
           <button
             onClick={() => tooglePayment("Cash")}
-            className={`border-1 text-text ${
+            className={`border-2 text-text ${
               payment === "Cash"
                 ? "bg-primary/20 border-primary"
-                : "border-background/60"
+                : "border-border"
             } cursor-pointer snap-center flex-shrink-0 flex gap-2 px-4 py-2 rounded-xl`}
           >
             <div className="flex items-center justify-center gap-2 text-sm">
@@ -141,10 +141,10 @@ const Cart = () => {
           </button>
           <button
             onClick={() => tooglePayment("Card")}
-            className={`border-1 text-text ${
+            className={`border-2 text-text ${
               payment === "Card"
                 ? "bg-primary/20 border-primary"
-                : "border-background/60"
+                : "border-border"
             } cursor-pointer snap-center flex-shrink-0 flex gap-2 px-4 py-2 rounded-xl`}
           >
             <div className="flex items-center justify-center gap-2 text-sm">
@@ -157,11 +157,11 @@ const Cart = () => {
         </div>
       </div>
       <div className="flex justify-between gap-2 mt-4">
-        <button className="flex flex-1 gap-2 justify-center items-center border-1 border-foreground cursor-pointer bg-primary hover:bg-primary/80 transition-colors duration-200 ease-in-out text-text-accent p-2 rounded-lg">
+        <button className="flex flex-1 gap-2 justify-center items-center border-2 border-border cursor-pointer bg-primary hover:bg-primary/80 transition-colors duration-200 ease-in-out text-text-accent p-2 rounded-lg">
           <FaPrint />
           <span>Print</span>
         </button>
-        <button className="flex flex-2 gap-2 justify-center items-center border-1 border-foreground cursor-pointer bg-primary hover:bg-primary/80 transition-colors duration-200 ease-in-out text-text-accent p-2 rounded-lg">
+        <button className="flex flex-2 gap-2 justify-center items-center border-2 border-border cursor-pointer bg-primary hover:bg-primary/80 transition-colors duration-200 ease-in-out text-text-accent p-2 rounded-lg">
           <FaMouse />
           <span>Place Order</span>
         </button>
@@ -219,7 +219,7 @@ const ModalOrder = ({ isOpen, onClose, createOrder }) => {
                 order.orderType === "Dine in"
                   ? "bg-lime-600/10 border-lime-600"
                   : "border-lime-600/20"
-              } border-1 flex-1 gap-2 justify-center items-center text-sm p-4 rounded-xl cursor-pointer transition-colors duration-300 ease-in-out text-text`}
+              } border-2 flex-1 gap-2 justify-center items-center text-sm p-4 rounded-xl cursor-pointer transition-colors duration-300 ease-in-out text-text`}
             >
               <PiPicnicTableBold size={20} />
               <span>Dine in</span>
@@ -230,7 +230,7 @@ const ModalOrder = ({ isOpen, onClose, createOrder }) => {
                 order.orderType === "Take away"
                   ? "bg-violet-600/10 border-violet-600"
                   : "border-violet-600/20"
-              } border-1 flex-1 gap-2 justify-center items-center text-sm p-4 rounded-xl cursor-pointer transition-colors duration-300 ease-in-out text-text`}
+              } border-2 flex-1 gap-2 justify-center items-center text-sm p-4 rounded-xl cursor-pointer transition-colors duration-300 ease-in-out text-text`}
             >
               <RiTakeawayLine size={20} />
               <span>Take away</span>
@@ -260,20 +260,20 @@ const ModalOrder = ({ isOpen, onClose, createOrder }) => {
           </option>
         </Select>
         <div>
-          <label className="block mb-2 mt-3 text-sm font-medium text-[#ababab]">
+          <label className="block mb-2 text-sm font-medium text-[#ababab]">
             Guest
           </label>
           <div className="flex items-center justify-between bg-primary/30 px-4 py-3 rounded-lg">
             <button
               onClick={decrement}
-              className="text-text cursor-pointer rounded-full p-2 border-2 border-background/60 hover:border-primary bg-primary/20 hover:bg-primary/30 transition-colors duration-200 ease-in-out"
+              className="text-text cursor-pointer rounded-full p-2 border-2 border-border hover:border-primary bg-primary/20 hover:bg-primary/30 transition-colors duration-200 ease-in-out"
             >
               <FaMinus size={16} />
             </button>
             <span className="text-text">{order.guestCount} Person</span>
             <button
               onClick={increment}
-              className="text-text cursor-pointer rounded-full p-2 border-2 border-background/60 hover:border-primary bg-primary/20 hover:bg-primary/30 transition-colors duration-200 ease-in-out"
+              className="text-text cursor-pointer rounded-full p-2 border-2 border-border hover:border-primary bg-primary/20 hover:bg-primary/30 transition-colors duration-200 ease-in-out"
             >
               <FaPlus size={16} />
             </button>

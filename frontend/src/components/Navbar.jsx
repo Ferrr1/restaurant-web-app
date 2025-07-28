@@ -11,7 +11,7 @@ const Navbar = ({ head, summary }) => {
     setActiveDropdown((prev) => (prev === type ? null : type));
   };
   return (
-    <div className="py-2 px-8 bg-background shadow-sm text-text border-b-2 border-foreground transition-all duration-300 ease-in-out">
+    <div className="py-2 px-12 bg-surface shadow-sm text-text transition-all duration-300 ease-in-out">
       <div className="flex justify-between items-center">
         <div>
           <h2 className="text-xl text-text font-semibold">{head}</h2>
@@ -27,8 +27,8 @@ const Navbar = ({ head, summary }) => {
               to={"/settings"}
               className={({ isActive }) =>
                 `${
-                  isActive && "bg-secondary text-white"
-                } relative cursor-pointer rounded-full p-2 border-2 border-foreground hover:border-primary group transition-colors duration-200 ease-in-out`
+                  isActive && "bg-surface text-primary border-primary"
+                } relative cursor-pointer rounded-full p-2 border-2 border-border hover:border-primary group transition-colors duration-200 ease-in-out`
               }
             >
               <MdOutlineSettings
@@ -78,7 +78,7 @@ export default Navbar;
 //         {MenuData.map((item, index) => (
 //           <div
 //             key={index}
-//             className="group flex w-full items-center gap-2 px-4 py-2 border-b-2 border-foreground cursor-pointer hover:bg-primary transition-colors duration-200 last:border-b-0"
+//             className="group flex w-full items-center gap-2 px-4 py-2 border-b-2 border-border cursor-pointer hover:bg-primary transition-colors duration-200 last:border-b-0"
 //           >
 //             <span className="text-text group-hover:text-text-accent">
 //               {item.icon}

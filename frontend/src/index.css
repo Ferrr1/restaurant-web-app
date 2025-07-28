@@ -5,50 +5,83 @@
   preferredstrategy: "pseudoelements";
 }
 @theme {
-  --color-primary: var(--primary);
-  --color-secondary: var(--secondary);
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-text: var(--text);
-  --color-text-accent: var(--text-accent);
-  --color-card: var(--card);
+  --color-primary: var(--primary); /* Tombol utama dan highlight */
+  --color-secondary: var(--secondary); /* Warna pendukung utama */
+  --color-background: var(--background); /* Latar halaman utama */
+  --color-surface: var(--surface); /* Untuk card atau komponen berpermukaan */
+  --color-border: var(--border); /* Garis pemisah atau border */
+  --color-text: var(--text); /* Teks utama */
+  --color-text-muted: var(--text-muted); /* Teks sekunder */
+  --color-text-accent: var(--text-accent); /* Teks kontras untuk tombol */
+  --color-success: var(--success); /* Contoh: 'Ready' status */
+  --color-warning: var(--warning); /* Contoh: 'Wait List' */
+  --color-info: var(--info); /* Contoh: 'In Kitchen' */
+  --color-danger: var(--danger); /* Untuk delete icon dll */
   --font-roboto: "Roboto", sans-serif;
 }
 
 @layer base {
   :root {
-    --background: #fff;
+    --background: #f6f8fa;
+    --surface: #ffffff;
     --foreground: #f1f0f4;
-    --text: #000;
-    --card: #ffffff;
+    --border: #e5e7eb;
+    --text: #000000;
+    --text-muted: #6b7280;
   }
 
   .dark {
     --background: #111518;
+    --surface: #1a1a1a;
     --foreground: #283239;
-    --text: #fff;
-    --card: #242426;
+    --border: #3a3a3a;
+    --text: #ffffff;
+    --text-muted: #a1a1aa;
   }
 
   .accent-forest {
-    --primary: #39e079;
-    --secondary: #264532;
-    --text-accent: #c1ffd3;
+    --primary: #1b9f9c;
+    --secondary: #1e7d7a;
+    --text-accent: #ffffff;
+
+    --success: #10b981; /* green-500 */
+    --warning: #f59e0b; /* amber-500 */
+    --info: #3b82f6; /* blue-500 */
+    --danger: #ef4444; /* red-500 */
   }
 
   .accent-ocean {
     --primary: #0c92f2;
-    --secondary: #00406d;
-    --text-accent: #c1eaff;
+    --secondary: #00498d;
+    --text-accent: #ffffff;
+
+    --success: #10b981;
+    --warning: #f59e0b;
+    --info: #3b82f6;
+    --danger: #ef4444;
   }
 
   .accent-purple {
     --primary: #731fc7;
-    --secondary: #362645;
-    --text-accent: #fca1ff;
+    --secondary: #4c2b7a;
+    --text-accent: #ffffff;
+
+    --success: #10b981;
+    --warning: #f59e0b;
+    --info: #3b82f6;
+    --danger: #ef4444;
   }
 
-  /* .dark.accent-forest {
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* .dark.accent-forest {
     --primary: #34c759;
     --secondary: #1e3527;
     --text-accent: #8bc34a;
@@ -65,12 +98,3 @@
     --secondary: #2b2033;
     --text-accent: #b300ff;
   } */
-
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
-  .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-}

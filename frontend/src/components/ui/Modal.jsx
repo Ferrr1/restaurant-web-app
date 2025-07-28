@@ -11,12 +11,12 @@ const Modal = ({ isOpen, onClose, title, children }) => {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
-            className="bg-background rounded-lg shadow-lg w-full max-w-lg mx-4"
+            className="bg-surface rounded-lg shadow-lg w-full max-w-lg mx-4"
           >
-            <div className="flex justify-between items-center px-6 py-4 border-b border-b-foreground">
+            <div className="flex justify-between items-center px-6 py-4 border-b border-b-border">
               <h2 className="text-xl text-text font-semibold">{title}</h2>
               <button
-                className="text-gray-600 p-1.5 text-xl border-2 border-foreground rounded-full hover:text-gray-800 cursor-pointer"
+                className="text-text-muted/60 p-1.5 text-xl border-2 border-border rounded-full hover:text-text-muted cursor-pointer"
                 onClick={onClose}
               >
                 <IoMdClose />

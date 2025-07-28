@@ -11,15 +11,11 @@ export const LogoutButton = () => {
     <>
       <button
         onClick={openModal}
-        className="relative cursor-pointer p-2 border-2 border-foreground hover:border-primary rounded-full group transition-colors duration-200 ease-in-out"
+        className="relative cursor-pointer p-2 border-2 border-border hover:border-primary rounded-full group transition-colors duration-200 ease-in-out"
       >
         <MdLogout size={20} className="group-hover:text-primary" />
       </button>
-      <Modal
-        isOpen={isModalOpen}
-        onClose={closeModal}
-        title="Are you sure you want to logout?"
-      >
+      <Modal isOpen={isModalOpen} onClose={closeModal} title="Logout">
         <div className="flex flex-col gap-4">
           <div>
             <p className="text-sm text-text">

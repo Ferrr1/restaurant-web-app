@@ -11,7 +11,7 @@ const Sidebar = () => {
     <div
       className={`${
         isCollapsed ? "w-20" : "w-72"
-      } fixed top-0 left-0 bottom-0 bg-background text-text shadow-md border-r-2 border-foreground transition-all duration-300 ease-in-out flex flex-col`}
+      } fixed top-0 left-0 bottom-0 bg-background text-text shadow-md border-r-2 border-border transition-all duration-300 ease-in-out flex flex-col`}
     >
       {/* Logo */}
       <div className="flex justify-center">

@@ -4,23 +4,21 @@ const Button = ({ children, variant = "custom", ...props }) => {
   switch (variant) {
     case "delete":
       className =
-        "text-[1rem] px-4 py-2 bg-red-600/10 border-2 border-red-700 text-red-600 rounded-md hover:bg-red-700/10 cursor-pointer transition-colors duration-300 ease-in-out";
+        "flex flex-1 gap-2 justify-center items-center border-2 border-red-700 cursor-pointer bg-red-600/10 hover:bg-red-700/10 transition-colors duration-200 ease-in-out text-red-600 p-2 rounded-lg";
       break;
     case "confirm":
       className =
-        "text-[1rem] px-4 py-2 bg-green-600/10 border-2 border-green-700 text-green-600 rounded-md hover:bg-green-700/10 cursor-pointer transition-colors duration-300 ease-in-out";
+        "flex flex-1 gap-2 justify-center items-center border-2 border-green-700 cursor-pointer bg-green-600/10 hover:bg-green-700/10 transition-colors duration-200 ease-in-out text-green-600 p-2 rounded-lg";
       break;
     default:
       className =
-        "text-[1rem] px-4 py-2 bg-primary/10 border-2 border-primary/80 text-primary rounded-md hover:bg-primary/20 cursor-pointer transition-colors duration-300 ease-in-out";
+        "flex flex-1 gap-2 justify-center items-center border-2 border-border cursor-pointer bg-primary hover:bg-primary/80 transition-colors duration-200 ease-in-out text-text-accent p-2 rounded-lg";
   }
 
   return (
-    <>
-      <button {...props} className={className}>
-        {children}
-      </button>
-    </>
+    <button {...props} className={className}>
+      {children}
+    </button>
   );
 };
 

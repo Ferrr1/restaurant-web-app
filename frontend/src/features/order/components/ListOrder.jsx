@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { DataOrder } from "../../data/constants";
-import Heading from "../ui/Heading";
+import { DataOrder } from "../../../data/constants";
+import Heading from "../../../components/ui/Heading";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { useScrollNavigator } from "../../hooks/useScrollNavigator";
-import { getFilterCountsByKey } from "../../utils/FilterCounts";
+import { useScrollNavigator } from "../../../hooks/useScrollNavigator";
+import { getFilterCountsByKey } from "../../../utils/FilterCounts";
 
 const ListOrder = () => {
   const { scrollRef, handleScroll } = useScrollNavigator();
@@ -18,8 +18,8 @@ const ListOrder = () => {
       count: filterCounts["All"] || 0,
       style:
         activeFilter === "All"
-          ? "bg-sky-600/10 border-1 border-sky-600 text-text"
-          : `border-1 border-sky-600/20 text-text`,
+          ? "bg-sky-600/10 border-2 border-sky-600 text-text"
+          : `border-2 border-sky-600/20 text-text`,
       countStyle: "bg-sky-600 text-white",
     },
     {
@@ -27,8 +27,8 @@ const ListOrder = () => {
       count: filterCounts["Dine In"] || 0,
       style:
         activeFilter === "Dine In"
-          ? "bg-lime-600/10 border-1 border-lime-600 text-text"
-          : `border-1 border-lime-600/20 text-text`,
+          ? "bg-lime-600/10 border-2 border-lime-600 text-text"
+          : `border-2 border-lime-600/20 text-text`,
       countStyle: "bg-lime-600 text-white",
     },
     {
@@ -36,8 +36,8 @@ const ListOrder = () => {
       count: filterCounts["Wait List"] || 0,
       style:
         activeFilter === "Wait List"
-          ? "bg-amber-600/10 border-1 border-amber-600 text-text"
-          : `border-1 border-amber-600/20 text-text`,
+          ? "bg-amber-600/10 border-2 border-amber-600 text-text"
+          : `border-2 border-amber-600/20 text-text`,
       countStyle: "bg-amber-600 text-white",
     },
     {
@@ -45,8 +45,8 @@ const ListOrder = () => {
       count: filterCounts["Take Away"] || 0,
       style:
         activeFilter === "Take Away"
-          ? "bg-violet-600/10 border-1 border-violet-600 text-text"
-          : `border-1 border-violet-600/20 text-text`,
+          ? "bg-violet-600/10 border-2 border-violet-600 text-text"
+          : `border-2 border-violet-600/20 text-text`,
       countStyle: "bg-violet-600 text-white",
     },
     {
@@ -54,8 +54,8 @@ const ListOrder = () => {
       count: filterCounts["Served"] || 0,
       style:
         activeFilter === "Served"
-          ? "bg-green-600/10 border-1 border-green-600 text-text"
-          : `border-1 border-green-600/20 text-text`,
+          ? "bg-green-600/10 border-2 border-green-600 text-text"
+          : `border-2 border-green-600/20 text-text`,
       countStyle: "bg-green-600 text-white",
     },
   ];
@@ -109,13 +109,13 @@ const ListOrder = () => {
         <div className="flex gap-2">
           <button
             onClick={() => handleScroll("left")}
-            className="text-text cursor-pointer rounded-full p-2 border-2 border-background/60 hover:border-primary bg-primary/20 hover:bg-primary/30 transition-colors duration-200 ease-in-out"
+            className="text-text cursor-pointer rounded-full p-2 border-2 border-border hover:border-primary bg-primary/20 hover:bg-primary/30 transition-colors duration-200 ease-in-out"
           >
             <IoIosArrowBack size={20} />
           </button>
           <button
             onClick={() => handleScroll("right")}
-            className="text-text cursor-pointer rounded-full p-2 border-2 border-background/60 hover:border-primary bg-primary/20 hover:bg-primary/30 transition-colors duration-200 ease-in-out"
+            className="text-text cursor-pointer rounded-full p-2 border-2 border-border hover:border-primary bg-primary/20 hover:bg-primary/30 transition-colors duration-200 ease-in-out"
           >
             <IoIosArrowForward size={20} />
           </button>
