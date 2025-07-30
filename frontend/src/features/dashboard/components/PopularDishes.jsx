@@ -61,15 +61,75 @@ const PopularDishes = () => {
       image: MiePangsit,
       ordered: 0,
     },
+    {
+      id: 11,
+      name: "Mangga",
+      image: MiePangsit,
+      ordered: 0,
+    },
+    {
+      id: 12,
+      name: "Durian",
+      image: MiePangsit,
+      ordered: 0,
+    },
+    {
+      id: 13,
+      name: "Rambutan",
+      image: MiePangsit,
+      ordered: 0,
+    },
+    {
+      id: 14,
+      name: "Manggis",
+      image: MiePangsit,
+      ordered: 0,
+    },
+    {
+      id: 15,
+      name: "Leci",
+      image: MiePangsit,
+      ordered: 0,
+    },
+    {
+      id: 16,
+      name: "Duku",
+      image: MiePangsit,
+      ordered: 0,
+    },
+    {
+      id: 17,
+      name: "Langsat",
+      image: MiePangsit,
+      ordered: 0,
+    },
+    {
+      id: 18,
+      name: "Sawo",
+      image: MiePangsit,
+      ordered: 0,
+    },
+    {
+      id: 19,
+      name: "Gondokusuman",
+      image: MiePangsit,
+      ordered: 0,
+    },
+    {
+      id: 20,
+      name: "Jambu Bol",
+      image: MiePangsit,
+      ordered: 0,
+    },
   ];
   return (
-    <div className="text-text">
+    <div className="text-text bg-surface rounded-xl p-4">
       <h1 className="text-lg font-semibold mb-2">Popular Dishes</h1>
       <div className="overflow-y-scroll max-h-[calc(100vh-250px)] flex flex-col gap-2 scrollbar scrollbar-w-1 scrollbar-h-1 scrollbar-thumb-primary scrollbar-track-background-background">
         {PopularDishData.map((item) => (
           <div
             key={item.id}
-            className="flex items-center gap-4 bg-primary/20 rounded-lg py-2 px-4"
+            className="flex h-full items-center gap-4 bg-primary/20 rounded-lg py-2 px-4"
           >
             <h1 className="text-text font-bold text-xl mr-2">
               {item.id < 10 ? `0${item.id}` : item.id}
@@ -84,7 +144,7 @@ const PopularDishes = () => {
                 {item.name}
               </h1>
               <p className="text-text text-sm font-semibold mt-1">
-                <span className="text-text-muted">Orders: </span>
+                <span className="text-text-muted">Ordered: </span>
                 {item.ordered}
               </p>
             </div>

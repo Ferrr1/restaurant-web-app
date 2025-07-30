@@ -23,7 +23,7 @@ const RecentOrders = () => {
     },
   };
   return (
-    <div className="flex flex-col max-h-[calc(100vh-250px)] h-full gap-2 text-text p-4 bg-surface rounded-xl">
+    <div className="flex flex-col max-h-[calc(100vh-432px)] h-full gap-2 text-text p-4 bg-surface rounded-xl">
       <h1 className="text-lg font-semibold">Recent Orders</h1>
       <Input placeholder="Search" className={"w-full mb-2"} />
       <div className="flex flex-col gap-2 overflow-y-scroll scrollbar-hide">
@@ -47,7 +47,7 @@ const RecentOrders = () => {
                         <IoFastFoodOutline size={20} />
                         <p>{`${item.itemCount}`}</p>
                       </span>
-                      <p className="text-xs text-text-muted">{`Time: ${item.time}`}</p>
+                      <p className="text-xs text-text-muted">{`${item.time}`}</p>
                     </div>
                   </div>
                 </div>
