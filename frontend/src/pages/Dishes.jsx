@@ -19,7 +19,7 @@ const Dishes = () => {
             />
           </div>
         </div>
-        <div className="flex-[3] min-w-0 p-4 bg-surface rounded-xl">
+        <div className="flex-[3] min-w-0 h-full p-4 bg-surface rounded-xl">
           <ManageDishes activeFilter={activeFilter} />
         </div>
       </div>

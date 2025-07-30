@@ -5,15 +5,13 @@ import { useState } from "react";
 import Button from "../../../components/ui/Button";
 import ModalEditDishes from "./ModalEditDishes";
 import ModalDeleteDishes from "./ModalDeleteDishes";
+import { CiEdit } from "react-icons/ci";
+import { AiOutlineDelete } from "react-icons/ai";
 
 const DishesGridView = ({ data }) => {
-  const [dropdown, setDropdown] = useState(false);
   const [isOpen, setIsOpen] = useState(null);
   const onOpenModal = (type) => setIsOpen(type);
   const onClose = () => setIsOpen(null);
-
-  const toggleDropdown = (id) =>
-    setDropdown((prev) => (prev === id ? null : id));
 
   return (
     <div className="flex flex-wrap justify-center gap-4 mt-4">
@@ -35,28 +33,20 @@ const DishesGridView = ({ data }) => {
               <span className="text-[1rem]">
                 {item.price === 0 ? "Free" : currencyIDR(item.price)}
               </span>
-              <button
-                onClick={() => toggleDropdown(item.id)}
-                className="relative cursor-pointer p-2 border-2 border-border hover:bg-background rounded-full"
-              >
-                <GoKebabHorizontal size={18} className="text-primary" />
-                {dropdown === item.id && (
-                  <div className="absolute z-2 top-0 -right-24 flex flex-col gap-2 p-2 bg-surface border-2 border-border rounded-lg">
-                    <Button
-                      onClick={() => onOpenModal("edit")}
-                      variant="confirm"
-                    >
-                      Edit
-                    </Button>
-                    <Button
-                      onClick={() => onOpenModal("delete")}
-                      variant="delete"
-                    >
-                      Delete
-                    </Button>
-                  </div>
-                )}
-              </button>
+              <div className="flex gap-2 items-center">
+                <button
+                  onClick={() => onOpenModal("edit")}
+                  className="cursor-pointer p-2 border-2 border-border hover:bg-background rounded-full"
+                >
+                  <CiEdit size={18} className="text-primary" />
+                </button>
+                <button
+                  onClick={() => onOpenModal("delete")}
+                  className="cursor-pointer p-2 border-2 border-border hover:bg-background rounded-full"
+                >
+                  <AiOutlineDelete size={18} className="text-red-600" />
+                </button>
+              </div>
             </div>
           </div>
         );

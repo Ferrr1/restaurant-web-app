@@ -27,12 +27,12 @@ const ManageDishes = ({ activeFilter }) => {
     dish.name.toLowerCase().includes(search.toLowerCase())
   );
   return (
-    <div>
+    <>
       <Heading
         text="Manage Dishes"
         className={"flex justify-between items-center mb-2"}
       >
-        <div className="flex gap-2 items-center">
+        <div className="flex gap-2 items-center ">
           <Input
             onChange={(e) => setSearch(e.target.value)}
             className="w-full md:w-80 sm:w-60 text-text"
@@ -81,12 +81,14 @@ const ManageDishes = ({ activeFilter }) => {
               <DishesListView data={searchDishes} />
             )
           ) : (
-            <p className="text-center text-text-muted">No Dishes Found</p>
+            <div className="w-full">
+              <p className="text-center text-text-muted">No Dishes Found</p>
+            </div>
           )}
         </div>
       </div>
       <ModalAddDishes isOpen={isModalOpen} onClose={closeModal} />
-    </div>
+    </>
   );
 };
 
