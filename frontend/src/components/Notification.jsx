@@ -32,7 +32,7 @@ const ShowNotification = () => {
     time: `Time Notification ${i + 1}`,
   }));
   return (
-    <div className="absolute rounded-md z-10 scrollbar-w-1 scrollbar scrollbar-thumb-primary scrollbar-track-slate-300 overflow-y-auto flex flex-col top-15 left-0 w-72 max-h-72 bg-surface shadow-sm text-text transition-all duration-300 ease-in-out">
+    <div className="absolute rounded-md z-10 scrollbar-w-1 scrollbar scrollbar-thumb-primary scrollbar-track-background overflow-y-auto flex flex-col top-15 left-0 w-72 max-h-72 bg-surface shadow-sm text-text transition-all duration-300 ease-in-out">
       {dummyNotif.map((notif) => (
         <div
           key={notif.id}
