@@ -81,7 +81,7 @@ const DishesCategory = ({ activeFilter, setActiveFilter }) => {
           </button>
         ))}
       </div>
-      <div className="flex justify-center pt-8 bgsura">
+      <div className="flex justify-center pt-8">
         <button
           onClick={openModal}
           className="flex flex-2 gap-2 justify-center items-center border-2 border-border cursor-pointer bg-primary hover:bg-primary/80 transition-colors duration-200 ease-in-out text-text-accent p-2 rounded-lg"
