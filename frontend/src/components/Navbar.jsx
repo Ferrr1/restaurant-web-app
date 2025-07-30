@@ -73,7 +73,7 @@ export default Navbar;
 //     },
 //   ];
 //   return (
-//     <div className="absolute rounded-md z-10 overflow-y-auto flex flex-col top-18 left-0 w-52 max-h-72 bg-card shadow-sm text-text scrollbar-w-1 scrollbar scrollbar-thumb-primary scrollbar-track-slate-300 transition-all duration-300 ease-in-out">
+//     <div className="absolute rounded-md z-10 overflow-y-auto flex flex-col top-18 left-0 w-52 max-h-72 bg-card shadow-sm text-text scrollbar-w-1 scrollbar scrollbar-thumb-primary scrollbar-track-background transition-all duration-300 ease-in-out">
 //       <div className="flex flex-col items-start">
 //         {MenuData.map((item, index) => (
 //           <div

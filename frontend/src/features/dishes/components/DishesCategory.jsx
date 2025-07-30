@@ -52,7 +52,7 @@ const DishesCategory = ({ activeFilter, setActiveFilter }) => {
         text="Dishes Category"
         className={"flex justify-between items-center mb-2"}
       />
-      <div className="flex flex-col gap-2 max-h-[calc(100vh-250px)] overflow-y-auto scrollbar scrollbar-w-1 scrollbar-h-1 scrollbar-thumb-primary scrollbar-track-slate-300">
+      <div className="flex flex-col gap-2 max-h-[calc(100vh-250px)] overflow-y-auto scrollbar scrollbar-w-1 scrollbar-h-1 scrollbar-thumb-primary scrollbar-track-background">
         {FilterDishes.map((item, index) => (
           <button
             onClick={() => toggleFilter(item.type)}
