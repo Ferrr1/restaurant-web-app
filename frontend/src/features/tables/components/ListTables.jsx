@@ -4,8 +4,8 @@ import { CustomerData, DataTables } from "../../../data/constants";
 import { FaCheck, FaPlus } from "react-icons/fa6";
 import { useScrollNavigator } from "../../../hooks/useScrollNavigator";
 import { Input } from "../../../components/ui/Input";
-import { BiTable } from "react-icons/bi";
 import { IoMdCall, IoMdPeople } from "react-icons/io";
+import { PiPicnicTableBold } from "react-icons/pi";
 
 const ListTables = ({ activeFilter, setActiveFilter }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -88,10 +88,10 @@ const ListTables = ({ activeFilter, setActiveFilter }) => {
               <span className="text-primary text-center max-w-16 bg-primary/20 px-2 py-4 rounded-lg">
                 On Dine
               </span>
-              <div className="flex flex-col">
+              <div className="flex flex-col gap-2">
                 <p>Testing</p>
                 <div className="flex gap-1.5">
-                  <BiTable size={20} className="text-text-muted" />
+                  <PiPicnicTableBold size={20} className="text-text-muted" />
                   <p className="text-sm text-text">2</p>
                   <IoMdPeople size={20} className="text-text-muted" />
                   <p className="text-sm text-text">2</p>
@@ -102,8 +102,8 @@ const ListTables = ({ activeFilter, setActiveFilter }) => {
                 </div>
               </div>
             </div>
-            <div>
-              <p className="text-sm text-text-muted">Dinner</p>
+            <div className="flex flex-col">
+              <p className="text-sm text-text-muted text-right">Dinner</p>
               <div className="flex items-center justify-center gap-1">
                 <span className="p-0.5 bg-green-600 rounded-full">
                   <FaCheck size={12} className="text-text-accent" />

@@ -6,7 +6,7 @@ import { TfiMenuAlt } from "react-icons/tfi";
 import ModalAddDishes from "../../dishes/components/ModalAddDishes";
 import { Input } from "../../../components/ui/Input";
 import { FaPlus } from "react-icons/fa6";
-import TableLayout from "./TableLayout";
+import { TableLayout } from "./TableLayout";
 
 const ManageTables = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -31,7 +31,7 @@ const ManageTables = () => {
           >
             <span>Main Dining</span>
           </button>
-          <button
+          {/* <button
             onClick={openModal}
             className="flex flex-2 gap-2 justify-center items-center text-nowrap border-2 border-border cursor-pointer bg-primary hover:bg-primary/80 transition-colors duration-200 ease-in-out text-text-accent py-2 px-4 rounded-lg"
           >
@@ -42,7 +42,7 @@ const ManageTables = () => {
             className="flex flex-2 gap-2 justify-center items-center text-nowrap border-2 border-border cursor-pointer bg-primary hover:bg-primary/80 transition-colors duration-200 ease-in-out text-text-accent py-2 px-4 rounded-lg"
           >
             <span>Outdoor</span>
-          </button>
+          </button> */}
         </div>
       </Heading>
       <div className="flex gap-2 items-center mb-4">
@@ -53,26 +53,8 @@ const ManageTables = () => {
         <span className="rounded-full bg-orange-600 w-[0.6rem] h-[0.6rem]"></span>
         <p className="text-sm text-text">On Dine</p>
       </div>
-      <div className="bg-border/50 rounded-lg p-4 text-text">
-        <div className="flex justify-between items-center">
-          <h1>DishesCategor (19)</h1>
-          <div>
-            <button
-              className={`p-2 rounded-l-lg border-2 border-border text-text cursor-pointer transition-colors duration-200 ease-in-out`}
-            >
-              <CiGrid41 size={20} />
-            </button>
-            <button
-              className={`p-2 rounded-r-lg border-2 border-primary text-primary
-                   cursor-pointer transition-colors duration-200 ease-in-out`}
-            >
-              <TfiMenuAlt size={20} />
-            </button>
-          </div>
-        </div>
-        {tables.map((table) => (
-          <TableLayout key={table.id} {...table} />
-        ))}
+      <div className="bg-border/50 rounded-lg p-6 text-text">
+        <TableLayout tables={tables} />
       </div>
       {/* <ModalAddDishes isOpen={isModalOpen} onClose={closeModal} /> */}
     </>
