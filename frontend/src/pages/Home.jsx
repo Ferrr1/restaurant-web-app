@@ -17,7 +17,7 @@ export const Home = () => {
             <SummaryCard />
             <RecentOrders />
           </div>
-          <div className="flex-1/3 bg-surface rounded-xl p-4">
+          <div className="flex-1/3">
             <PopularDishes />
           </div>
         </div>
