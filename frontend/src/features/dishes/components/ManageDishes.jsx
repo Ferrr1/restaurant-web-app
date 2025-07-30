@@ -35,7 +35,7 @@ const ManageDishes = ({ activeFilter }) => {
         <div className="flex gap-2 items-center ">
           <Input
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full md:w-80 sm:w-60 text-text"
+            className="w-full text-text rounded-lg"
             placeholder="Search Dishes"
           />
           <button

@@ -10,7 +10,7 @@ export const Input = ({ className, ...props }) => {
         name="name"
         {...props}
         className={cn(
-          "border-2 p-2 rounded-md border-border placeholder:text-text/30 focus:outline-none focus:border-primary transition-colors duration-300 ease-in-out",
+          "border-2 p-2 rounded-md border-border placeholder:text-sm placeholder:text-text/30 focus:outline-none focus:border-primary transition-colors duration-300 ease-in-out",
           className
         )}
       />

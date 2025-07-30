@@ -2,7 +2,7 @@ import { BiCart, BiTable, BiDish, BiHome } from "react-icons/bi";
 import MiePangsit from "../assets/images/food/filter/soups.jpg";
 import MieGoreng from "../assets/images/food/filter/mie goreng.png";
 
-const BottomNavItems = [
+export const BottomNavItems = [
   {
     name: "Home",
     link: "/",
@@ -25,7 +25,7 @@ const BottomNavItems = [
   },
 ];
 
-const DataOrder = [
+export const DataOrder = [
   {
     id: "#ODR001",
     table: "01",
@@ -98,7 +98,7 @@ const DataOrder = [
   },
 ];
 
-const FoodData = [
+export const FoodData = [
   {
     id: 1,
     type: "Beef",
@@ -185,7 +185,146 @@ const FoodData = [
   },
 ];
 
-const PaymentMethods = ["Cash", "Debit"];
-const OrderTypes = ["Dine In", "Take Away"];
+export const DataTables = [
+  {
+    id: "TBL001",
+    name: "Table 01",
+    occupied: 2,
+    maxCapacity: 4,
+    status: "Dine In",
+    reserved: false,
+    free: true,
+  },
+  {
+    id: "TBL002",
+    name: "Table 02",
+    occupied: 3,
+    maxCapacity: 4,
+    status: "Reserved",
+    reserved: true,
+    free: false,
+  },
+  {
+    id: "TBL003",
+    name: "Table 03",
+    occupied: 1,
+    maxCapacity: 2,
+    status: "Free",
+    reserved: false,
+    free: true,
+  },
+  {
+    id: "TBL004",
+    name: "Table 04",
+    occupied: 0,
+    maxCapacity: 6,
+    status: "Reserved",
+    reserved: true,
+    free: false,
+  },
+  {
+    id: "TBL005",
+    name: "Table 05",
+    occupied: 4,
+    maxCapacity: 8,
+    status: "Dine In",
+    reserved: false,
+    free: true,
+  },
+];
 
-export { BottomNavItems, DataOrder, FoodData, OrderTypes, PaymentMethods };
+export const CustomerData = [
+  {
+    name: "John Doe",
+    reservationTime: null,
+    phoneNumber: "123-456-7890",
+    table: "TBL001",
+  },
+  {
+    name: "Jane Smith",
+    reservationTime: "6:00 PM",
+    phoneNumber: "987-654-3210",
+    table: "TBL003",
+  },
+  {
+    name: "Alice Johnson",
+    reservationTime: null,
+    phoneNumber: "555-555-5555",
+    table: "TBL002",
+  },
+  {
+    name: "John Doe",
+    reservationTime: null,
+    phoneNumber: "123-456-7890",
+    table: "TBL001",
+  },
+  {
+    name: "Jane Smith",
+    reservationTime: "6:00 PM",
+    phoneNumber: "987-654-3210",
+    table: "TBL003",
+  },
+  {
+    name: "Alice Johnson",
+    reservationTime: null,
+    phoneNumber: "555-555-5555",
+    table: "TBL002",
+  },
+  {
+    name: "John Doe",
+    reservationTime: null,
+    phoneNumber: "123-456-7890",
+    table: "TBL001",
+  },
+  {
+    name: "Jane Smith",
+    reservationTime: "6:00 PM",
+    phoneNumber: "987-654-3210",
+    table: "TBL003",
+  },
+  {
+    name: "Alice Johnson",
+    reservationTime: null,
+    phoneNumber: "555-555-5555",
+    table: "TBL002",
+  },
+  {
+    name: "John Doe",
+    reservationTime: null,
+    phoneNumber: "123-456-7890",
+    table: "TBL001",
+  },
+  {
+    name: "Jane Smith",
+    reservationTime: "6:00 PM",
+    phoneNumber: "987-654-3210",
+    table: "TBL003",
+  },
+  {
+    name: "Alice Johnson",
+    reservationTime: null,
+    phoneNumber: "555-555-5555",
+    table: "TBL002",
+  },
+  {
+    name: "John Doe",
+    reservationTime: null,
+    phoneNumber: "123-456-7890",
+    table: "TBL001",
+  },
+  {
+    name: "Jane Smith",
+    reservationTime: "6:00 PM",
+    phoneNumber: "987-654-3210",
+    table: "TBL003",
+  },
+  {
+    name: "Alice Johnson",
+    reservationTime: null,
+    phoneNumber: "555-555-5555",
+    table: "TBL002",
+  },
+];
+
+export const PaymentMethods = ["Cash", "Debit"];
+export const OrderTypes = ["Dine In", "Take Away"];
