@@ -3,67 +3,153 @@ import { PiChairFill } from "react-icons/pi";
 import { cn } from "../../../utils/cn";
 
 // Kursi
-const Chair = ({ occupied }) => {
+const Chair = ({ occupied = false, styles }) => {
   return (
     <div
       className={cn(
-        "w-4 h-6 flex items-center justify-center rounded-sm",
-        occupied ? "text-primary" : "text-muted-foreground",
+        "flex items-center justify-center rounded-sm",
+        occupied ? styles.chair : "text-muted-foreground",
         "transition-colors"
       )}
     >
-      <PiChairFill size={20} />
+      <PiChairFill size={28} />
     </div>
   );
 };
 
 // Meja
-const Table = ({ id, type = "normal", occupied = 0, capacity = 4 }) => {
-  const isBig = type === "big";
-
+const Table8 = ({ name, guestCount, seats, styles }) => {
   return (
-    <div className="flex flex-col items-center gap-2">
-      <div
-        className={cn(
-          "relative bg-primary/30 rounded-md shadow-md border border-border p-4",
-          isBig ? "w-[280px] h-[160px]" : "w-40 h-28",
-          "flex flex-col justify-center"
-        )}
-      >
-        {/* Bagian Atas: Kursi */}
-        <div className="flex justify-center gap-1">
-          {Array.from({ length: capacity / 2 }).map((_, idx) => (
-            <Chair key={idx} occupied={idx < occupied / 2} />
-          ))}
-        </div>
-
-        {/* Tengah: Meja */}
-        <div className="text-center">
-          <div className="font-semibold text-text">Table {id}</div>
-          <div className="flex items-center justify-center gap-1 text-sm text-text/80">
-            <IoMdPeople size={16} />
-            {occupied}
+    <>
+      <div className="relative m-8  w-36 h-24 flex flex-col items-center gap-2">
+        <div
+          className={cn(
+            "flex flex-col items-center px-10 py-8 rounded-xl",
+            styles.table
+          )}
+        >
+          <h1 className="text-text text-sm text-nowrap">{name}</h1>
+          <div className="flex items-center gap-2">
+            <IoMdPeople />
+            <span className="text-xs">{guestCount}</span>
           </div>
         </div>
-
-        {/* Bawah: Kursi */}
-        <div className="flex justify-center gap-1">
-          {Array.from({ length: capacity / 2 }).map((_, idx) => (
-            <Chair key={idx} occupied={idx < occupied / 2} />
-          ))}
+        {/* Kursi Atas */}
+        <div className="absolute -top-8 flex gap-2">
+          <Chair occupied={seats[0]} styles={styles} />
+          <Chair occupied={seats[1]} styles={styles} />
+          <Chair occupied={seats[2]} styles={styles} />
         </div>
+
+        {/* Kursi Kiri */}
+        <div className="absolute -left-6 top-[2rem] -rotate-90 flex gap-2">
+          <Chair occupied={seats[3]} styles={styles} />
+        </div>
+        {/* Kursi Kanan */}
+        <div className="absolute -right-6 top-[2rem] rotate-90 flex gap-2">
+          <Chair occupied={seats[4]} styles={styles} />
+        </div>
+
+        {/* Kursi Bawah */}
+        <div className="absolute -bottom-9 flex gap-2 rotate-180">
+          <Chair occupied={seats[5]} styles={styles} />
+          <Chair occupied={seats[6]} styles={styles} />
+          <Chair occupied={seats[7]} styles={styles} />
+        </div>
+      </div>
+    </>
+  );
+};
+
+const Table4 = ({ name, guestCount, seats, styles }) => {
+  return (
+    <div className="relative m-8  w-36 h-24 flex flex-col items-center gap-2">
+      <div
+        className={cn(
+          "flex flex-col items-center px-8 py-8 rounded-xl",
+          styles.table
+        )}
+      >
+        <h1 className="text-text text-sm text-nowrap">{name}</h1>
+        <div className="flex items-center gap-2">
+          <IoMdPeople />
+          <span className="text-xs">{guestCount}</span>
+        </div>
+      </div>
+      {/* Kursi Atas */}
+      <div className="absolute -top-8 flex gap-2">
+        <Chair occupied={seats[0]} styles={styles} />
+      </div>
+
+      {/* Kursi Kiri */}
+      <div className="absolute -left-4 top-[2rem] -rotate-90 flex gap-2">
+        <Chair occupied={seats[1]} styles={styles} />
+      </div>
+      {/* Kursi Kanan */}
+      <div className="absolute -right-4 top-[2rem] rotate-90 flex gap-2">
+        <Chair occupied={seats[2]} styles={styles} />
+      </div>
+
+      {/* Kursi Bawah */}
+      <div className="absolute -bottom-9 flex gap-2 rotate-180">
+        <Chair occupied={seats[3]} styles={styles} />
       </div>
     </div>
   );
 };
 
 // Layout semua meja
-export const TableLayout = ({ tables = [] }) => {
+export const TableLayout = ({ tables }) => {
+  const generateSeats = (occupiedCount, totalSeats) => {
+    return Array.from({ length: totalSeats }, (_, i) => i < occupiedCount);
+  };
+  const getStyles = (status) => {
+    switch (status) {
+      case "Available":
+        return {
+          chair: "text-purple-400",
+          table: "bg-purple-400/20",
+        };
+      case "Reserved":
+        return {
+          chair: "text-teal-400",
+          table: "bg-teal-400/20",
+        };
+      case "Dine In":
+        return {
+          chair: "text-orange-400",
+          table: "bg-orange-400/20",
+        };
+      default:
+        return {
+          chair: "text-teal-400",
+          table: "bg-teal-400/20",
+        };
+    }
+  };
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-      {tables.map((table) => (
-        <Table key={table.id} {...table} />
-      ))}
+    <div className="flex flex-wrap justify-center gap-12">
+      {tables.map((table) => {
+        const seats = generateSeats(table.occupied, table.capacity);
+        const styles = getStyles(table.status);
+        return seats.length > 4 ? (
+          <Table8
+            key={table.id}
+            name={table.name}
+            guestCount={table.occupied}
+            styles={styles}
+            seats={seats}
+          />
+        ) : (
+          <Table4
+            key={table.id}
+            name={table.name}
+            guestCount={table.occupied}
+            styles={styles}
+            seats={seats}
+          />
+        );
+      })}
     </div>
   );
 };
