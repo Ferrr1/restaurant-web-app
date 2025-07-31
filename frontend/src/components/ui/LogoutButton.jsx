@@ -26,7 +26,7 @@ export const LogoutButton = () => {
             <Button onClick={closeModal} variant="delete">
               Cancel
             </Button>
-            <Button variant="confirm">Confirm</Button>
+            <Button  variant="confirm">Confirm</Button>
           </div>
         </div>
       </Modal>

@@ -5,7 +5,7 @@ import MieGoreng from "../assets/images/food/filter/mie goreng.png";
 const BottomNavItems = [
   {
     name: "Home",
-    link: "/",
+    link: "/dashboard",
     icon: BiHome,
   },
   {
