@@ -1,19 +1,37 @@
 import { cn } from "../../utils/cn";
 
-export const Input = ({ className, ...props }) => {
+export const Input = ({ className, IconStart, IconEnd, ...props }) => {
+  const hasStartIcon = !!IconStart;
+  const hasEndIcon = !!IconEnd;
+
   return (
     <div>
-      <label htmlFor={props.name}>
-        <span className="text-sm text-text/50">{props.label}</span>
-      </label>
-      <input
-        name="name"
-        {...props}
-        className={cn(
-          "border-2 p-2 rounded-md border-border placeholder:text-text/30 focus:outline-none focus:border-primary transition-colors duration-300 ease-in-out",
-          className
+      {props.label && (
+        <label htmlFor={props.name}>
+          <span className="text-sm text-text/50">{props.label}</span>
+        </label>
+      )}
+      <div className="relative">
+        {hasStartIcon && (
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-text/50">
+            <IconStart className="w-5 h-5" />
+          </span>
         )}
-      />
+        {hasEndIcon && (
+          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-text/50">
+            <IconEnd className="w-5 h-5" />
+          </span>
+        )}
+        <input
+          {...props}
+          className={cn(
+            "border-2 p-2 rounded-md border-border placeholder:text-text/30 focus:outline-none focus:border-primary transition-colors duration-300 ease-in-out w-full",
+            hasStartIcon && "pl-10",
+            hasEndIcon && "pr-10",
+            className
+          )}
+        />
+      </div>
     </div>
   );
 };
