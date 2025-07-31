@@ -11,7 +11,7 @@ const Modal = ({ isOpen, onClose, title, children }) => {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
-            className="bg-surface rounded-lg shadow-lg w-full max-w-lg mx-4"
+            className="bg-surface rounded-lg mb-20 lg:mb-0 shadow-lg w-full max-w-lg max-h-[calc(100vh-10rem)] overflow-y-auto scrollbar-hide mx-4"
           >
             <div className="flex justify-between items-center px-6 py-4 border-b border-b-border">
               <h2 className="text-xl text-text font-semibold">{title}</h2>
@@ -22,7 +22,7 @@ const Modal = ({ isOpen, onClose, title, children }) => {
                 <IoMdClose />
               </button>
             </div>
-            <div className="p-6">{children}</div>
+            <div className="px-6 py-4">{children}</div>
           </motion.div>
         </div>
       )}

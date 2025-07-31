@@ -123,9 +123,9 @@ const PopularDishes = () => {
     },
   ];
   return (
-    <div className="text-text bg-surface rounded-xl p-4">
+    <div className="text-text bg-surface rounded-xl p-4 h-full">
       <h1 className="text-lg font-semibold mb-2">Popular Dishes</h1>
-      <div className="overflow-y-scroll max-h-[calc(100vh-250px)] flex flex-col gap-2 scrollbar scrollbar-w-1 scrollbar-h-1 scrollbar-thumb-primary scrollbar-track-background-background">
+      <div className="overflow-y-scroll overflow-x-hidden flex flex-col gap-2 scrollbar scrollbar-w-1 scrollbar-h-1 scrollbar-thumb-primary scrollbar-track-background-background">
         {PopularDishData.map((item) => (
           <div
             key={item.id}
