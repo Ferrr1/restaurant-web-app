@@ -16,6 +16,7 @@ export const Input = ({ className, IconStart, IconEnd, ...props }) => {
           <span className="absolute left-3 top-1/2 -translate-y-1/2 text-text/50">
             <IconStart className="w-5 h-5" />
           </span>
+
         )}
         {hasEndIcon && (
           <span className="absolute right-3 top-1/2 -translate-y-1/2 text-text/50">

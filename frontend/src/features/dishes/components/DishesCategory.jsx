@@ -52,7 +52,7 @@ const DishesCategory = ({ activeFilter, setActiveFilter }) => {
         text="Dishes Category"
         className={"flex justify-between items-center mb-2"}
       />
-      <div className="flex flex-col gap-2 max-h-[calc(100vh-250px)] overflow-y-auto scrollbar scrollbar-w-1 scrollbar-h-1 scrollbar-thumb-primary scrollbar-track-slate-300">
+      <div className="flex flex-col gap-2 max-h-[calc(100vh-250px)] overflow-y-auto scrollbar scrollbar-w-1 scrollbar-h-1 scrollbar-thumb-primary scrollbar-track-background">
         {FilterDishes.map((item, index) => (
           <button
             onClick={() => toggleFilter(item.type)}
@@ -81,7 +81,7 @@ const DishesCategory = ({ activeFilter, setActiveFilter }) => {
           </button>
         ))}
       </div>
-      <div className="flex justify-center pt-8 bgsura">
+      <div className="flex justify-center pt-8">
         <button
           onClick={openModal}
           className="flex flex-2 gap-2 justify-center items-center border-2 border-border cursor-pointer bg-primary hover:bg-primary/80 transition-colors duration-200 ease-in-out text-text-accent p-2 rounded-lg"

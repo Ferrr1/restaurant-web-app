@@ -104,7 +104,7 @@ const FoodList = ({ activeFilter }) => {
       ? FoodData
       : FoodData.filter((item) => item.type === activeFilter);
   return (
-    <div className="flex flex-wrap gap-4 mt-4">
+    <div className="flex justify-center flex-wrap gap-4 mt-4">
       {filteredData.map((item, index) => {
         const cartItem = cartItems.find((cart) => cart.id === item.id);
         const quantity = cartItem?.quantity || 0;

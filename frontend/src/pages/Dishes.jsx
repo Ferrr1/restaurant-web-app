@@ -10,7 +10,7 @@ const Dishes = () => {
     <div>
       <MetaTag title={"Dishes"} description={"List of dishes"} />
       <Navbar head={"Dishes"} summary={"List of dishes"} />
-      <div className="flex flex-col py-4 px-8 md:flex-row gap-4 w-full">
+      <div className="flex flex-col py-4 px-8 lg:flex-row gap-4 w-full">
         <div className="flex-[1] min-w-0 p-4 rounded-xl border border-border">
           <div className="sticky top-4">
             <DishesCategory
@@ -19,7 +19,7 @@ const Dishes = () => {
             />
           </div>
         </div>
-        <div className="flex-[3] min-w-0 p-4 bg-surface rounded-xl">
+        <div className="flex-[3] min-w-0 h-full p-4 bg-surface rounded-xl">
           <ManageDishes activeFilter={activeFilter} />
         </div>
       </div>
