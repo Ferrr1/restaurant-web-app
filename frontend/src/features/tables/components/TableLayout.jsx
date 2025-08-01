@@ -42,11 +42,11 @@ const Table8 = ({ name, guestCount, seats, styles }) => {
         </div>
 
         {/* Kursi Kiri */}
-        <div className="absolute -left-6 top-[2rem] -rotate-90 flex gap-2">
+        <div className="absolute -left-6 top-[2.2rem] -rotate-90 flex gap-2">
           <Chair occupied={seats[3]} styles={styles} />
         </div>
         {/* Kursi Kanan */}
-        <div className="absolute -right-6 top-[2rem] rotate-90 flex gap-2">
+        <div className="absolute -right-6 top-[2.2rem] rotate-90 flex gap-2">
           <Chair occupied={seats[4]} styles={styles} />
         </div>
 
@@ -82,11 +82,11 @@ const Table4 = ({ name, guestCount, seats, styles }) => {
       </div>
 
       {/* Kursi Kiri */}
-      <div className="absolute -left-4 top-[2rem] -rotate-90 flex gap-2">
+      <div className="absolute -left-4 top-[2.2rem] -rotate-90 flex gap-2">
         <Chair occupied={seats[1]} styles={styles} />
       </div>
       {/* Kursi Kanan */}
-      <div className="absolute -right-4 top-[2rem] rotate-90 flex gap-2">
+      <div className="absolute -right-4 top-[2.2rem] rotate-90 flex gap-2">
         <Chair occupied={seats[2]} styles={styles} />
       </div>
 

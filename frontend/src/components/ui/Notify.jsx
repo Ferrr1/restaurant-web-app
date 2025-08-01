@@ -21,18 +21,16 @@ const NotifyItem = ({ message, type = "info" }) => {
     info: "bg-blue-100 text-blue-800",
   };
   return (
-    <AnimatePresence>
-      <motion.div
-        initial={{ opacity: 0, y: -50, scale: 0.95 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        exit={{ opacity: 0, y: -50, scale: 0.95 }}
-        transition={{ type: "spring", stiffness: 300, damping: 15 }}
-        className={`flex items-center gap-3 px-4 py-3 rounded-xl shadow-md w-fit max-w-[90vw] ${colors[type]}`}
-      >
-        {icons[type]}
-        <div className="text-sm font-medium">{message}</div>
-      </motion.div>
-    </AnimatePresence>
+    <motion.div
+      initial={{ opacity: 0, y: -80, scale: 0.95 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, y: -80, scale: 0.95 }}
+      transition={{ type: "spring", stiffness: 300, damping: 15 }}
+      className={`flex items-center gap-3 px-4 py-3 rounded-xl shadow-md w-fit max-w-[90vw] ${colors[type]}`}
+    >
+      {icons[type]}
+      <div className="text-sm font-medium">{message}</div>
+    </motion.div>
   );
 };
 

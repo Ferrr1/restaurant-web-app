@@ -1,4 +1,5 @@
 import React, { createContext, useState, useCallback } from "react";
+import { AnimatePresence } from "framer-motion";
 import NotifyItem from "../components/ui/Notify";
 
 let idCounter = 0;
@@ -21,9 +22,11 @@ const NotifyProvider = ({ children }) => {
     <NotifyContext.Provider value={{ push }}>
       {children}
       <div className="fixed top-4 left-1/2 -translate-x-1/2 flex flex-col gap-3 z-50 items-center">
-        {notifications.slice(-3).map((n) => (
-          <NotifyItem key={n.id} {...n} />
-        ))}
+        <AnimatePresence initial={false}>
+          {notifications.slice(-3).map((n) => (
+            <NotifyItem key={n.id} {...n} />
+          ))}
+        </AnimatePresence>
       </div>
     </NotifyContext.Provider>
   );

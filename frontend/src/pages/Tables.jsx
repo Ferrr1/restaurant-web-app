@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Navbar from "../components/Navbar";
 import MetaTag from "../components/ui/MetaTag";
-import ListTables from "../features/tables/components/ListTables";
+import ListBooked from "../features/tables/components/ListBooked";
 import ManageTables from "../features/tables/components/ManageTables";
 
 const Tables = () => {
@@ -12,7 +12,7 @@ const Tables = () => {
       <Navbar head={"Tables"} summary={"List of tables"} />
       <div className="flex flex-col-reverse py-4 px-8 lg:flex-row gap-4 w-full">
         <div className="flex-[1.5] min-w-0 p-4 rounded-xl border border-border">
-          <ListTables
+          <ListBooked
             activeFilter={activeFilter}
             setActiveFilter={setActiveFilter}
           />
