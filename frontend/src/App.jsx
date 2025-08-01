@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 import Layout from "./layouts/Layout";
 import AuthLayout from "./layouts/AuthLayout";
-import { Dashboard } from "./pages/Dashboard";
+import { Home } from "./pages/Home";
 import Settings from "./pages/Settings";
 import Orders from "./pages/Orders";
 import Tables from "./pages/Tables";
@@ -24,7 +24,7 @@ function App() {
           <Route path="/register" element={<Register />} />
         </Route>
         <Route element={<Layout />}>
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/tables" element={<Tables />} />
           <Route path="/dishes" element={<Dishes />} />

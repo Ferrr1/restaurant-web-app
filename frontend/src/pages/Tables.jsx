@@ -10,7 +10,7 @@ const Tables = () => {
     <div>
       <MetaTag title={"Tables"} description={"List of tables"} />
       <Navbar head={"Tables"} summary={"List of tables"} />
-      <div className="flex flex-col py-4 px-8 lg:flex-row gap-4 w-full">
+      <div className="flex flex-col-reverse py-4 px-8 lg:flex-row gap-4 w-full">
         <div className="flex-[1.5] min-w-0 p-4 rounded-xl border border-border">
           <ListTables
             activeFilter={activeFilter}

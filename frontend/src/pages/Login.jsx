@@ -16,7 +16,7 @@ const Login = () => {
     // Simulasi login berhasil
     console.log("Data Login:", data);
     localStorage.setItem("isLoggedIn", "true");
-    navigate("/dashboard");
+    navigate("/home");
   };
 
   // const handleRegister = () => {
@@ -28,7 +28,8 @@ const Login = () => {
       <div className="p-8 flex flex-col items-center w-[30%] h-auto bg-surface rounded-3xl">
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="w-full flex flex-col gap-4">
+          className="w-full flex flex-col gap-4"
+        >
           <div className="text-center">
             <h1 className="font-bold text-2xl text-text">Welcome Back</h1>
             <p className="text-sm text-text-muted">
