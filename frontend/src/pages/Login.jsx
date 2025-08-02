@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { Input } from "../components/ui/Input";
 import Button from "../components/ui/Button";
 import { MdMailOutline, MdOutlineLock } from "react-icons/md";
+import imageLogin from "../assets/images/food/filter/soups.jpg";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ const Login = () => {
       {/* Left Section */}
       <div className="md:w-1/2 w-full h-64 md:h-auto">
         <img
-          src=""
+          src={imageLogin}
           alt="This Image Login"
           className="w-full h-full object-cover"
         />
