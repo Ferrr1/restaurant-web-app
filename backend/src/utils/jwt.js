@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
+import { config } from "../config/config.js";
 
-const secretKey = process.env.JWT_SECRET || "18937218djhaudh./.,;adwu8374";
-
+const secretKey = config.TOKEN;
 const generateToken = (user) => {
   return jwt.sign(
     {
@@ -12,7 +12,7 @@ const generateToken = (user) => {
       role: user.role,
     },
     secretKey,
-    { expiresIn: "1h" }
+    { expiresIn: "1d" }
   );
 };
 

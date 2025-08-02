@@ -13,6 +13,7 @@ import Tables from "./pages/Tables";
 import Dishes from "./pages/Dishes";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import ProtectedRoute from "./layouts/ProtectedRoute";
 
 function App() {
   return (
@@ -24,7 +25,14 @@ function App() {
           <Route path="/register" element={<Register />} />
         </Route>
         <Route element={<Layout />}>
-          <Route path="/home" element={<Home />} />
+          <Route
+            path="/home"
+            element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/orders" element={<Orders />} />
           <Route path="/tables" element={<Tables />} />
           <Route path="/dishes" element={<Dishes />} />

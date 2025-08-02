@@ -1,9 +1,9 @@
 import { neon } from "@neondatabase/serverless";
-import "dotenv/config";
 import { createUsersTable } from "../models/users.model.js";
+import { config } from "./config.js";
 
 // Create a SQL Connectioon using Database URL
-export const sql = neon(process.env.DATABASE_URL);
+export const sql = neon(config.DATABASE_URL);
 
 export async function initDB() {
   try {

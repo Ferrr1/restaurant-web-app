@@ -2,11 +2,18 @@ import { useState } from "react";
 import { MdLogout } from "react-icons/md";
 import Modal from "./Modal";
 import Button from "./Button";
+import { logout } from "../../features/auth/services/AuthServices";
+import { useNavigate } from "react-router-dom";
 
 export const LogoutButton = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
   return (
     <>
       <button
@@ -26,7 +33,9 @@ export const LogoutButton = () => {
             <Button onClick={closeModal} variant="delete">
               Cancel
             </Button>
-            <Button  variant="confirm">Confirm</Button>
+            <Button onClick={handleLogout} variant="confirm">
+              Confirm
+            </Button>
           </div>
         </div>
       </Modal>
