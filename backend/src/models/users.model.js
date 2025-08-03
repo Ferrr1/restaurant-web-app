@@ -7,7 +7,8 @@ export async function createUsersTable() {
     last_name VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
-    remember_token VARCHAR(255),
-    role VARCHAR(10) CHECK (role IN ('admin', 'cashier')) NOT NULL
+    is_verified BOOLEAN NOT NULL DEFAULT false,
+    role VARCHAR(10) CHECK (role IN ('admin', 'cashier')) NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW()
   )`;
 }
