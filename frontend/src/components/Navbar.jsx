@@ -3,10 +3,12 @@ import Notification from "./Notification";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import Avatar from "./ui/Avatar";
-import { LogoutButton } from "./ui/LogoutButton";
+import { LogoutButton } from "../features/auth/components/LogoutButton";
+import { useAuth } from "../context/AuthContext";
 
 const Navbar = ({ head, summary }) => {
   const [activeDropdown, setActiveDropdown] = useState(null);
+  const { user } = useAuth();
   const toggleDropdown = (type) => {
     setActiveDropdown((prev) => (prev === type ? null : type));
   };
@@ -42,14 +44,12 @@ const Navbar = ({ head, summary }) => {
             <div
               className={`flex items-center gap-4 p-2 rounded-md transition-colors duration-200 ease-in-out group`}
             >
-              <Avatar
-                src={
-                  "https://images.unsplash.com/photo-1499714608240-22fc6ad53fb2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                }
-              />
+              <Avatar firstName={user.first_name} lastName={user.last_name} />
               <span className={`flex flex-col text-left `}>
-                <h6 className="capitalize">maulana feri </h6>
-                <p className={`text-sm lowercase text-text/50`}>Admin</p>
+                <h6 className="capitalize">
+                  {user.first_name + " " + user.last_name}
+                </h6>
+                <p className={`text-sm lowercase text-text/50`}>{user.role}</p>
               </span>
             </div>
           </div>

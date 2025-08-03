@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import { createContext, useReducer } from "react";
 
 const CartContext = createContext({});
@@ -14,7 +15,6 @@ const initialCart = {
 const cartReducer = (state, action) => {
   switch (action.type) {
     case "CREATE_ORDER":
-      console.log(state);
       return {
         ...state,
         order: action.payload,
@@ -76,7 +76,7 @@ const cartReducer = (state, action) => {
   }
 };
 
-const CartProvider = ({ children }) => {
+export const CartProvider = ({ children }) => {
   const [state, dispatch] = useReducer(cartReducer, initialCart);
 
   const addToCart = (product) => {
@@ -111,8 +111,14 @@ const CartProvider = ({ children }) => {
     decreaseQuantity,
     removeFromCart,
   };
-  console.log("value", value);
+  // console.log("value", value);
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 };
 
-export { CartContext, CartProvider };
+export const useCart = () => {
+  const context = useContext(CartContext);
+  if (!context) {
+    throw new Error("useCart must be used within a CartProvider");
+  }
+  return context;
+};
