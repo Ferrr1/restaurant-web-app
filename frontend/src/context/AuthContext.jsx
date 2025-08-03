@@ -1,31 +1,83 @@
-import { createContext } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
+import { createContext, useContext, useEffect, useState } from "react";
 import { getUserData } from "../features/auth/services/AuthServices";
 
-const AuthContext = createContext({});
+// Fungsi sederhana untuk mendapatkan data user
 
-const AuthProvider = ({ children }) => {
-  const {
-    data,
-    isLoading: loading,
-    isError,
-    refetch,
-  } = useQuery({
-    queryKey: ["auth:user"],
-    queryFn: getUserData,
-    retry: false, // jangan retry kalau gagal (misal 401)
+const AuthContext = createContext();
+
+export const AuthProvider = ({ children }) => {
+  // Ambil user dari localStorage jika ada (untuk persistensi saat refresh)
+  const [user, setUser] = useState(() => {
+    const storedUser = localStorage.getItem("user");
+    return storedUser ? JSON.parse(storedUser) : null;
   });
 
-  const user = data?.data?.user || null;
-  const isAuth = !!user && !isError;
-
-  return (
-    <AuthContext.Provider
-      value={{ user, loading, isAuth, refetchUser: refetch }}
-    >
-      {children}
-    </AuthContext.Provider>
+  const [accessToken, setAccessToken] = useState(() =>
+    localStorage.getItem("accessToken")
   );
+  const [loading, setLoading] = useState(true);
+
+  const { mutate } = useMutation({
+    mutationFn: getUserData,
+    onSuccess: (response) => {
+      const userData = response.data?.user || response.data; // sesuaikan dengan struktur response Anda
+      setUser(userData);
+      localStorage.setItem("user", JSON.stringify(userData));
+      setLoading(false);
+    },
+    onError: (err) => {
+      console.error("Error fetching user data:", err);
+      setUser(null);
+      localStorage.removeItem("user");
+      setLoading(false);
+    },
+  });
+
+  useEffect(() => {
+    if (accessToken) {
+      mutate();
+    } else {
+      setLoading(false);
+    }
+  }, [accessToken, mutate]);
+
+  // Fungsi untuk update user dan access token secara bersamaan
+  const updateAuth = (userData, token) => {
+    setUser(userData);
+    setAccessToken(token);
+    if (userData) {
+      localStorage.setItem("user", JSON.stringify(userData));
+    } else {
+      localStorage.removeItem("user");
+    }
+    if (token) {
+      localStorage.setItem("accessToken", token);
+    } else {
+      localStorage.removeItem("accessToken");
+    }
+  };
+
+  const logout = () => {
+    updateAuth(null, null);
+  };
+
+  const value = {
+    user,
+    accessToken,
+    loading,
+    setAuth: updateAuth,
+    logout,
+    refetchUser: mutate,
+  };
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
-export { AuthContext, AuthProvider };
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
+};

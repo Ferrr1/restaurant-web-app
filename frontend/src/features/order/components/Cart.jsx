@@ -15,10 +15,10 @@ import {
 import { FaMouse } from "react-icons/fa";
 import Modal from "../../../components/ui/Modal";
 import Button from "../../../components/ui/Button";
-import { NotifyContext } from "../../../context/NotifyContext";
+import { useNotify } from "../../../context/NotifyContext";
 import { Input, Select, TextArea } from "../../../components/ui/Input";
-import { CartContext } from "../../../context/CartContext";
 import { currencyIDR } from "../../../utils/currency";
+import { useCart } from "../../../context/CartContext";
 
 const Cart = () => {
   const {
@@ -30,7 +30,7 @@ const Cart = () => {
     totalAfterTax,
     createOrder,
     removeFromCart,
-  } = useContext(CartContext);
+  } = useCart();
   const [payment, setPayment] = useState("Cash");
   const [activeModal, setactiveModal] = useState(null);
   const openModal = (type) => {
@@ -302,7 +302,7 @@ const ModalOrder = ({ isOpen, onClose, createOrder }) => {
   );
 };
 const ModalDelete = ({ isOpen, onClose, removeFromCart, cartItems, order }) => {
-  const { push } = useContext(NotifyContext);
+  const { push } = useNotify();
 
   const handleClick = () => {
     const isOrderEmpty = !order || Object.keys(order).length === 0;

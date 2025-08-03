@@ -1,26 +1,38 @@
 import express from "express";
+import rateLimit from "express-rate-limit";
 import {
-  getUserData,
+  getUser,
   login,
   logout,
+  refreshToken,
   register,
+  requestPasswordReset,
+  resetPassword,
+  verifyEmail,
 } from "../controllers/auth.controller.js";
-import { authenticate, authorize } from "../middlewares/auth.middleware.js";
+import { testEmailConnection } from "../services/email.service.js";
+import { authenticate } from "../middlewares/auth.middleware.js";
 
 const router = express.Router();
 
-// Public route
-router.post("/login", login);
-router.post("/register", register);
-// router.get("/remember-login", authenticate, rememberLogin);
-
-// Protected Route
-router.get("/user", authenticate, getUserData);
-router.post("/logout", authenticate, logout);
-
-// Admin Route
-router.get("/admin", authenticate, authorize(["admin"]), (req, res) => {
-  res.json({ user: req.user, message: "Halaman admin" });
+// Rate limiting untuk proteksi brute force
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 menit
+  max: 500, // Maksimal 5 request per windowMs
+  message: "Terlalu banyak percobaan, silakan coba lagi setelah 15 menit",
 });
+
+// Public routes
+router.post("/register", register);
+router.post("/login", limiter, login);
+router.post("/refresh-token", refreshToken);
+router.get("/verify-email/:token", verifyEmail);
+router.post("/request-password-reset", limiter, requestPasswordReset);
+router.post("/reset-password/:token", resetPassword);
+
+// Protected routes
+router.get("/user", authenticate, getUser);
+router.post("/logout", authenticate, logout);
+router.post("/test-email", testEmailConnection);
 
 export default router;

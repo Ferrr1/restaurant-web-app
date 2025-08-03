@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { FaMinus, FaPlus } from "react-icons/fa6";
 import { FoodData } from "../../../data/constants";
@@ -6,8 +6,8 @@ import Heading from "../../../components/ui/Heading";
 import { useScrollNavigator } from "../../../hooks/useScrollNavigator";
 import MiePangsit from "../../../assets/images/food/filter/soups.jpg";
 import { getFilterCountsByKey } from "../../../utils/FilterCounts";
-import { CartContext } from "../../../context/CartContext";
 import { currencyIDR } from "../../../utils/currency";
+import { useCart } from "../../../context/CartContext";
 
 const FoodMenu = () => {
   const { scrollRef, handleScroll } = useScrollNavigator();
@@ -97,7 +97,7 @@ const FoodMenu = () => {
 export default FoodMenu;
 
 const FoodList = ({ activeFilter }) => {
-  const { addToCart, cartItems, decreaseQuantity } = useContext(CartContext);
+  const { addToCart, cartItems, decreaseQuantity } = useCart();
 
   const filteredData =
     activeFilter === "All"

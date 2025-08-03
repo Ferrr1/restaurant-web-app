@@ -1,14 +1,28 @@
-import { useContext } from "react";
-import { AuthContext } from "../context/AuthContext";
+import { useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import LoadingScreen from "../components/ui/LoadingScreen";
 
 const GuestRoute = ({ children }) => {
-  const { isAuth, loading } = useContext(AuthContext);
+  const { user, loading } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  if (loading) return <div>Loading...</div>;
+  useEffect(() => {
+    if (!loading) {
+      if (user) {
+        // Redirect ke halaman sebelumnya atau home
+        const redirectPath = location.state?.from?.pathname || "/home";
+        navigate(redirectPath, { replace: true });
+      }
+    }
+  }, [user, loading, navigate, location]);
 
-  if (isAuth) return <Navigate to="/" replace />;
+  if (loading) return <LoadingScreen />;
 
-  return children;
+  if (!user) return children;
+
+  return null;
 };
 
 export default GuestRoute;

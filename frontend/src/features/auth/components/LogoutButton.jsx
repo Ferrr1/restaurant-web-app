@@ -1,18 +1,37 @@
 import { useState } from "react";
 import { MdLogout } from "react-icons/md";
-import Modal from "./Modal";
-import Button from "./Button";
-import { logout } from "../../features/auth/services/AuthServices";
+import Modal from "../../../components/ui/Modal";
+import Button from "../../../components/ui/Button";
+import { logout } from "../services/AuthServices";
 import { useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
+import { useAuth } from "../../../context/AuthContext";
 
 export const LogoutButton = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
   const navigate = useNavigate();
+  const { setAuth } = useAuth();
+
+  const { mutate } = useMutation({
+    mutationFn: logout,
+    onSuccess: async () => {
+      try {
+        setAuth(null, null);
+        console.log("✅ Logout success");
+        navigate("/login");
+      } catch (error) {
+        console.error("Gagal ambil data user:", error);
+      }
+    },
+    onError: (err) => {
+      console.error("Logout gagal:", err?.response?.data);
+      // TODO: Tambahkan notifikasi ke user
+    },
+  });
   const handleLogout = () => {
-    logout();
-    navigate("/login");
+    mutate();
   };
   return (
     <>

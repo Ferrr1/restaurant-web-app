@@ -4,17 +4,19 @@ import dotenv from "dotenv";
 import { initDB } from "./src/config/db.config.js";
 import authRoute from "./src/routes/auth.routes.js";
 import { config } from "./src/config/config.js";
+import cookieParser from "cookie-parser";
 
 dotenv.config();
 const app = express();
 
 // Middleware
 app.use(express.json());
+app.use(cookieParser());
 // Middleware CORS
 app.use(
   cors({
-    origin: "http://localhost:5173", // atau "*" untuk semua origin
-    credentials: true, // penting jika pakai cookie / withCredentials
+    origin: "http://localhost:5173",
+    credentials: true,
   })
 );
 
