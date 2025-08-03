@@ -1,3 +1,5 @@
+import { cn } from "../../utils/cn";
+
 const Button = ({ children, variant = "custom", ...props }) => {
   let className;
 
@@ -16,7 +18,10 @@ const Button = ({ children, variant = "custom", ...props }) => {
   }
 
   return (
-    <button {...props} className={className}>
+    <button
+      {...props}
+      className={cn(className, props.disabled && "cursor-not-allowed")}
+    >
       {children}
     </button>
   );

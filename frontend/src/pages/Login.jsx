@@ -7,10 +7,15 @@ import { MdMailOutline, MdOutlineLock } from "react-icons/md";
 import imageLogin from "../assets/images/food/filter/soups.jpg";
 import { login } from "../features/auth/services/AuthServices";
 import { useAuth } from "../context/AuthContext";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { useState } from "react";
+import { useNotify } from "../context/NotifyContext";
 
 const Login = () => {
   const navigate = useNavigate();
   const { setAuth } = useAuth();
+  const [loading, setLoading] = useState(false);
+  const { push } = useNotify();
 
   const {
     register,
@@ -18,20 +23,29 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
-  const { mutate, isLoading: isLoggingIn } = useMutation({
+  const { mutate } = useMutation({
     mutationFn: login,
+    onMutate: () => {
+      setLoading(true);
+    },
     onSuccess: async (res) => {
       try {
         setAuth(res.data.user, res.data.accessToken);
-        console.log("✅ Login response data:", res.data);
         navigate("/home");
       } catch (error) {
         console.error("Gagal ambil data user:", error);
+      } finally {
+        push({ message: "Berhasil login!", type: "success" });
+        setLoading(false);
       }
     },
     onError: (err) => {
+      push({
+        message: err?.response?.data?.message || "Login gagal",
+        type: "error",
+      });
       console.error("Login gagal:", err?.response?.data);
-      // TODO: Tambahkan notifikasi ke user
+      setLoading(false);
     },
   });
 
@@ -96,8 +110,19 @@ const Login = () => {
             </p>
 
             <div className="flex justify-center mt-2">
-              <Button variant="confirm" className="mt-2" type="submit">
-                {isLoggingIn ? "Loading..." : "Login"}
+              <Button
+                disabled={loading}
+                variant="confirm"
+                className="mt-2"
+                type="submit"
+              >
+                {loading && (
+                  <AiOutlineLoading3Quarters
+                    size={20}
+                    className="animate-spin"
+                  />
+                )}
+                Login
               </Button>
             </div>
           </form>

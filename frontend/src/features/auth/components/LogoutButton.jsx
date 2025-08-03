@@ -6,28 +6,38 @@ import { logout } from "../services/AuthServices";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { useAuth } from "../../../context/AuthContext";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { useNotify } from "../../../context/NotifyContext";
 
 export const LogoutButton = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const { push } = useNotify();
   const { setAuth } = useAuth();
 
   const { mutate } = useMutation({
     mutationFn: logout,
+    onMutate: () => {
+      setLoading(true);
+    },
     onSuccess: async () => {
       try {
         setAuth(null, null);
-        console.log("✅ Logout success");
         navigate("/login");
       } catch (error) {
         console.error("Gagal ambil data user:", error);
+      } finally {
+        setLoading(false);
+        push({ message: "Berhasil logout!", type: "success" });
       }
     },
     onError: (err) => {
       console.error("Logout gagal:", err?.response?.data);
-      // TODO: Tambahkan notifikasi ke user
+      setLoading(false);
+      push({ message: "Logout gagal!", type: "error" });
     },
   });
   const handleLogout = () => {
@@ -52,8 +62,12 @@ export const LogoutButton = () => {
             <Button onClick={closeModal} variant="delete">
               Cancel
             </Button>
-            <Button onClick={handleLogout} variant="confirm">
-              Confirm
+            <Button disabled={loading} onClick={handleLogout} variant="confirm">
+              {loading ? (
+                <AiOutlineLoading3Quarters size={20} className="animate-spin" />
+              ) : (
+                "Confirm"
+              )}
             </Button>
           </div>
         </div>
