@@ -21,9 +21,9 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row">
+    <div className="min-h-screen flex">
       {/* Left Section */}
-      <div className="md:w-1/2 w-full h-64 md:h-auto">
+      <div className="hidden md:block md:w-1/2 h-screen">
         <img
           src={imageLogin}
           alt="This Image Login"
