@@ -55,7 +55,12 @@ const ModalAddCategory = ({ isOpen, onClose, notify }) => {
           <p className="text-red-500 text-sm -mt-1">{errors.image.message}</p>
         )}
         <div className="flex justify-end gap-2 mt-2">
-          <Button variant="delete" onClick={onClose} className="mt-2">
+          <Button
+            variant="delete"
+            type="button"
+            onClick={onClose}
+            className="mt-2"
+          >
             Close
           </Button>
           <Button variant="confirm" type="submit" className="mt-2">

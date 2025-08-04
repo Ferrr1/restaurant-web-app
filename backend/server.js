@@ -5,6 +5,7 @@ import { initDB } from "./src/config/db.config.js";
 import authRoute from "./src/routes/auth.routes.js";
 import categoriesRoute from "./src/routes/category.route.js";
 import dishRoute from "./src/routes/dishes.route.js";
+import tableRoute from "./src/routes/tables.route.js";
 import { config } from "./src/config/config.js";
 import cookieParser from "cookie-parser";
 
@@ -26,6 +27,7 @@ app.get("/api", (req, res) => res.send("This is Api Restaurant Website"));
 app.use("/api/auth", authRoute);
 app.use("/api/categories", categoriesRoute);
 app.use("/api/dishes", dishRoute);
+app.use("/api/tables", tableRoute);
 // Akses gambar dish: /uploads/dishes/image-name.png
 app.use("/uploads/dishes", express.static("src/uploads/images/dishes"));
 

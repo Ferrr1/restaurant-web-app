@@ -5,45 +5,43 @@ import { FoodData } from "../../../data/constants";
 import Heading from "../../../components/ui/Heading";
 import { useScrollNavigator } from "../../../hooks/useScrollNavigator";
 import MiePangsit from "../../../assets/images/food/filter/soups.jpg";
-import { getFilterCountsByKey } from "../../../utils/FilterCounts";
+import ImageFilterAll from "../../../assets/images/food/filter/mie goreng.png";
 import { currencyIDR } from "../../../utils/currency";
 import { useCart } from "../../../context/CartContext";
+import { useQuery } from "@tanstack/react-query";
+import { useNotify } from "../../../context/NotifyContext";
+import {
+  BASE_URL,
+  getCategories,
+  getDishes,
+} from "../../dishes/services/DishesServices";
 
 const FoodMenu = () => {
   const { scrollRef, handleScroll } = useScrollNavigator();
   const [activeFilter, setActiveFilter] = useState("All");
+  const [loaded, setLoaded] = useState(false);
+  const { push } = useNotify();
+
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ["dishes-and-categories"],
+    queryFn: async () => {
+      const [dishesRes, categoriesRes] = await Promise.all([
+        getDishes(),
+        getCategories(),
+      ]);
+      return {
+        dishes: dishesRes.data,
+        categories: categoriesRes.data,
+      };
+    },
+  });
+  console.log("data", data);
+  // if (isLoading || !data) return <LoadingScreen />;
+  if (isError) return push({ message: error.message, type: "error" });
 
   const toggleFilter = (filter) => {
     setActiveFilter(filter);
   };
-  const typeCounts = getFilterCountsByKey(FoodData, "type");
-  const FilterFood = [
-    {
-      type: "All",
-      image: MiePangsit,
-      items: typeCounts["All"] || 0,
-    },
-    {
-      type: "Beef",
-      image: MiePangsit,
-      items: typeCounts["Beef"] || 0,
-    },
-    {
-      type: "Soups",
-      image: MiePangsit,
-      items: typeCounts["Soups"] || 0,
-    },
-    {
-      type: "Desserts",
-      image: MiePangsit,
-      items: typeCounts["Desserts"] || 0,
-    },
-    {
-      type: "Chickens",
-      image: MiePangsit,
-      items: typeCounts["Chickens"] || 0,
-    },
-  ];
   return (
     <div>
       <Heading
@@ -69,54 +67,84 @@ const FoodMenu = () => {
         ref={scrollRef}
         className="flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-hide"
       >
-        {FilterFood.map((item, index) => (
+        <div
+          onClick={() => toggleFilter("All")}
+          className={`min-w-[150px] border-2 text-text ${
+            activeFilter === "All" ? "border-primary" : "border-border"
+          } cursor-pointer snap-center flex-shrink-0 flex gap-2 p-2 rounded-xl`}
+        >
+          <img
+            src={ImageFilterAll}
+            onLoad={() => setLoaded(true)}
+            alt={"Food Menu"}
+            className={`w-[50px] object-cover rounded-xl ${
+              loaded ? "opacity-100" : "opacity-0"
+            }`}
+          />
+          <div className="flex flex-col gap-2 text-sm">
+            <span className="flex-1 font-semibold">All</span>
+            <div className="text-xs text-text-muted">
+              {data?.dishes.length} Items
+            </div>
+          </div>
+        </div>
+        {data?.categories.map((item, index) => (
           <div
-            onClick={() => toggleFilter(item.type)}
+            onClick={() => toggleFilter(item.name)}
             key={index}
             className={`min-w-[150px] border-2 text-text ${
-              activeFilter === item.type ? "border-primary" : "border-border"
+              activeFilter === item.name ? "border-primary" : "border-border"
             } cursor-pointer snap-center flex-shrink-0 flex gap-2 p-2 rounded-xl`}
           >
             <img
-              src={item.image}
+              src={`${BASE_URL}/uploads/categories/${item.image}`}
+              onLoad={() => setLoaded(true)}
               alt={item.type}
-              className="w-[50px] object-cover rounded-xl"
+              className={`w-[50px] object-cover rounded-xl ${
+                loaded ? "opacity-100" : "opacity-0"
+              }`}
             />
             <div className="flex flex-col gap-2 text-sm">
-              <span className="flex-1 font-semibold">{item.type}</span>
-              <div className="text-xs text-text-muted">{item.items} Items</div>
+              <span className="flex-1 font-semibold">{item.name}</span>
+              <div className="text-xs text-text-muted">
+                {
+                  data?.dishes.filter((dish) => dish.categoryname === item.name)
+                    .length
+                }{" "}
+                Items
+              </div>
             </div>
           </div>
         ))}
       </div>
-      <FoodList activeFilter={activeFilter} />
+      <FoodList activeFilter={activeFilter} data={data?.dishes} />
     </div>
   );
 };
 
 export default FoodMenu;
 
-const FoodList = ({ activeFilter }) => {
+const FoodList = ({ activeFilter, data }) => {
   const { addToCart, cartItems, decreaseQuantity } = useCart();
 
   const filteredData =
     activeFilter === "All"
-      ? FoodData
-      : FoodData.filter((item) => item.type === activeFilter);
+      ? data
+      : data?.filter((item) => item.name === activeFilter);
   return (
     <div className="group flex justify-center flex-wrap gap-4 mt-4">
-      {filteredData.map((item, index) => {
+      {filteredData?.map((item) => {
         const cartItem = cartItems.find((cart) => cart.id === item.id);
         const quantity = cartItem?.quantity || 0;
         return (
           <div
-            key={index}
+            key={item.dishid}
             className={`p-2 text-text min-w-[15rem] border-2 ${
               quantity > 0 ? "border-primary" : "border-border"
             } rounded-xl transition-colors duration-300 ease-in-out`}
           >
             <img
-              src={item.image}
+              src={`${BASE_URL}/uploads/dishes/${item.dishimage}`}
               alt=""
               className="w-full h-[calc(10rem*1.2)]
       object-cover rounded-xl bg-center"
@@ -124,10 +152,10 @@ const FoodList = ({ activeFilter }) => {
             <p className="group-hover:line-clamp-none line-clamp-1 text-sm text-text-muted mt-2">
               {item.type}
             </p>
-            <h5 className="font-semibold">{item.name}</h5>
+            <h5 className="font-semibold">{item.dishname}</h5>
             <div className="flex justify-between items-center my-2">
               <span className="text-[1rem]">
-                {item.price === 0 ? "Free" : currencyIDR(item.price)}
+                {item.dishprice === 0 ? "Free" : currencyIDR(item.dishprice)}
               </span>
               <div className="flex gap-2 items-center">
                 <button

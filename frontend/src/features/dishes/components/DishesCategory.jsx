@@ -64,14 +64,14 @@ const DishesCategory = ({
               } rounded-lg p-2 text-text cursor-pointer`}
             >
               <div className="flex gap-4 items-center">
-                {!loaded && (
+                {/* {!loaded && (
                   <div className="w-[40px] flex justify-center items-center">
                     <AiOutlineLoading3Quarters
                       size={20}
                       className="animate-spin"
                     />
                   </div>
-                )}
+                )} */}
                 <img
                   src={`${BASE_URL}/uploads/categories/${item.image}`}
                   onLoad={() => setLoaded(true)}

@@ -22,9 +22,9 @@ const ManageDishes = ({ activeFilter, dishes, categories, notify }) => {
   const filteredDishesData =
     activeFilter === "All"
       ? dishes
-      : dishes.filter((dish) => dish.categoryname === activeFilter);
+      : dishes?.filter((dish) => dish?.categoryname === activeFilter);
   const searchDishes = filteredDishesData.filter((dish) =>
-    dish.dishname.toLowerCase().includes(search.toLowerCase())
+    dish?.dishname.toLowerCase().includes(search.toLowerCase())
   );
   return (
     <>
@@ -49,7 +49,9 @@ const ManageDishes = ({ activeFilter, dishes, categories, notify }) => {
       </Heading>
       <div className="bg-border/50 rounded-lg p-4 text-text">
         <div className="flex justify-between items-center">
-          <h1>DishesCategor (19)</h1>
+          <h1>
+            {activeFilter} ({searchDishes.length})
+          </h1>
           <div>
             <button
               onClick={toggleLayout}
