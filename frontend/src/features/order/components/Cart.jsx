@@ -5,6 +5,9 @@ import { RiTakeawayLine } from "react-icons/ri";
 import { IoMdPeople } from "react-icons/io";
 import Divider from "../../../components/ui/Divider";
 import { useContext, useState } from "react";
+import Invoice from "../../../components/pdf/Invoice";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+
 import {
   FaCashRegister,
   FaCreditCard,
@@ -53,14 +56,12 @@ const Cart = () => {
           <div className="flex gap-2">
             <button
               onClick={() => openModal("order")}
-              className="cursor-pointer p-2 border-2 border-border hover:bg-background rounded-full"
-            >
+              className="cursor-pointer p-2 border-2 border-border hover:bg-background rounded-full">
               <CiEdit size={24} className="text-primary" />
             </button>
             <button
               onClick={() => openModal("delete")}
-              className="cursor-pointer p-2 border-2 border-border hover:bg-background rounded-full"
-            >
+              className="cursor-pointer p-2 border-2 border-border hover:bg-background rounded-full">
               <AiOutlineDelete size={24} className="text-red-600" />
             </button>
           </div>
@@ -130,8 +131,7 @@ const Cart = () => {
               payment === "Cash"
                 ? "bg-primary/20 border-primary"
                 : "border-border"
-            } cursor-pointer snap-center flex-shrink-0 flex gap-2 px-4 py-2 rounded-xl`}
-          >
+            } cursor-pointer snap-center flex-shrink-0 flex gap-2 px-4 py-2 rounded-xl`}>
             <div className="flex items-center justify-center gap-2 text-sm">
               <span className="flex-1 font-semibold">
                 <FaCashRegister />
@@ -145,8 +145,7 @@ const Cart = () => {
               payment === "Card"
                 ? "bg-primary/20 border-primary"
                 : "border-border"
-            } cursor-pointer snap-center flex-shrink-0 flex gap-2 px-4 py-2 rounded-xl`}
-          >
+            } cursor-pointer snap-center flex-shrink-0 flex gap-2 px-4 py-2 rounded-xl`}>
             <div className="flex items-center justify-center gap-2 text-sm">
               <span className="flex-1 font-semibold">
                 <FaCreditCard />
@@ -157,10 +156,25 @@ const Cart = () => {
         </div>
       </div>
       <div className="flex justify-between gap-2 mt-4">
-        <button className="flex flex-1 gap-2 justify-center items-center border-2 border-border cursor-pointer bg-primary hover:bg-primary/80 transition-colors duration-200 ease-in-out text-text-accent p-2 rounded-lg">
-          <FaPrint />
-          <span>Print</span>
-        </button>
+        <PDFDownloadLink
+          document={
+            <Invoice
+              order={order}
+              cartItems={cartItems}
+              totalAmount={totalAmount}
+              tax={tax}
+              totalAfterTax={totalAfterTax}
+              payment={payment}
+            />
+          }
+          fileName={`Invoice-${order.tableNumber || "NoTable"}.pdf`}>
+          {({ loading }) => (
+            <button className="flex flex-1 gap-2 justify-center items-center border-2 border-border cursor-pointer bg-primary hover:bg-primary/80 transition-colors duration-200 ease-in-out text-text-accent p-2 rounded-lg">
+              <FaPrint />
+              <span>{loading ? "Loading..." : "Print"}</span>
+            </button>
+          )}
+        </PDFDownloadLink>
         <button className="flex flex-2 gap-2 justify-center items-center border-2 border-border cursor-pointer bg-primary hover:bg-primary/80 transition-colors duration-200 ease-in-out text-text-accent p-2 rounded-lg">
           <FaMouse />
           <span>Place Order</span>
@@ -207,7 +221,7 @@ const ModalOrder = ({ isOpen, onClose, createOrder }) => {
         <Input
           onChange={(e) => setOrder({ ...order, customerName: e.target.value })}
           label="Customer Name"
-          className="w-full"
+          className="w-full text-text"
           placeholder="e.g. Udin"
         />
         <div>
@@ -219,8 +233,7 @@ const ModalOrder = ({ isOpen, onClose, createOrder }) => {
                 order.orderType === "Dine in"
                   ? "bg-lime-600/10 border-lime-600"
                   : "border-lime-600/20"
-              } border-2 flex-1 gap-2 justify-center items-center text-sm p-4 rounded-xl cursor-pointer transition-colors duration-300 ease-in-out text-text`}
-            >
+              } border-2 flex-1 gap-2 justify-center items-center text-sm p-4 rounded-xl cursor-pointer transition-colors duration-300 ease-in-out text-text`}>
               <PiPicnicTableBold size={20} />
               <span>Dine in</span>
             </button>
@@ -230,8 +243,7 @@ const ModalOrder = ({ isOpen, onClose, createOrder }) => {
                 order.orderType === "Take away"
                   ? "bg-violet-600/10 border-violet-600"
                   : "border-violet-600/20"
-              } border-2 flex-1 gap-2 justify-center items-center text-sm p-4 rounded-xl cursor-pointer transition-colors duration-300 ease-in-out text-text`}
-            >
+              } border-2 flex-1 gap-2 justify-center items-center text-sm p-4 rounded-xl cursor-pointer transition-colors duration-300 ease-in-out text-text`}>
               <RiTakeawayLine size={20} />
               <span>Take away</span>
             </button>
@@ -241,8 +253,7 @@ const ModalOrder = ({ isOpen, onClose, createOrder }) => {
           onChange={(e) => setOrder({ ...order, tableNumber: e.target.value })}
           label="Select Table"
           className="w-full text-text "
-          placeholder="Select Table"
-        >
+          placeholder="Select Table">
           <option className="bg-background text-text" value="1">
             Table 1
           </option>
@@ -266,15 +277,13 @@ const ModalOrder = ({ isOpen, onClose, createOrder }) => {
           <div className="flex items-center justify-between bg-primary/30 px-4 py-3 rounded-lg">
             <button
               onClick={decrement}
-              className="text-text cursor-pointer rounded-full p-2 border-2 border-border hover:border-primary bg-primary/20 hover:bg-primary/30 transition-colors duration-200 ease-in-out"
-            >
+              className="text-text cursor-pointer rounded-full p-2 border-2 border-border hover:border-primary bg-primary/20 hover:bg-primary/30 transition-colors duration-200 ease-in-out">
               <FaMinus size={16} />
             </button>
             <span className="text-text">{order.guestCount} Person</span>
             <button
               onClick={increment}
-              className="text-text cursor-pointer rounded-full p-2 border-2 border-border hover:border-primary bg-primary/20 hover:bg-primary/30 transition-colors duration-200 ease-in-out"
-            >
+              className="text-text cursor-pointer rounded-full p-2 border-2 border-border hover:border-primary bg-primary/20 hover:bg-primary/30 transition-colors duration-200 ease-in-out">
               <FaPlus size={16} />
             </button>
           </div>
@@ -282,7 +291,7 @@ const ModalOrder = ({ isOpen, onClose, createOrder }) => {
         <TextArea
           onChange={(e) => setOrder({ ...order, note: e.target.value })}
           label="Note"
-          className="w-full"
+          className="w-full text-text"
           placeholder="e.g. Please add extra cheese, No MSG, etc."
         />
         <div className="flex justify-end gap-2">
@@ -292,8 +301,7 @@ const ModalOrder = ({ isOpen, onClose, createOrder }) => {
           <Button
             variant="confirm"
             onClick={() => createOrder(order)}
-            className="mt-2"
-          >
+            className="mt-2">
             Create
           </Button>
         </div>
