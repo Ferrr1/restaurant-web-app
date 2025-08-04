@@ -1,17 +1,13 @@
 import Heading from "../../../components/ui/Heading";
 import { TableLayout } from "./TableLayout";
+import { useState } from "react";
+import ModalAddTable from "./ModalAddTable";
+import { PiPicnicTableBold } from "react-icons/pi";
 
-const ManageTables = () => {
-  const tables = [
-    { id: 1, name: "Table 1", capacity: 8, occupied: 6, status: "Dine In" },
-    { id: 2, name: "Table 2", capacity: 2, occupied: 1, status: "Reserved" },
-    { id: 3, name: "Table 3", capacity: 4, occupied: 1, status: "Available" },
-    { id: 4, name: "Table 4", capacity: 6, occupied: 4, status: "Dine In" },
-    { id: 5, name: "Table 5", capacity: 8, occupied: 3, status: "Available" },
-    { id: 6, name: "Table 6", capacity: 4, occupied: 2, status: "Reserved" },
-    { id: 7, name: "Table 7", capacity: 6, occupied: 5, status: "Dine In" },
-    { id: 8, name: "Table 8", capacity: 8, occupied: 4, status: "Available" },
-  ];
+const ManageTables = ({ data, isLoading, notify }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   return (
     <>
@@ -20,8 +16,12 @@ const ManageTables = () => {
         className={"flex justify-between items-center mb-2"}
       >
         <div className="flex gap-2 items-center max-h-screen">
-          <button className="flex flex-2 gap-2 justify-center items-center text-nowrap border-2 border-primary bg-primary/30 text-text-accent py-2 px-4 rounded-lg">
-            <span>Main Dining</span>
+          <button
+            onClick={openModal}
+            className="cursor-pointer flex flex-2 gap-2 justify-center items-center text-nowrap border-2 border-primary bg-primary/30 text-text py-2 px-4 rounded-lg"
+          >
+            <PiPicnicTableBold size={20} className="text-text" />
+            <p className="text-sm text-text">New Table</p>
           </button>
         </div>
       </Heading>
@@ -34,8 +34,36 @@ const ManageTables = () => {
         <p className="text-sm text-text">On Dine</p>
       </div>
       <div className="bg-border/50 rounded-lg p-6 text-text">
-        <TableLayout tables={tables} />
+        {isLoading ? (
+          <div>
+            <div className="animate-pulse flex space-x-4">
+              <div className="flex-1 space-y-6 py-1">
+                <div className="h-20 bg-slate-300 rounded"></div>
+                <div className="h-20 bg-slate-300 rounded"></div>
+                <div className="h-20 bg-slate-300 rounded"></div>
+              </div>
+              <div className="flex-1 space-y-6 py-1">
+                <div className="h-20 bg-slate-300 rounded"></div>
+                <div className="h-20 bg-slate-300 rounded"></div>
+                <div className="h-20 bg-slate-300 rounded"></div>
+              </div>
+              <div className="flex-1 space-y-6 py-1">
+                <div className="h-20 bg-slate-300 rounded"></div>
+                <div className="h-20 bg-slate-300 rounded"></div>
+                <div className="h-20 bg-slate-300 rounded"></div>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <TableLayout dataTables={data} notify={notify} />
+        )}
       </div>
+      <ModalAddTable
+        data={data}
+        notify={notify}
+        isOpen={isModalOpen}
+        onClose={closeModal}
+      />
     </>
   );
 };

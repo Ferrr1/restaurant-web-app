@@ -8,7 +8,6 @@ import {
   getDishes,
 } from "../features/dishes/services/DishesServices";
 import { useQuery } from "@tanstack/react-query";
-import LoadingScreen from "../components/ui/LoadingScreen";
 import { useNotify } from "../context/NotifyContext";
 import SkeletonDishes from "../features/dishes/components/skeleton/SkeletonDishes";
 import SkeletonCategory from "../features/dishes/components/skeleton/SkeletonCategory";

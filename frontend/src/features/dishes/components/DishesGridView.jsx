@@ -24,11 +24,11 @@ const DishesGridView = ({ dishes, categories, notify }) => {
             key={item.dishid}
             className={`group p-2 bg-surface text-text min-w-[15rem] border-2 border-border rounded-xl`}
           >
-            {!loaded && (
-              <div className="w-full h-[calc(10rem*1.2)] flex justify-center items-center">
-                <AiOutlineLoading3Quarters size={40} className="animate-spin" />
+            {/* {!loaded && (
+              <div className="w-full h-full flex justify-center items-center">
+                <AiOutlineLoading3Quarters size={24} className="animate-spin" />
               </div>
-            )}
+            )} */}
             <img
               src={`${BASE_URL}/uploads/dishes/${item.dishimage}`}
               onLoad={() => setLoaded(true)}
