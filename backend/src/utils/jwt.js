@@ -3,13 +3,15 @@ import { config } from "../config/config.js";
 
 const accessTokenSecret = config.JWT_ACCESS_SECRET;
 const refreshTokenSecret = config.JWT_REFRESH_SECRET;
-const accessTokenExpiry = "15m"; // 15 menit
+const accessTokenExpiry = "1d"; // 15 menit
 const refreshTokenExpiry = "7d"; // 7 hari
 const emailTokenExpiry = "1d"; // 1 hari
 const resetTokenExpiry = "1h"; // 1 jam
 
 const generateAccessToken = (payload) => {
-  return jwt.sign(payload, config.JWT_ACCESS_SECRET, { expiresIn: "1d" });
+  return jwt.sign(payload, config.JWT_ACCESS_SECRET, {
+    expiresIn: accessTokenExpiry,
+  });
 };
 
 const generateRefreshToken = (payload) => {
