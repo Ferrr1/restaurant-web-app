@@ -108,7 +108,7 @@ export const deleteCategory = async (req, res) => {
 export const getCategories = async (req, res) => {
   try {
     const categories = await sql`SELECT * FROM categories ORDER BY name ASC`;
-    res.status(200).json(categories[0]);
+    res.status(200).json(categories);
   } catch (error) {
     console.error("Get categories error:", error);
     res.status(500).json({

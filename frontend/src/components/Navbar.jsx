@@ -1,17 +1,17 @@
-import { MdLogout, MdOutlineSettings } from "react-icons/md";
-import Notification from "./Notification";
-import { useState } from "react";
+import { MdOutlineSettings } from "react-icons/md";
+// import Notification from "./Notification";
+// import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import Avatar from "./ui/Avatar";
 import { LogoutButton } from "../features/auth/components/LogoutButton";
 import { useAuth } from "../context/AuthContext";
 
 const Navbar = ({ head, summary }) => {
-  const [activeDropdown, setActiveDropdown] = useState(null);
+  // const [activeDropdown, setActiveDropdown] = useState(null);
   const { user } = useAuth();
-  const toggleDropdown = (type) => {
-    setActiveDropdown((prev) => (prev === type ? null : type));
-  };
+  // const toggleDropdown = (type) => {
+  //   setActiveDropdown((prev) => (prev === type ? null : type));
+  // };
   return (
     <div className="py-2 px-12 bg-surface shadow-sm text-text transition-all duration-300 ease-in-out">
       <div className="flex justify-between items-center">
@@ -21,10 +21,10 @@ const Navbar = ({ head, summary }) => {
         </div>
         <div className="flex gap-4 items-center">
           <div className="flex gap-2">
-            <Notification
+            {/* <Notification
               isOpen={activeDropdown === "notification"}
               onToggle={() => toggleDropdown("notification")}
-            />
+            /> */}
             <NavLink
               to={"/settings"}
               className={({ isActive }) =>

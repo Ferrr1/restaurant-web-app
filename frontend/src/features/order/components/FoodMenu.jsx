@@ -104,7 +104,7 @@ const FoodList = ({ activeFilter }) => {
       ? FoodData
       : FoodData.filter((item) => item.type === activeFilter);
   return (
-    <div className="flex justify-center flex-wrap gap-4 mt-4">
+    <div className="group flex justify-center flex-wrap gap-4 mt-4">
       {filteredData.map((item, index) => {
         const cartItem = cartItems.find((cart) => cart.id === item.id);
         const quantity = cartItem?.quantity || 0;
@@ -121,7 +121,9 @@ const FoodList = ({ activeFilter }) => {
               className="w-full h-[calc(10rem*1.2)]
       object-cover rounded-xl bg-center"
             />
-            <p className="text-sm text-text-muted mt-2">{item.type}</p>
+            <p className="group-hover:line-clamp-none line-clamp-1 text-sm text-text-muted mt-2">
+              {item.type}
+            </p>
             <h5 className="font-semibold">{item.name}</h5>
             <div className="flex justify-between items-center my-2">
               <span className="text-[1rem]">
