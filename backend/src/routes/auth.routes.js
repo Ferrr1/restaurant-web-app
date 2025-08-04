@@ -1,5 +1,4 @@
 import express from "express";
-import rateLimit from "express-rate-limit";
 import {
   getUser,
   login,
@@ -12,15 +11,9 @@ import {
 } from "../controllers/auth.controller.js";
 import { testEmailConnection } from "../services/email.service.js";
 import { authenticate } from "../middlewares/auth.middleware.js";
+import { limiter } from "../utils/limiter.js";
 
 const router = express.Router();
-
-// Rate limiting untuk proteksi brute force
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 menit
-  max: 500, // Maksimal 5 request per windowMs
-  message: "Terlalu banyak percobaan, silakan coba lagi setelah 15 menit",
-});
 
 // Public routes
 router.post("/register", register);

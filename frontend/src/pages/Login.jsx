@@ -4,7 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 import { Input } from "../components/ui/Input";
 import Button from "../components/ui/Button";
 import { MdMailOutline, MdOutlineLock } from "react-icons/md";
-import imageLogin from "../assets/images/food/filter/soups.jpg";
+import imageLogin from "../assets/images/food/filter/bg_login.webp";
 import { login } from "../features/auth/services/AuthServices";
 import { useAuth } from "../context/AuthContext";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
