@@ -9,7 +9,7 @@ const emailTokenExpiry = "1d"; // 1 hari
 const resetTokenExpiry = "1h"; // 1 jam
 
 const generateAccessToken = (payload) => {
-  return jwt.sign(payload, config.JWT_ACCESS_SECRET, { expiresIn: "15m" });
+  return jwt.sign(payload, config.JWT_ACCESS_SECRET, { expiresIn: "1d" });
 };
 
 const generateRefreshToken = (payload) => {
