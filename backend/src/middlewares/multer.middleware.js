@@ -1,11 +1,17 @@
 import multer from "multer";
 import path from "path";
-import crypto from "crypto";
 
 // Konfigurasi penyimpanan file
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "src/uploads/images/"); // folder tempat file disimpan
+    let folder = "src/uploads/images/others";
+    if (req.originalUrl.includes("/categories")) {
+      folder = "src/uploads/images/category";
+    } else if (req.originalUrl.includes("/dishes")) {
+      folder = "src/uploads/images/dishes";
+    }
+
+    cb(null, folder);
   },
   filename: (req, file, cb) => {
     const uniqueSuffix =

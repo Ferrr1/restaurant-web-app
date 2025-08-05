@@ -1,6 +1,11 @@
 import { IoMdPeople } from "react-icons/io";
 import { PiChairFill } from "react-icons/pi";
 import { cn } from "../../../utils/cn";
+import { AiOutlineDelete } from "react-icons/ai";
+import { CiEdit } from "react-icons/ci";
+import { useState } from "react";
+import ModalEditTable from "./ModalEditTable";
+import ModalDeleteTable from "./ModalDeleteTable";
 
 // Kursi
 const Chair = ({ occupied = false, styles }) => {
@@ -28,7 +33,7 @@ const Table8 = ({ name, guestCount, seats, styles }) => {
             styles.table
           )}
         >
-          <h1 className="text-text text-sm text-nowrap">{name}</h1>
+          <h1 className="text-text text-sm text-nowrap">Table {name}</h1>
           <div className="flex items-center gap-2">
             <IoMdPeople />
             <span className="text-xs">{guestCount}</span>
@@ -70,7 +75,7 @@ const Table4 = ({ name, guestCount, seats, styles }) => {
           styles.table
         )}
       >
-        <h1 className="text-text text-sm text-nowrap">{name}</h1>
+        <h1 className="text-text text-sm text-nowrap">Table {name}</h1>
         <div className="flex items-center gap-2">
           <IoMdPeople />
           <span className="text-xs">{guestCount}</span>
@@ -99,23 +104,28 @@ const Table4 = ({ name, guestCount, seats, styles }) => {
 };
 
 // Layout semua meja
-export const TableLayout = ({ tables }) => {
+export const TableLayout = ({ dataTables, notify }) => {
+  const [isModalOpen, setIsModalOpen] = useState(null);
+  const [selectedTable, setSelectedTable] = useState({});
+
+  const openModal = (type) => setIsModalOpen(type);
+  const closeModal = () => setIsModalOpen(null);
   const generateSeats = (occupiedCount, totalSeats) => {
     return Array.from({ length: totalSeats }, (_, i) => i < occupiedCount);
   };
   const getStyles = (status) => {
     switch (status) {
-      case "Available":
+      case "available":
         return {
           chair: "text-purple-400",
           table: "bg-purple-400/20",
         };
-      case "Reserved":
+      case "reserved":
         return {
           chair: "text-teal-400",
           table: "bg-teal-400/20",
         };
-      case "Dine In":
+      case "dine in":
         return {
           chair: "text-orange-400",
           table: "bg-orange-400/20",
@@ -129,27 +139,63 @@ export const TableLayout = ({ tables }) => {
   };
   return (
     <div className="flex flex-wrap justify-center gap-12">
-      {tables.map((table) => {
+      {dataTables.map((table) => {
         const seats = generateSeats(table.occupied, table.capacity);
         const styles = getStyles(table.status);
-        return seats.length > 4 ? (
-          <Table8
-            key={table.id}
-            name={table.name}
-            guestCount={table.occupied}
-            styles={styles}
-            seats={seats}
-          />
-        ) : (
-          <Table4
-            key={table.id}
-            name={table.name}
-            guestCount={table.occupied}
-            styles={styles}
-            seats={seats}
-          />
+        return (
+          <div className="relative group hover:cursor-alias">
+            {seats.length > 4 ? (
+              <Table8
+                key={table.id}
+                name={table.number}
+                guestCount={table.occupied}
+                styles={styles}
+                seats={seats}
+              />
+            ) : (
+              <Table4
+                key={table.id}
+                name={table.number}
+                guestCount={table.occupied}
+                styles={styles}
+                seats={seats}
+              />
+            )}
+            <div className="absolute bg-background rounded-xl p-2 top-0 right-0 gap-2 hidden group-hover:flex opacity-0 group-hover:opacity-100">
+              <button
+                onClick={() => {
+                  openModal("delete");
+                  setSelectedTable(table);
+                }}
+                className="cursor-pointer bg-danger/60 border-2 border-danger p-1 rounded"
+              >
+                <AiOutlineDelete size={18} className="text-text" />
+              </button>
+              <button
+                onClick={() => {
+                  openModal("edit");
+                  setSelectedTable(table);
+                }}
+                className="cursor-pointer bg-primary/60 border-2 border-primary p-1 rounded"
+              >
+                <CiEdit size={18} className="text-text" />
+              </button>
+            </div>
+          </div>
         );
       })}
+      <ModalEditTable
+        notify={notify}
+        isOpen={isModalOpen === "edit"}
+        onClose={closeModal}
+        data={selectedTable}
+      />
+      <ModalDeleteTable
+        notify={notify}
+        isOpen={isModalOpen === "delete"}
+        onClose={closeModal}
+        data={selectedTable}
+      />
     </div>
   );
 };

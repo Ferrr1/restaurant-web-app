@@ -1,18 +1,18 @@
 import express from "express";
 import { authenticate } from "../middlewares/auth.middleware.js";
-import {
-  addDish,
-  deleteDish,
-  getDishes,
-  updateDish,
-} from "../controllers/dishes.controller.js";
 import { upload } from "../middlewares/multer.middleware.js";
 import multer from "multer";
+import {
+  addCategory,
+  deleteCategory,
+  getCategories,
+  updateCategory,
+} from "../controllers/category.controller.js";
 
 const router = express.Router();
 
 // Protected Routes
-router.get("/", getDishes);
+router.get("/", getCategories);
 router.post(
   "/",
 
@@ -25,7 +25,7 @@ router.post(
       next();
     });
   },
-  addDish
+  addCategory
 );
 
 router.put(
@@ -40,7 +40,7 @@ router.put(
       next();
     });
   },
-  updateDish
+  updateCategory
 );
-router.delete("/:id", deleteDish);
+router.delete("/:id", deleteCategory);
 export default router;

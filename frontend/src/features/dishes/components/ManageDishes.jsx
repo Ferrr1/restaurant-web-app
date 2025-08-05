@@ -9,7 +9,7 @@ import { FoodData } from "../../../data/constants";
 import DishesListView from "./DishesListView";
 import ModalAddDishes from "./ModalAddDishes";
 
-const ManageDishes = ({ activeFilter }) => {
+const ManageDishes = ({ activeFilter, dishes, categories, notify }) => {
   const [view, setView] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [search, setSearch] = useState("");
@@ -21,10 +21,10 @@ const ManageDishes = ({ activeFilter }) => {
 
   const filteredDishesData =
     activeFilter === "All"
-      ? FoodData
-      : FoodData.filter((dish) => dish.type === activeFilter);
+      ? dishes
+      : dishes?.filter((dish) => dish?.categoryname === activeFilter);
   const searchDishes = filteredDishesData.filter((dish) =>
-    dish.name.toLowerCase().includes(search.toLowerCase())
+    dish?.dishname.toLowerCase().includes(search.toLowerCase())
   );
   return (
     <>
@@ -49,7 +49,9 @@ const ManageDishes = ({ activeFilter }) => {
       </Heading>
       <div className="bg-border/50 rounded-lg p-4 text-text">
         <div className="flex justify-between items-center">
-          <h1>DishesCategor (19)</h1>
+          <h1>
+            {activeFilter} ({searchDishes.length})
+          </h1>
           <div>
             <button
               onClick={toggleLayout}
@@ -76,9 +78,17 @@ const ManageDishes = ({ activeFilter }) => {
         <div className="mt-4">
           {searchDishes.length > 0 ? (
             view ? (
-              <DishesGridView data={searchDishes} />
+              <DishesGridView
+                dishes={searchDishes}
+                categories={categories}
+                notify={notify}
+              />
             ) : (
-              <DishesListView data={searchDishes} />
+              <DishesListView
+                dishes={searchDishes}
+                categories={categories}
+                notify={notify}
+              />
             )
           ) : (
             <div className="w-full">
@@ -87,7 +97,12 @@ const ManageDishes = ({ activeFilter }) => {
           )}
         </div>
       </div>
-      <ModalAddDishes isOpen={isModalOpen} onClose={closeModal} />
+      <ModalAddDishes
+        notify={notify}
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        data={categories}
+      />
     </>
   );
 };
