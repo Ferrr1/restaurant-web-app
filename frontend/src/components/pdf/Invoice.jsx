@@ -12,7 +12,7 @@ const Invoice = ({
   payment,
 }) => (
   <Document>
-    <Page size="A4" style={styles.page}>
+    <Page size={{ width: 165, height: 600 }} style={styles.page}>
       <Text style={styles.title}>INVOICE</Text>
 
       <View style={styles.section}>
