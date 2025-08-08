@@ -6,6 +6,7 @@ import authRoute from "./src/routes/auth.routes.js";
 import categoriesRoute from "./src/routes/category.route.js";
 import dishRoute from "./src/routes/dishes.route.js";
 import tableRoute from "./src/routes/tables.route.js";
+import customerRoute from "./src/routes/customers.route.js";
 import { config } from "./src/config/config.js";
 import cookieParser from "cookie-parser";
 
@@ -28,6 +29,7 @@ app.use("/api/auth", authRoute);
 app.use("/api/categories", categoriesRoute);
 app.use("/api/dishes", dishRoute);
 app.use("/api/tables", tableRoute);
+app.use("/api/customers", customerRoute);
 // Akses gambar dish: /uploads/dishes/image-name.png
 app.use("/uploads/dishes", express.static("src/uploads/images/dishes"));
 
