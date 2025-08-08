@@ -5,8 +5,8 @@ import { RiTakeawayLine } from "react-icons/ri";
 import { IoMdPeople } from "react-icons/io";
 import Divider from "../../../components/ui/Divider";
 import { useContext, useState } from "react";
-import Invoice from "../../../components/pdf/Invoice";
-import { PDFDownloadLink } from "@react-pdf/renderer";
+// import Invoice from "../../../components/pdf/Invoice";
+// import { PDFDownloadLink } from "@react-pdf/renderer";
 
 import {
   FaCashRegister,
@@ -41,6 +41,8 @@ const Cart = () => {
   };
   const closeModal = () => setactiveModal(null);
   const tooglePayment = (pay) => setPayment(pay);
+  console.log("cartItems:", cartItems);
+
   // customerName: "",
   //   orderType: "",
   //   tableNumber: 0,
@@ -88,7 +90,7 @@ const Cart = () => {
           <div key={item.id} className="flex justify-between">
             <div className="flex gap-2">
               <h2 className="text-text-muted text-lg">{item.quantity}</h2>
-              <h2 className="text-text-muted text-lg">{item.name}</h2>
+              <h2 className="text-text-muted text-lg">{item.dishname}</h2>
             </div>
             <div className="flex gap-2 text-text">
               <span className="text-lg text-text">
@@ -156,25 +158,9 @@ const Cart = () => {
         </div>
       </div>
       <div className="flex justify-between gap-2 mt-4">
-        <PDFDownloadLink
-          document={
-            <Invoice
-              order={order}
-              cartItems={cartItems}
-              totalAmount={totalAmount}
-              tax={tax}
-              totalAfterTax={totalAfterTax}
-              payment={payment}
-            />
-          }
-          fileName={`Invoice-${order.tableNumber || "NoTable"}.pdf`}>
-          {({ loading }) => (
-            <button className="flex flex-1 gap-2 justify-center items-center border-2 border-border cursor-pointer bg-primary hover:bg-primary/80 transition-colors duration-200 ease-in-out text-text-accent p-2 rounded-lg">
-              <FaPrint />
-              <span>{loading ? "Loading..." : "Print"}</span>
-            </button>
-          )}
-        </PDFDownloadLink>
+        <button className="flex flex-1 gap-2 justify-center items-center border-2 border-border cursor-pointer bg-primary hover:bg-primary/80 transition-colors duration-200 ease-in-out text-text-accent p-2 rounded-lg">
+          <FaPrint />
+        </button>
         <button className="flex flex-2 gap-2 justify-center items-center border-2 border-border cursor-pointer bg-primary hover:bg-primary/80 transition-colors duration-200 ease-in-out text-text-accent p-2 rounded-lg">
           <FaMouse />
           <span>Place Order</span>

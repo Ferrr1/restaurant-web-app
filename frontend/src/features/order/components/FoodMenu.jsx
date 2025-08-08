@@ -46,33 +46,28 @@ const FoodMenu = () => {
     <div>
       <Heading
         text="Food Menu"
-        className={"flex justify-between items-center mb-2"}
-      >
+        className={"flex justify-between items-center mb-2"}>
         <div className="flex gap-2">
           <button
             onClick={() => handleScroll("left")}
-            className="text-text cursor-pointer rounded-full p-2 border-2 border-border hover:border-primary bg-primary/20 hover:bg-primary/30 transition-colors duration-200 ease-in-out"
-          >
+            className="text-text cursor-pointer rounded-full p-2 border-2 border-border hover:border-primary bg-primary/20 hover:bg-primary/30 transition-colors duration-200 ease-in-out">
             <IoIosArrowBack size={20} />
           </button>
           <button
             onClick={() => handleScroll("right")}
-            className="text-text cursor-pointer rounded-full p-2 border-2 border-border hover:border-primary bg-primary/20 hover:bg-primary/30 transition-colors duration-200 ease-in-out"
-          >
+            className="text-text cursor-pointer rounded-full p-2 border-2 border-border hover:border-primary bg-primary/20 hover:bg-primary/30 transition-colors duration-200 ease-in-out">
             <IoIosArrowForward size={20} />
           </button>
         </div>
       </Heading>
       <div
         ref={scrollRef}
-        className="flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-hide"
-      >
+        className="flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-hide">
         <div
           onClick={() => toggleFilter("All")}
           className={`min-w-[150px] border-2 text-text ${
             activeFilter === "All" ? "border-primary" : "border-border"
-          } cursor-pointer snap-center flex-shrink-0 flex gap-2 p-2 rounded-xl`}
-        >
+          } cursor-pointer snap-center flex-shrink-0 flex gap-2 p-2 rounded-xl`}>
           <img
             src={ImageFilterAll}
             onLoad={() => setLoaded(true)}
@@ -94,8 +89,7 @@ const FoodMenu = () => {
             key={index}
             className={`min-w-[150px] border-2 text-text ${
               activeFilter === item.name ? "border-primary" : "border-border"
-            } cursor-pointer snap-center flex-shrink-0 flex gap-2 p-2 rounded-xl`}
-          >
+            } cursor-pointer snap-center flex-shrink-0 flex gap-2 p-2 rounded-xl`}>
             <img
               src={`${BASE_URL}/uploads/categories/${item.image}`}
               onLoad={() => setLoaded(true)}
@@ -134,15 +128,15 @@ const FoodList = ({ activeFilter, data }) => {
   return (
     <div className="group flex justify-center flex-wrap gap-4 mt-4">
       {filteredData?.map((item) => {
-        const cartItem = cartItems.find((cart) => cart.id === item.id);
+        const cartItem = cartItems.find((cart) => cart.id === item.dishid);
+
         const quantity = cartItem?.quantity || 0;
         return (
           <div
             key={item.dishid}
             className={`p-2 text-text min-w-[15rem] border-2 ${
               quantity > 0 ? "border-primary" : "border-border"
-            } rounded-xl transition-colors duration-300 ease-in-out`}
-          >
+            } rounded-xl transition-colors duration-300 ease-in-out`}>
             <img
               src={`${BASE_URL}/uploads/dishes/${item.dishimage}`}
               alt=""
@@ -160,15 +154,13 @@ const FoodList = ({ activeFilter, data }) => {
               <div className="flex gap-2 items-center">
                 <button
                   onClick={() => decreaseQuantity(item)}
-                  className="p-2 cursor-pointer border-2 border-border hover:border-primary rounded-full transition-colors duration-200 ease-in-out"
-                >
+                  className="p-2 cursor-pointer border-2 border-border hover:border-primary rounded-full transition-colors duration-200 ease-in-out">
                   <FaMinus size={16} />
                 </button>
                 <span>{quantity}</span>
                 <button
                   onClick={() => addToCart(item)}
-                  className="p-2 cursor-pointer text-text-accent bg-primary border-2 border-border hover:bg-primary/30 hover:border-primary rounded-full transition-colors duration-200 ease-in-out"
-                >
+                  className="p-2 cursor-pointer text-text-accent bg-primary border-2 border-border hover:bg-primary/30 hover:border-primary rounded-full transition-colors duration-200 ease-in-out">
                   <FaPlus size={16} />
                 </button>
               </div>
