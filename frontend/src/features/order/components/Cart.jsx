@@ -69,7 +69,12 @@ const Cart = () => {
           </div>
         </div>
         <div className="flex justify-between ">
-          <h2 className="text-base text-text-muted">Order #ODR007</h2>
+          {/* Minus Dinamis Order */}
+          <div className="flex flex-col">
+            <h2 className="text-base text-text-muted">Order #ODR007</h2>
+            <h2 className="text-base text-text-muted">{order.customerName}</h2>
+            <h2 className="text-base text-text-muted">{order.orderType}</h2>
+          </div>
           <div className="flex gap-2 items-center justify-center text-text">
             {order.guestCount > 0 ? (
               <p>{order.guestCount}</p>
@@ -185,6 +190,7 @@ const Cart = () => {
 export default Cart;
 
 const ModalOrder = ({ isOpen, onClose, createOrder }) => {
+  const { push } = useNotify();
   const [order, setOrder] = useState({
     customerName: "",
     orderType: "",
@@ -200,6 +206,24 @@ const ModalOrder = ({ isOpen, onClose, createOrder }) => {
   const decrement = () => {
     if (order.guestCount <= 0) return;
     setOrder({ ...order, guestCount: order.guestCount - 1 });
+  };
+  const handleCreate = () => {
+    if (
+      !order.customerName ||
+      !order.orderType ||
+      !order.tableNumber ||
+      !order.paymentType
+    ) {
+      onClose();
+      push({
+        message: "Gagal membuat order!! Lengkapi semua field",
+        type: "error",
+      });
+      return;
+    }
+    createOrder(order);
+    onClose();
+    push({ message: "Berhasil membuat order!", type: "success" });
   };
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Create Order">
@@ -284,10 +308,7 @@ const ModalOrder = ({ isOpen, onClose, createOrder }) => {
           <Button variant="delete" onClick={onClose} className="mt-2">
             Close
           </Button>
-          <Button
-            variant="confirm"
-            onClick={() => createOrder(order)}
-            className="mt-2">
+          <Button variant="confirm" onClick={handleCreate} className="mt-2">
             Create
           </Button>
         </div>
