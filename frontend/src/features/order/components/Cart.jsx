@@ -5,7 +5,7 @@ import { RiTakeawayLine } from "react-icons/ri";
 import { IoMdPeople } from "react-icons/io";
 import Divider from "../../../components/ui/Divider";
 import { useContext, useState } from "react";
-// import Invoice from "../../../components/pdf/Invoice";
+import Invoice from "../../../components/pdf/Invoice";
 // import { PDFDownloadLink } from "@react-pdf/renderer";
 
 import {
@@ -22,6 +22,8 @@ import { useNotify } from "../../../context/NotifyContext";
 import { Input, Select, TextArea } from "../../../components/ui/Input";
 import { currencyIDR } from "../../../utils/currency";
 import { useCart } from "../../../context/CartContext";
+import { useReactToPrint } from "react-to-print";
+import { useRef } from "react";
 
 const Cart = () => {
   const {
@@ -41,8 +43,11 @@ const Cart = () => {
   };
   const closeModal = () => setactiveModal(null);
   const tooglePayment = (pay) => setPayment(pay);
-  console.log("cartItems:", cartItems);
-
+  // console.log("cartItems:", cartItems);
+  const componentRef = useRef();
+  const handlePrint = useReactToPrint({
+    contentRef: componentRef,
+  });
   // customerName: "",
   //   orderType: "",
   //   tableNumber: 0,
@@ -163,13 +168,26 @@ const Cart = () => {
         </div>
       </div>
       <div className="flex justify-between gap-2 mt-4">
-        <button className="flex flex-1 gap-2 justify-center items-center border-2 border-border cursor-pointer bg-primary hover:bg-primary/80 transition-colors duration-200 ease-in-out text-text-accent p-2 rounded-lg">
+        <div style={{ display: "none" }}>
+          <Invoice
+            ref={componentRef}
+            order={order}
+            cartItems={cartItems}
+            totalAmount={totalAmount}
+            tax={tax}
+            totalAfterTax={totalAfterTax}
+            payment={payment}
+          />
+        </div>
+        <button
+          onClick={handlePrint}
+          className="flex flex-1 gap-2 justify-center items-center border-2 border-border cursor-pointer bg-primary hover:bg-primary/80 transition-colors duration-200 ease-in-out text-text-accent p-2 rounded-lg">
           <FaPrint />
         </button>
-        <button className="flex flex-2 gap-2 justify-center items-center border-2 border-border cursor-pointer bg-primary hover:bg-primary/80 transition-colors duration-200 ease-in-out text-text-accent p-2 rounded-lg">
+        {/* <button className="flex flex-2 gap-2 justify-center items-center border-2 border-border cursor-pointer bg-primary hover:bg-primary/80 transition-colors duration-200 ease-in-out text-text-accent p-2 rounded-lg">
           <FaMouse />
           <span>Place Order</span>
-        </button>
+        </button> */}
       </div>
       <ModalOrder
         createOrder={createOrder}

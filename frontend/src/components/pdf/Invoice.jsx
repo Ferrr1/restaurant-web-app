@@ -1,56 +1,71 @@
-// components/pdf/InvoiceDocument.jsx
+// Invoice.jsx
 import React from "react";
-import { Document, Page, Text, View } from "@react-pdf/renderer";
-import styles from "./InvoiceStyles";
+import { currencyIDR } from "../../utils/currency";
 
-// Fungsi manual format angka ke format Rp
-const formatRupiah = (value) => {
-  const number = Number(value) || 0;
-  return `Rp ${number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
-};
+const Invoice = React.forwardRef(
+  (
+    {
+      order,
+      cartItems,
+      // totalQuantity,
+      totalAmount,
+      tax,
+      totalAfterTax,
+      // payment,
+      // currencyIDR,
+    },
+    ref
+  ) => {
+    const now = new Date();
+    const formattedDate = now.toLocaleDateString("id-ID", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    });
+    const formattedTime = now.toLocaleTimeString("id-ID", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
 
-const Invoice = ({
-  order = {},
-  cartItems = [],
-  totalAmount = 0,
-  tax = 0,
-  totalAfterTax = 0,
-  payment = "Not Set",
-}) => (
-  <Document>
-    <Page size="A4" style={styles.page}>
-      <Text style={styles.title}>INVOICE</Text>
-
-      <View style={styles.section}>
-        <Text>Order ID: {order.id || "ODR007"}</Text>
-        <Text>Table: {order.tableNumber || "Not Selected"}</Text>
-        <Text>Guest Count: {order.guestCount || "Not Set"}</Text>
-        <Text>Payment Method: {payment}</Text>
-      </View>
-
-      <View style={styles.table}>
-        <Text style={styles.subtitle}>Ordered Items:</Text>
-        {cartItems.length === 0 ? (
-          <Text>Tidak ada item yang dipesan.</Text>
-        ) : (
-          cartItems.map((item, idx) => (
-            <View key={idx} style={styles.row}>
-              <Text>
-                {item.quantity || 0}x {item.name || "Unknown Item"}
-              </Text>
-              <Text>{formatRupiah(item.price)}</Text>
-            </View>
-          ))
+    return (
+      <div ref={ref} className="Invoice">
+        <div className="center bold">TOKO MAJU JAYA</div>
+        <div className="center">Jl. Contoh No. 123</div>
+        <div className="center">Telp: 0812-3456-7890</div>
+        <hr />
+        <div>Customer: {order.customerName || "-"}</div>
+        <div>Order Type: {order.orderType || "-"}</div>
+        {order.orderType === "Dine in" && (
+          <div>Table: {order.tableNumber || "-"}</div>
         )}
-      </View>
+        <div>Tanggal: {formattedDate}</div>
+        <div>Waktu: {formattedTime}</div>
+        <hr />
+        {cartItems?.map((item, i) => (
+          <div key={i}>
+            {item.dishname} x{item.quantity}{" "}
+            <span style={{ float: "right" }}>
+              {currencyIDR(item.price * item.quantity)}
+            </span>
+          </div>
+        ))}
+        <hr />
+        <div>
+          Sub Total{" "}
+          <span style={{ float: "right" }}>{currencyIDR(totalAmount)}</span>
+        </div>
+        <div>
+          Tax <span style={{ float: "right" }}>{currencyIDR(tax)}</span>
+        </div>
+        <div style={{ fontWeight: "bold" }}>
+          Total{" "}
+          <span style={{ float: "right" }}>{currencyIDR(totalAfterTax)}</span>
+        </div>
 
-      <View style={styles.summary}>
-        <Text>Subtotal: {formatRupiah(totalAmount)}</Text>
-        <Text>Tax: {formatRupiah(tax)}</Text>
-        <Text style={styles.total}>Total: {formatRupiah(totalAfterTax)}</Text>
-      </View>
-    </Page>
-  </Document>
+        <div className="center">-- Terima Kasih --</div>
+      </div>
+    );
+  }
 );
 
 export default Invoice;
