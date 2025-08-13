@@ -1,0 +1,89 @@
+@media print {
+  @page {
+    size: 80mm auto;
+    margin: 0;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  .invoice-container {
+    width: 80mm !important;
+    max-width: 80mm !important;
+    padding: 5mm !important;
+    font-family: "Courier New", Courier, monospace !important;
+    font-size: 3.5mm !important;
+    line-height: 1.2;
+    box-sizing: border-box;
+    page-break-after: auto;
+  }
+
+  .resto-title {
+    font-size: 5mm !important;
+    font-weight: bold;
+    margin-bottom: 2mm;
+  }
+
+  .address-invoice,
+  .phone-number {
+    font-size: 3mm !important;
+    margin-bottom: 1mm;
+  }
+
+  .customer-info {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    text-align: left;
+    margin-top: 2mm;
+    margin-bottom: 2mm;
+    font-size: 3mm !important;
+    page-break-inside: avoid;
+  }
+
+  .customer-info > div {
+    width: 48%;
+    margin-bottom: 1mm;
+    box-sizing: border-box;
+  }
+
+  .customer-info > div:nth-child(2n) {
+    float: right;
+  }
+  .invoice-head,
+  .footer-section {
+    text-align: center;
+    page-break-inside: avoid;
+  }
+
+  hr {
+    border-top: 1px dashed #000 !important;
+    margin: 3mm 0 !important;
+  }
+
+  .item-list {
+    font-size: 3mm !important;
+  }
+
+  .invoice-container > div {
+    page-break-inside: avoid;
+  }
+  span {
+    float: right;
+  }
+  .final-total {
+    font-size: 4mm !important;
+    font-weight: bold !important;
+  }
+
+  .center {
+    margin-top: 5mm !important;
+    font-size: 3mm !important;
+  }
+
+  .no-print {
+    display: none;
+  }
+}
