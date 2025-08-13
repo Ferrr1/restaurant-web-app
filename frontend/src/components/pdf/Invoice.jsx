@@ -1,6 +1,7 @@
 // Invoice.jsx
 import React from "react";
 import { currencyIDR } from "../../utils/currency";
+import "./InvoiceStyles.css";
 
 const Invoice = React.forwardRef(
   (
@@ -11,8 +12,7 @@ const Invoice = React.forwardRef(
       totalAmount,
       tax,
       totalAfterTax,
-      // payment,
-      // currencyIDR,
+      payment,
     },
     ref
   ) => {
@@ -28,41 +28,45 @@ const Invoice = React.forwardRef(
     });
 
     return (
-      <div ref={ref} className="Invoice">
-        <div className="center bold">TOKO MAJU JAYA</div>
-        <div className="center">Jl. Contoh No. 123</div>
-        <div className="center">Telp: 0812-3456-7890</div>
+      <div ref={ref} className="invoice-container">
+        <div className="invoice-head">
+          <div className="resto-title">RESTO WEB APP</div>
+          <div className="address-invoice">Jl. Contoh No. 123</div>
+          <div className="phone-number">Telp: 0812-3456-7890</div>
+        </div>
         <hr />
-        <div>Customer: {order.customerName || "-"}</div>
-        <div>Order Type: {order.orderType || "-"}</div>
-        {order.orderType === "Dine in" && (
-          <div>Table: {order.tableNumber || "-"}</div>
-        )}
-        <div>Tanggal: {formattedDate}</div>
-        <div>Waktu: {formattedTime}</div>
+        <div className="customer-info">
+          <div className="order-info">Order: {order.orderType || "-"}</div>
+          <div className="customer-name">
+            Customer: {order.customerName || "-"}
+          </div>
+          {order.orderType === "Dine in"}
+          <div className="time-info">Waktu: {formattedTime}</div>
+          <div className="time-info">Table: {order.tableNumber || "-"}</div>
+          <div className="date-info">Tanggal: {formattedDate}</div>
+          <div className="time-info">Payment: {payment}</div>
+        </div>
         <hr />
         {cartItems?.map((item, i) => (
           <div key={i}>
             {item.dishname} x{item.quantity}{" "}
-            <span style={{ float: "right" }}>
-              {currencyIDR(item.price * item.quantity)}
-            </span>
+            <span>{currencyIDR(item.price * item.quantity)}</span>
           </div>
         ))}
         <hr />
         <div>
-          Sub Total{" "}
-          <span style={{ float: "right" }}>{currencyIDR(totalAmount)}</span>
+          Sub Total <span>{currencyIDR(totalAmount)}</span>
         </div>
         <div>
-          Tax <span style={{ float: "right" }}>{currencyIDR(tax)}</span>
+          Tax <span>{currencyIDR(tax)}</span>
         </div>
-        <div style={{ fontWeight: "bold" }}>
-          Total{" "}
-          <span style={{ float: "right" }}>{currencyIDR(totalAfterTax)}</span>
+        <div className="final-total">
+          Total <span>{currencyIDR(totalAfterTax)}</span>
         </div>
-
-        <div className="center">-- Terima Kasih --</div>
+        <hr />
+        <div className="note">Noted: {order.note || "-"}</div>
+        <hr />
+        <div className="footer-section">-- Terima Kasih --</div>
       </div>
     );
   }

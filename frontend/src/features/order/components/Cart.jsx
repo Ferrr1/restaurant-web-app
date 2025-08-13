@@ -319,6 +319,7 @@ const ModalOrder = ({ isOpen, onClose, createOrder }) => {
         <TextArea
           onChange={(e) => setOrder({ ...order, note: e.target.value })}
           label="Note"
+          value={order.note}
           className="w-full text-text"
           placeholder="e.g. Please add extra cheese, No MSG, etc."
         />
