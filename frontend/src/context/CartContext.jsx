@@ -1,4 +1,4 @@
-import { createContext, useReducer } from "react";
+import { createContext, useContext, useReducer } from "react";
 
 const CartContext = createContext({});
 
@@ -14,91 +14,102 @@ const initialCart = {
 const cartReducer = (state, action) => {
   switch (action.type) {
     case "CREATE_ORDER":
-      console.log(state);
       return {
         ...state,
         order: action.payload,
       };
-    case "ADD_AND_INCREASE":
+
+    case "ADD_AND_INCREASE": {
+      const existingItem = state.cartItems.find(
+        (item) => item.id === action.payload.id
+      );
+      const updatedCartItems = existingItem
+        ? state.cartItems.map((item) =>
+            item.id === action.payload.id
+              ? { ...item, quantity: item.quantity + 1 }
+              : item
+          )
+        : [...state.cartItems, { ...action.payload, quantity: 1 }];
+
       return {
         ...state,
-        cartItems: state.cartItems.find((item) => item.id === action.payload.id)
-          ? state.cartItems.map((item) => {
-              if (item.id === action.payload.id) {
-                return { ...item, quantity: item.quantity + 1 };
-              }
-              return item;
-            })
-          : [...state.cartItems, { ...action.payload, quantity: 1 }],
+        cartItems: updatedCartItems,
         totalAmount: state.totalAmount + action.payload.price,
         totalQuantity: state.totalQuantity + 1,
       };
-    // case "INCREASE":
-    //   return {
-    //     ...state,
-    //     cartItems: state.cartItems.map((item) => {
-    //       if (item.id === action.payload.id) {
-    //         return { ...item, quantity: item.quantity + 1 };
-    //       }
-    //       return item;
-    //     }),
-    //     totalAmount: state.totalAmount + action.payload.price,
-    //   };
-    case "DECREASE_AND_REMOVE":
+    }
+
+    case "DECREASE_AND_REMOVE": {
+      const existingItem = state.cartItems.find(
+        (item) => item.id === action.payload.id
+      );
+      const updatedCartItems = state.cartItems.reduce((acc, item) => {
+        if (item.id === action.payload.id) {
+          const updatedQuantity = item.quantity - 1;
+          if (updatedQuantity > 0) {
+            acc.push({ ...item, quantity: updatedQuantity });
+          }
+        } else {
+          acc.push(item);
+        }
+        return acc;
+      }, []);
+
       return {
         ...state,
-        cartItems: state.cartItems.reduce((acc, item) => {
-          if (item.id === action.payload.id) {
-            const updatedQuantity = item.quantity - 1;
-            if (updatedQuantity > 0) {
-              acc.push({ ...item, quantity: updatedQuantity });
-            }
-          } else {
-            acc.push(item);
-          }
-          return acc;
-        }, []),
-        totalAmount: state.cartItems.find(
-          (item) => item.id === action.payload.id
-        )
+        cartItems: updatedCartItems,
+        totalAmount: existingItem
           ? state.totalAmount - action.payload.price
           : state.totalAmount,
         totalQuantity:
-          state.cartItems.find((item) => item.id === action.payload.id)
-            ?.quantity > 0
+          existingItem && existingItem.quantity > 0
             ? state.totalQuantity - 1
             : state.totalQuantity,
       };
+    }
+
     case "REMOVE":
       return { ...initialCart };
+
     default:
       return state;
   }
 };
 
-const CartProvider = ({ children }) => {
+export const CartProvider = ({ children }) => {
   const [state, dispatch] = useReducer(cartReducer, initialCart);
 
   const addToCart = (product) => {
-    dispatch({ type: "ADD_AND_INCREASE", payload: product });
+    dispatch({
+      type: "ADD_AND_INCREASE",
+      payload: {
+        ...product,
+        id: product.dishid, // mapping dishid → id
+        price: product.dishprice, // mapping dishprice → price
+      },
+    });
   };
 
-  //   const increaseQuantity = (product) => {
-  //     dispatch({ type: "INCREASE", payload: product });
-  //   };
+  const decreaseQuantity = (product) => {
+    dispatch({
+      type: "DECREASE_AND_REMOVE",
+      payload: {
+        id: product.dishid,
+        price: product.dishprice,
+      },
+    });
+  };
+
   const createOrder = (order) => {
     dispatch({ type: "CREATE_ORDER", payload: order });
   };
 
-  const decreaseQuantity = (product) => {
-    dispatch({ type: "DECREASE_AND_REMOVE", payload: product });
-  };
-
-  const removeFromCart = (product) => {
-    dispatch({ type: "REMOVE", payload: product });
+  const removeFromCart = () => {
+    dispatch({ type: "REMOVE" });
   };
 
   const tax = state.totalAmount * 0.11;
+
   const value = {
     order: state.order,
     cartItems: state.cartItems,
@@ -107,12 +118,18 @@ const CartProvider = ({ children }) => {
     tax: tax,
     totalAfterTax: state.totalAmount + tax,
     addToCart,
-    createOrder,
     decreaseQuantity,
+    createOrder,
     removeFromCart,
   };
-  console.log("value", value);
+
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 };
 
-export { CartContext, CartProvider };
+export const useCart = () => {
+  const context = useContext(CartContext);
+  if (!context) {
+    throw new Error("useCart must be used within a CartProvider");
+  }
+  return context;
+};

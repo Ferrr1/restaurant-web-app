@@ -6,8 +6,9 @@ import { useScrollNavigator } from "../../../hooks/useScrollNavigator";
 import { Input } from "../../../components/ui/Input";
 import { IoMdCall, IoMdPeople } from "react-icons/io";
 import { PiPicnicTableBold } from "react-icons/pi";
+import ModalAddReservation from "./ModalAddReservation";
 
-const ListTables = ({ activeFilter, setActiveFilter }) => {
+const ListBooked = ({ activeFilter, setActiveFilter }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { scrollRef, onMouseDown, onMouseMove, onMouseLeave, onMouseUp } =
     useScrollNavigator();
@@ -123,9 +124,9 @@ const ListTables = ({ activeFilter, setActiveFilter }) => {
           <span>Add New Reservation</span>
         </button>
       </div>
-      {/* <ModalAddCategory isOpen={isModalOpen} onClose={closeModal} /> */}
+      <ModalAddReservation isOpen={isModalOpen} onClose={closeModal} />
     </div>
   );
 };
 
-export default ListTables;
+export default ListBooked;

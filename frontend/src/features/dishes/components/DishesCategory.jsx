@@ -1,16 +1,20 @@
 import Heading from "../../../components/ui/Heading";
-import MiePangsit from "../../../assets/images/food/filter/soups.jpg";
-import { getFilterCountsByKey } from "../../../utils/FilterCounts";
-import { FoodData } from "../../../data/constants";
-import { FaPlus } from "react-icons/fa6";
 import { useState } from "react";
-import Modal from "../../../components/ui/Modal";
-import { Input } from "../../../components/ui/Input";
-import Button from "../../../components/ui/Button";
 import ModalAddCategory from "./ModalAddCategory";
+import { FaPlus } from "react-icons/fa6";
+import { BASE_URL } from "../services/DishesServices";
+import ImageFilterAll from "../../../assets/images/food/filter/mie goreng.png";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
-const DishesCategory = ({ activeFilter, setActiveFilter }) => {
+const DishesCategory = ({
+  activeFilter,
+  setActiveFilter,
+  categories,
+  dishes,
+  notify,
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loaded, setLoaded] = useState(false);
 
   const toggleFilter = (filter) => {
     setActiveFilter(filter);
@@ -18,34 +22,7 @@ const DishesCategory = ({ activeFilter, setActiveFilter }) => {
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
-  const typeCounts = getFilterCountsByKey(FoodData, "type");
-  const FilterDishes = [
-    {
-      type: "All",
-      image: MiePangsit,
-      items: typeCounts["All"] || 0,
-    },
-    {
-      type: "Beef",
-      image: MiePangsit,
-      items: typeCounts["Beef"] || 0,
-    },
-    {
-      type: "Soups",
-      image: MiePangsit,
-      items: typeCounts["Soups"] || 0,
-    },
-    {
-      type: "Desserts",
-      image: MiePangsit,
-      items: typeCounts["Desserts"] || 0,
-    },
-    {
-      type: "Chickens",
-      image: MiePangsit,
-      items: typeCounts["Chickens"] || 0,
-    },
-  ];
+
   return (
     <div>
       <Heading
@@ -53,33 +30,74 @@ const DishesCategory = ({ activeFilter, setActiveFilter }) => {
         className={"flex justify-between items-center mb-2"}
       />
       <div className="flex flex-col gap-2 max-h-[calc(100vh-250px)] overflow-y-auto scrollbar scrollbar-w-1 scrollbar-h-1 scrollbar-thumb-primary scrollbar-track-background">
-        {FilterDishes.map((item, index) => (
-          <button
-            onClick={() => toggleFilter(item.type)}
-            key={index}
-            className={`flex gap-4 justify-between items-center bg-surface border-2 ${
-              activeFilter === item.type ? "border-primary" : "border-border"
-            } rounded-lg p-2 text-text cursor-pointer`}
+        <button
+          onClick={() => toggleFilter("All")}
+          className={`flex gap-4 justify-between items-center bg-surface border-2 ${
+            activeFilter === "All" ? "border-primary" : "border-border"
+          } rounded-lg p-2 text-text cursor-pointer`}
+        >
+          <div className="flex gap-4 items-center">
+            <img
+              src={ImageFilterAll}
+              alt="test"
+              className="w-[40px] object-cover rounded-xl"
+            />
+            <h1>All</h1>
+          </div>
+          <span
+            className={`w-6 h-6 ${
+              activeFilter === "All"
+                ? "bg-primary text-text-accent"
+                : "bg-border text-text"
+            } flex justify-center items-center text-sm rounded-full`}
           >
-            <div className="flex gap-4 items-center">
-              <img
-                src={item.image}
-                alt="test"
-                className="w-[40px] object-cover rounded-xl"
-              />
-              <h1>{item.type}</h1>
-            </div>
-            <span
-              className={`w-6 h-6 ${
-                activeFilter === item.type
-                  ? "bg-primary text-text-accent"
-                  : "bg-border text-text"
-              } flex justify-center items-center text-sm rounded-full`}
+            {dishes.length}
+          </span>
+        </button>
+        {categories.map((item, index) => {
+          return (
+            <button
+              onClick={() => toggleFilter(item.name)}
+              key={index}
+              className={`flex gap-4 justify-between items-center bg-surface border-2 ${
+                activeFilter === item.name ? "border-primary" : "border-border"
+              } rounded-lg p-2 text-text cursor-pointer`}
             >
-              {item.items}
-            </span>
-          </button>
-        ))}
+              <div className="flex gap-4 items-center">
+                {/* {!loaded && (
+                  <div className="w-[40px] flex justify-center items-center">
+                    <AiOutlineLoading3Quarters
+                      size={20}
+                      className="animate-spin"
+                    />
+                  </div>
+                )} */}
+                <img
+                  src={`${BASE_URL}/uploads/categories/${item.image}`}
+                  onLoad={() => setLoaded(true)}
+                  alt="Category Image"
+                  className={`w-[40px]
+                    object-cover rounded-xl bg-center transition-opacity duration-300 ease-in-out ${
+                      loaded ? "opacity-100" : "opacity-0"
+                    }`}
+                />
+                <h1>{item.name}</h1>
+              </div>
+              <span
+                className={`w-6 h-6 ${
+                  activeFilter === item.name
+                    ? "bg-primary text-text-accent"
+                    : "bg-border text-text"
+                } flex justify-center items-center text-sm rounded-full`}
+              >
+                {
+                  dishes.filter((dish) => dish.categoryname === item.name)
+                    .length
+                }
+              </span>
+            </button>
+          );
+        })}
       </div>
       <div className="flex justify-center pt-8">
         <button
@@ -90,7 +108,11 @@ const DishesCategory = ({ activeFilter, setActiveFilter }) => {
           <span>Add New Category</span>
         </button>
       </div>
-      <ModalAddCategory isOpen={isModalOpen} onClose={closeModal} />
+      <ModalAddCategory
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        notify={notify}
+      />
     </div>
   );
 };

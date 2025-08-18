@@ -1,11 +1,13 @@
 import React, { createContext, useState, useCallback } from "react";
+import { AnimatePresence } from "framer-motion";
 import NotifyItem from "../components/ui/Notify";
+import { useContext } from "react";
 
 let idCounter = 0;
 
 const NotifyContext = createContext(null);
 
-const NotifyProvider = ({ children }) => {
+export const NotifyProvider = ({ children }) => {
   const [notifications, setNotifications] = useState([]);
 
   const push = useCallback(({ message, type = "info", duration = 5000 }) => {
@@ -21,12 +23,20 @@ const NotifyProvider = ({ children }) => {
     <NotifyContext.Provider value={{ push }}>
       {children}
       <div className="fixed top-4 left-1/2 -translate-x-1/2 flex flex-col gap-3 z-50 items-center">
-        {notifications.slice(-3).map((n) => (
-          <NotifyItem key={n.id} {...n} />
-        ))}
+        <AnimatePresence initial={false}>
+          {notifications.slice(-3).map((n) => (
+            <NotifyItem key={n.id} {...n} />
+          ))}
+        </AnimatePresence>
       </div>
     </NotifyContext.Provider>
   );
 };
 
-export { NotifyContext, NotifyProvider };
+export const useNotify = () => {
+  const context = useContext(NotifyContext);
+  if (!context) {
+    throw new Error("useNotify must be used within a NotifyProvider");
+  }
+  return context;
+};

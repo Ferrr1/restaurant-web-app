@@ -6,6 +6,17 @@ import { ThemeProvider } from "./context/ThemeContext.jsx";
 import { HelmetProvider } from "react-helmet-async";
 import { NotifyProvider } from "./context/NotifyContext.jsx";
 import { CartProvider } from "./context/CartContext.jsx";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { AuthProvider } from "./context/AuthContext.jsx";
+import { BrowserRouter } from "react-router-dom";
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 30000,
+    },
+  },
+});
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -13,7 +24,13 @@ createRoot(document.getElementById("root")).render(
       <ThemeProvider>
         <NotifyProvider>
           <CartProvider>
-            <App />
+            <QueryClientProvider client={queryClient}>
+              <BrowserRouter>
+                <AuthProvider>
+                  <App />
+                </AuthProvider>
+              </BrowserRouter>
+            </QueryClientProvider>
           </CartProvider>
         </NotifyProvider>
       </ThemeProvider>
